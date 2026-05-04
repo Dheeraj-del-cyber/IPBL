@@ -1,0 +1,1982 @@
+/* ================================================
+   AGRI AI — REBUILT CORE LOGIC
+   Clean, Modular, and Robust PWA Implementation
+   ================================================ */
+
+const AppState = {
+    currentScreen: 'screenHome',
+    previousScreen: null,
+    resultSource: null,
+    cameraStream: null,
+    facingMode: 'environment',
+    currentLang: localStorage.getItem('agri-lang') || 'en'
+};
+
+
+
+/* --- Translations --- */
+const TRANSLATIONS = {
+    en: {
+        navHome: 'Home', navDetect: 'Detect', navCrops: 'Crops', navShop: 'Shop', navScan: 'Start Scan',
+        heroBadge: '🚜 Farmer Support App',
+        heroTitle1: 'Healthy Crops', heroTitle2: 'Better Income',
+        heroDesc: 'Identify crop disease, get exact treatment steps, and select suitable crops by season and soil - fast and simple.',
+        heroBtn1: 'Detect Disease', heroBtn2: 'Get Crop Advice',
+        statCrops: 'Crops', statDiseases: 'Diseases', statLangs: 'Languages',
+        secFeatures: 'Features', secFeaturesTitle: 'Smart Farming Tools',
+        secFeaturesDesc: 'Everything you need for better farming decisions — powered by AI.',
+        featDetect: 'Detect Disease', featDetectDesc: 'Scan crop leaves with your camera for instant AI disease diagnosis.',
+        featCrop: 'Suggest Crop', featCropDesc: 'Get the best crops for your soil type and climate for maximum yield.',
+        featShop: 'Agri Shop', featShopDesc: 'Buy pesticides, fertilizers, tools and seeds online.',
+        featVoice: 'Voice Input', featVoiceDesc: 'Speak your question in your language. Our AI will guide you.',
+        secDashboard: 'Dashboard', secDashboardTitle: 'Farm Metrics', metricTemp: 'Temp', metricHumid: 'Humid', metricMoist: 'Moisture', metricHealth: 'Health',
+        back: 'Back', pageDetect: 'Disease Detection', pageCrop: 'Crop Recommendation', pageShop: 'Agri Shop',
+        cameraPrompt: 'Take a photo of the affected leaf', cameraHint: 'Use camera or upload an image',
+        upload: 'Upload', flip: 'Flip', retake: 'Retake', analyze: 'Analyze Now',
+        labelSoil: 'Soil Type', labelTemp: 'Temperature', labelRain: 'Rainfall', labelSeason: 'Season',
+        getSuggestion: 'Get Recommendation', searchPH: 'Search crops or diseases...'
+    },
+    hi: {
+        navHome: 'होम', navDetect: 'पहचानें', navCrops: 'फसलें', navShop: 'दुकान', navScan: 'स्कैन करें',
+        heroBadge: '🌱 AI-संचालित कृषि',
+        heroTitle1: 'स्मार्ट खेती', heroTitle2: 'हुई आसान',
+        heroDesc: 'पौधों की बीमारियों को तुरंत पहचानें, AI फसल सुझाव प्राप्त करें, और खेती का ज्ञान प्राप्त करें - सब कुछ सरल।',
+        heroBtn1: 'बीमारी पहचानें', heroBtn2: 'फसल सलाह लें',
+        statCrops: 'फसलें', statDiseases: 'बीमारियाँ', statLangs: 'भाषाएं',
+        secFeatures: 'विशेषताएं', secFeaturesTitle: 'स्मार्ट खेती उपकरण',
+        secFeaturesDesc: 'बेहतर खेती के फैसलों के लिए सब कुछ — AI द्वारा संचालित।',
+        featDetect: 'बीमारी पहचानें', featDetectDesc: 'त्वरित बीमारी निदान के लिए अपने कैमरे से पत्तियों को स्कैन करें।',
+        featCrop: 'फसल सुझाव', featCropDesc: 'अपनी मिट्टी और जलवायु के लिए सर्वोत्तम फसलें प्राप्त करें।',
+        featShop: 'कृषि दुकान', featShopDesc: 'कीटनाशक, उर्वरक, औजार और बीज ऑनलाइन खरीदें।',
+        featVoice: 'वॉयस इनपुट', featVoiceDesc: 'अपनी भाषा में बोलें। हमारी AI आपकी सहायता करेगी।',
+        secDashboard: 'डैशबोर्ड', secDashboardTitle: 'खेत के आँकड़े', metricTemp: 'तापमान', metricHumid: 'नमी', metricMoist: 'मिट्टी की नमी', metricHealth: 'मिट्टी का स्वास्थ्य',
+        back: 'पीछे', pageDetect: 'बीमारी की पहचान', pageCrop: 'फसल सुझाव', pageShop: 'कृषि दुकान',
+        cameraPrompt: 'प्रभावित पत्ते की फोटो लें', cameraHint: 'कैमरे का उपयोग करें या इमेज अपलोड करें',
+        upload: 'अपलोड', flip: 'पलटें', retake: 'फिर से लें', analyze: 'अभी विश्लेषण करें',
+        labelSoil: 'मिट्टी का प्रकार', labelTemp: 'तापमान', labelRain: 'वर्षा', labelSeason: 'मौसम',
+        getSuggestion: 'सुझाव प्राप्त करें', searchPH: 'फसलें या बीमारियाँ खोजें...'
+    },
+    kn: {
+        navHome: 'ಹೋಮ್', navDetect: 'ಗುರುತಿಸಿ', navCrops: 'ಬೆಳೆಗಳು', navShop: 'ಅಂಗಡಿ', navScan: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
+        heroBadge: '🌱 AI-ಚಾಲಿತ ಕೃಷಿ',
+        heroTitle1: 'ಸ್ಮಾರ್ಟ್ ಕೃಷಿ', heroTitle2: 'ಸುಲಭವಾಗಿದೆ',
+        heroDesc: 'ಸಸ್ಯ ರೋಗಗಳನ್ನು ತಕ್ಷಣ ಪತ್ತೆಹಚ್ಚಿ, AI ಬೆಳೆ ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ ಮತ್ತು ಕೃಷಿ ಜ್ಞಾನವನ್ನು ಪಡೆದುಕೊಳ್ಳಿ - ಎಲ್ಲವೂ ಸರಳ.',
+        heroBtn1: 'ರೋಗ ಪತ್ತೆಹಚ್ಚಿ', heroBtn2: 'ಬೆಳೆ ಸಲಹೆ ಪಡೆಯಿರಿ',
+        statCrops: 'ಬೆಳೆಗಳು', statDiseases: 'ರೋಗಗಳು', statLangs: 'ಭಾಷೆಗಳು',
+        secFeatures: 'ವೈಶಿಷ್ಟ್ಯಗಳು', secFeaturesTitle: 'ಸ್ಮಾರ್ಟ್ ಕೃಷಿ ಪರಿಕರಗಳು', secFeaturesDesc: 'ಉತ್ತಮ ಕೃಷಿ ನಿರ್ಧಾರಗಳಿಗೆ ಎಲ್ಲವೂ.',
+        featDetect: 'ರೋಗ ಪತ್ತೆಹಚ್ಚಿ', featDetectDesc: 'ತಕ್ಷಣ AI ರೋಗ ನಿರ್ಣಯಕ್ಕಾಗಿ ಎಲೆಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.',
+        featCrop: 'ಬೆಳೆ ಶಿಫಾರಸು', featCropDesc: 'ನಿಮ್ಮ ಜಮೀನಿಗೆ ಉತ್ತಮ ಬೆಳೆಗಳನ್ನು ಹುಡುಕಿ.',
+        featShop: 'ಕೃಷಿ ಅಂಗಡಿ', featShopDesc: 'ಕೀಟನಾಶಕ, ಗೊಬ್ಬರ, ಉಪಕರಣ ಮತ್ತು ಬೀಜಗಳನ್ನು ಖರೀದಿಸಿ.',
+        secDashboard: 'ಡ್ಯಾಶ್‌ಬೋರ್ಡ್', metricTemp: 'ತಾಪಮಾನ', metricHumid: 'ಆರ್ದ್ರತೆ', metricMoist: 'ಮಣ್ಣಿನ ತೇವಾಂಶ', metricHealth: 'ಮಣ್ಣಿನ ಆರೋಗ್ಯ',
+        back: 'ಹಿಂದೆ', pageDetect: 'ರೋಗ ಪತ್ತೆಹಚ್ಚುವಿಕೆ', pageCrop: 'ಬೆಳೆ ಶಿಫಾರಸು', pageShop: 'ಕೃಷಿ ಅಂಗಡಿ',
+        cameraPrompt: 'ಬಾಧಿತ ಎಲೆಯ ಫೋಟೋ ತೆಗೆದುಕೊಳ್ಳಿ', flip: 'ತಿರುಗಿಸಿ', retake: 'ಮತ್ತೆ ತೆಗೆಯಿರಿ', analyze: 'ವಿಶ್ಲೇಷಿಸಿ',
+        labelSoil: 'ಮಣ್ಣಿನ ಪ್ರಕಾರ', labelTemp: 'ತಾಪಮಾನ', labelRain: 'ಮಳೆ', labelSeason: 'ಋತು',
+        getSuggestion: 'ಶಿಫಾರಸು ಪಡೆಯಿರಿ', searchPH: 'ಬೆಳೆ ಅಥವಾ ರೋಗಗಳನ್ನು ಹುಡುಕಿ...'
+    },
+    te: {
+        navHome: 'హోమ్', navDetect: 'గుర్తించండి', navCrops: 'పంటలు', navShop: 'షాప్', navScan: 'స్కాన్ చేయండి',
+        heroBadge: '🌱 AI-ఆధారిత వ్యవసాయం',
+        heroTitle1: 'స్మార్ట్ వ్యవసాయం', heroTitle2: 'సులభంగా',
+        heroDesc: 'మొక్కల వ్యాధులను తక్షణమే గుర్తించండి, AI పంట సిఫార్సులను పొందండి మరియు వ్యవసాయ జ్ఞానాన్ని యాక్సెస్ చేయండి - అంతా సరళంగా.',
+        heroBtn1: 'వ్యాధిని గుర్తించండి', heroBtn2: 'పంట సలహా పొందండి',
+        statCrops: 'పంటలు', statDiseases: 'వ్యాధులు', statLangs: 'భాషలు',
+        secFeatures: 'ఫీచర్లు', secFeaturesTitle: 'స్మార్ట్ వ్యవసాయ సాధనాలు', secFeaturesDesc: 'మెరుగైన వ్యవసాయ నిర్ణయాలకు అన్నీ.',
+        featDetect: 'వ్యాధి గుర్తింపు', featDetectDesc: 'తక్షణ AI రోగ నిర్ధారణ కోసం ఆకులను స్కాన్ చేయండి.',
+        featCrop: 'పంట సూచన', featCropDesc: 'మీ పొలానికి అత్యుత్తమ పంటలు కనుగొనండి.',
+        featShop: 'వ్యవసాయ దుకాణం', featShopDesc: 'పురుగుమందులు, ఎరువులు, పరికరాలు & విత్తనాలు కొనండి.',
+        secDashboard: 'డ్యాష్‌బోర్డ్', metricTemp: 'ఉష్ణోగ్రత', metricHumid: 'తేమ', metricMoist: 'మట్టి తేమ', metricHealth: 'మట్టి ఆరోగ్యం',
+        back: 'వెనుకకు', pageDetect: 'వ్యాధి గుర్తింపు', pageCrop: 'పంట సిఫార్సు', pageShop: 'వ్యవసాయ దుకాణం',
+        cameraPrompt: 'ప్రభావిత ఆకు ఫోటో తీయండి', flip: 'తిప్పండి', retake: 'మళ్ళీ తీయండి', analyze: 'విశ్లేషించండి',
+        labelSoil: 'మట్టి రకం', labelTemp: 'ఉష్ణోగ్రత', labelRain: 'వర్షపాతం', labelSeason: 'సీజన్',
+        getSuggestion: 'సూచన పొందండి', searchPH: 'పంటలు లేదా వ్యాధుల కోసం వెతకండి...'
+    },
+    ta: {
+        navHome: 'முகப்பு', navDetect: 'கண்டறி', navCrops: 'பயிர்கள்', navShop: 'கடை', navScan: 'ஸ்கேன் செய்',
+        heroBadge: '🌱 AI-ஆல் இயக்கப்படும் விவசாயம்',
+        heroTitle1: 'ஸ்மார்ட் விவசாயம்', heroTitle2: 'எளிதாக',
+        heroDesc: 'தாவர நோய்களை உடனடியாகக் கண்டறியவும், AI பயிர் பரிந்துரைகளைப் பெறவும் மற்றும் விவசாய அறிவை அணுகவும் - அனைத்தும் எளிமையாக.',
+        heroBtn1: 'நோயைக் கண்டறி', heroBtn2: 'பயிர் ஆலோசனை பெறு',
+        statCrops: 'பயிர்கள்', statDiseases: 'நோய்கள்', statLangs: 'மொழிகள்',
+        secFeatures: 'அம்சங்கள்', secFeaturesTitle: 'ஸ்மார்ட் விவசாய கருவிகள்', secFeaturesDesc: 'சிறந்த விவசாய முடிவுகளுக்கு அனைத்தும்.',
+        featDetect: 'நோய் கண்டறிதல்', featDetectDesc: 'உடனடி AI நோய் கண்டறிவதற்கு இலைகளை ஸ்கேன் செய்யுங்கள்.',
+        featCrop: 'பயிர் பரிந்துரை', featCropDesc: 'உங்கள் பண்ணைக்கு சிறந்த பயிர்களை கண்டறியுங்கள்.',
+        featShop: 'விவசாய கடை', featShopDesc: 'பூச்சிக்கொல்லிகள், உரங்கள், கருவிகள் & விதைகளை வாங்குங்கள்.',
+        secDashboard: 'டாஷ்போர்டு', metricTemp: 'வெப்பநிலை', metricHumid: 'ஈரப்பதம்', metricMoist: 'மண் ஈரப்பதம்', metricHealth: 'மண் ஆரோக்கியம்',
+        back: 'பின்னால்', pageDetect: 'நோய் கண்டறிதல்', pageCrop: 'பயிர் பரிந்துரை', pageShop: 'விவசாய கடை',
+        cameraPrompt: 'பாதிக்கப்பட்ட இலையை புகைப்படம் எடுக்கவும்', flip: 'திருப்பு', retake: 'மீண்டும் எடு', analyze: 'பகுப்பாய்வு செய்',
+        labelSoil: 'மண் வகை', labelTemp: 'வெப்பநிலை', labelRain: 'மழைப்பொழிவு', labelSeason: 'பருவம்',
+        getSuggestion: 'பரிந்துரை பெறு', searchPH: 'பயிர்கள் அல்லது நோய்களைத் தேடுங்கள்...'
+    }
+};
+
+const LANG_META = {
+    en: { flag: '🌐', name: 'English' },
+    hi: { flag: '🇮🇳', name: 'हिन्दी (Hindi)' },
+    kn: { flag: '🇮🇳', name: 'ಕನ್ನಡ (Kannada)' },
+    te: { flag: '🇮🇳', name: 'తెలుగు (Telugu)' },
+    ta: { flag: '🇮🇳', name: 'தமிழ் (Tamil)' }
+};
+
+/* --- Core Initialization --- */
+window.addEventListener('load', () => {
+    applyLanguage(AppState.currentLang);
+    initApp();
+});
+
+function initApp() {
+    // Navigation listener
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Initial Data
+    renderDailyTip();
+    updateMetrics();
+}
+
+/* --- Navigation System --- */
+function navigateTo(screenId) {
+    const screens = document.querySelectorAll('.screen');
+    const target = document.getElementById(screenId);
+    
+    if (!target) return;
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Cleanup current
+    if (AppState.currentScreen === 'screenDiseaseDetect' && screenId !== 'screenResult') {
+        stopCamera();
+    }
+
+    screens.forEach(s => {
+        s.classList.remove('active', 'entering');
+    });
+
+    // Staggered entrance for grid items
+    const gridItems = target.querySelectorAll('.feat-card, .float-card, .form-glass, .product-card, .result-card');
+    gridItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    target.classList.add('active', 'entering');
+    AppState.previousScreen = AppState.currentScreen;
+    AppState.currentScreen = screenId;
+
+    // Update Nav UI
+    document.querySelectorAll('.nav-link, .bottom-nav-link').forEach(l => {
+        l.classList.toggle('active', l.getAttribute('data-screen') === screenId);
+    });
+
+    // Vibrate on navigation (mobile)
+    if (window.navigator.vibrate) {
+        window.navigator.vibrate(50);
+    }
+
+    // Sub-initializers
+    if (screenId === 'screenDiseaseDetect') initUploadZone();
+    if (screenId === 'screenCropForm') initCropForm();
+    if (screenId === 'screenEcommerce') renderProducts(currentCategory);
+}
+
+function goBackFromResult() {
+    if (AppState.resultSource === 'disease') navigateTo('screenDiseaseDetect');
+    else if (AppState.resultSource === 'crop') navigateTo('screenCropForm');
+    else navigateTo('screenHome');
+}
+
+/* --- i18n Logic --- */
+function setLanguage(lang) {
+    AppState.currentLang = lang;
+    localStorage.setItem('agri-lang', lang);
+    applyLanguage(lang);
+    closeLangMenu();
+}
+
+function applyLanguage(lang) {
+    const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+    
+    // Elements with data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+    });
+
+    // Placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+    });
+
+    // Update Selector
+    const meta = LANG_META[lang];
+    if (meta) {
+        const langCodeEl = document.getElementById('langCode');
+        if (langCodeEl) langCodeEl.textContent = meta.name;
+        
+        const langIconEl = document.querySelector('.lang-icon');
+        if (langIconEl) langIconEl.textContent = meta.flag;
+    }
+
+    // Update active dropdown item
+    document.querySelectorAll('.lang-opt').forEach(opt => {
+        const optLang = opt.getAttribute('onclick').match(/'([^']+)'/)[1];
+        opt.classList.toggle('active', optLang === lang);
+    });
+}
+
+function toggleLangMenu() {
+    const d = document.getElementById('langDropdown');
+    if (d) d.classList.toggle('show');
+}
+
+function closeLangMenu() {
+    const d = document.getElementById('langDropdown');
+    if (d) d.classList.remove('show');
+}
+
+/* --- Upload Zone (Desktop) --- */
+function initUploadZone() {
+    const zone = document.getElementById('cameraArea');
+    if (!zone || zone._dragReady) return;
+    zone._dragReady = true;
+
+    zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.style.borderColor = 'var(--g-400)';
+        zone.style.background = 'rgba(62,175,96,0.08)';
+    });
+    zone.addEventListener('dragleave', () => {
+        zone.style.borderColor = '';
+        zone.style.background = '';
+    });
+    zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.style.borderColor = '';
+        zone.style.background = '';
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            loadImageFile(file);
+        }
+    });
+}
+
+function loadImageFile(file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const img = document.getElementById('imagePreview');
+        img.src = event.target.result;
+        img.style.display = 'block';
+        document.getElementById('cameraPlaceholder').style.display = 'none';
+        showAnalyzeControls();
+    };
+    reader.readAsDataURL(file);
+    // Store file reference for form submission
+    AppState.selectedFile = file;
+}
+
+/* --- Camera Logic (kept for mobile compatibility) --- */
+async function initCamera() {
+    // Not auto-called on desktop — only on mobile if needed
+    const vid = document.getElementById('cameraPreview');
+    const ph = document.getElementById('cameraPlaceholder');
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: AppState.facingMode, width: { ideal: 1280 }, height: { ideal: 960 } },
+            audio: false
+        });
+        AppState.cameraStream = stream;
+        vid.srcObject = stream;
+        vid.style.display = 'block';
+        if (ph) ph.style.display = 'none';
+    } catch (err) {
+        console.error('Camera error:', err);
+    }
+}
+
+function stopCamera() {
+    if (AppState.cameraStream) {
+        AppState.cameraStream.getTracks().forEach(track => track.stop());
+        AppState.cameraStream = null;
+    }
+    const vid = document.getElementById('cameraPreview');
+    if (vid) {
+        vid.srcObject = null;
+        vid.style.display = 'none';
+    }
+}
+
+function capturePhoto() {
+    const vid = document.getElementById('cameraPreview');
+    if (!vid || vid.style.display === 'none') {
+        triggerUpload();
+        return;
+    }
+
+    const canvas = document.getElementById('cameraCanvas');
+    const img = document.getElementById('imagePreview');
+    
+    canvas.width = vid.videoWidth;
+    canvas.height = vid.videoHeight;
+    canvas.getContext('2d').drawImage(vid, 0, 0);
+    
+    img.src = canvas.toDataURL('image/jpeg', 0.85);
+    img.style.display = 'block';
+    
+    stopCamera();
+    showAnalyzeControls();
+}
+
+function switchCamera() {
+    AppState.facingMode = AppState.facingMode === 'user' ? 'environment' : 'user';
+    stopCamera();
+    initCamera();
+}
+
+function triggerUpload() {
+    document.getElementById('fileInput').click();
+}
+
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    loadImageFile(file);
+}
+
+function showAnalyzeControls() {
+    document.getElementById('cameraControls').classList.add('hidden');
+    document.getElementById('analyzeControls').classList.remove('hidden');
+}
+
+function retakePhoto() {
+    resetDetection();
+}
+
+function resetDetection() {
+    const img = document.getElementById('imagePreview');
+    img.style.display = 'none';
+    img.src = '';
+    AppState.selectedFile = null;
+    document.getElementById('cameraPlaceholder').style.display = 'flex';
+    document.getElementById('cameraControls').classList.remove('hidden');
+    document.getElementById('analyzeControls').classList.add('hidden');
+    // Reset file input so same file can be re-selected
+    document.getElementById('fileInput').value = '';
+}
+
+/* =====================================================
+   BACKEND INTEGRATION — Real Flask API + Offline Queue
+   ===================================================== */
+const API_BASE = 'http://127.0.0.1:5000';
+
+/* Local Advisory Knowledge Base (100% Offline Fallback) */
+const LOCAL_ADVISORY = {
+    "Apple Scab":            { emoji:'🍎', recovery:'Prune infected leaves; improve air circulation.', organic:'Neem oil or sulfur-based organic fungicides.', chemical:'Fungicides with Captan or Myclobutanil.', prevention:'Plant resistant varieties; clear fallen leaves.' },
+    "Bacterial Spot":        { emoji:'🦠', recovery:'Remove infected plants immediately.', organic:'Copper-based sprays or Bacillus subtilis (Serenade).', chemical:'Fixed copper products in early morning.', prevention:'Avoid overhead watering; use certified seeds.' },
+    "Black Rot":             { emoji:'🍇', recovery:'Cut out mummified fruit and cankers.', organic:'Lime-sulfur sprays during dormant season.', chemical:'Mancozeb or Ziram fungicides.', prevention:'Ensure good drainage and plant spacing.' },
+    "Cedar Apple Rust":      { emoji:'🍊', recovery:'Remove nearby cedar galls when possible.', organic:'Potassium bicarbonate sprays.', chemical:'Immunox or other systemic fungicides.', prevention:'Avoid planting apples near Junipers/Cedars.' },
+    "Early Blight":          { emoji:'🍅', recovery:'Remove bottom leaves showing spots; mulch base.', organic:'Compost tea or Bacillus amyloliquefaciens.', chemical:'Chlorothalonil or Copper-based fungicides.', prevention:'Rotate crops every 3 years; keep leaves dry.' },
+    "Esca (Black Measles)":  { emoji:'🍷', recovery:'Careful pruning of affected wood in dry weather.', organic:'Trichoderma-based biocontrol agents.', chemical:'Systemic triazole fungicides.', prevention:'Disinfect pruning tools between every cut.' },
+    "Healthy":               { emoji:'✅', recovery:'Plant is healthy! No action needed.', organic:'Continue using organic compost.', chemical:'No chemicals required.', prevention:'Regular monitoring and balanced watering.' },
+    "Late Blight":           { emoji:'🔴', recovery:'Remove entire plant immediately; bag it.', organic:'Strict copper sprays (preventive only).', chemical:'Systemic fungicides like Ridomil Gold.', prevention:'Destroy volunteer plants; choose resistant hybrids.' },
+    "Leaf Blight":           { emoji:'🍂', recovery:'Increase plant spacing to lower humidity.', organic:'Garlic-based sprays or baking soda solution.', chemical:'Mancozeb or Propiconazole.', prevention:'Avoid working in the field when leaves are wet.' },
+    "Septoria Leaf Spot":    { emoji:'🟡', recovery:'Drip irrigation only; remove spotted leaves.', organic:'Actinovate biological fungicide.', chemical:'Chlorothalonil every 7–10 days.', prevention:'Clean all tools with bleach after use.' },
+    "Yellow Leaf Curl Virus":{ emoji:'🌿', recovery:'Cannot be cured; focus on whitefly control.', organic:'Yellow sticky traps; mineral oil sprays.', chemical:'Imidacloprid targets whiteflies (virus vector).', prevention:'Use silver-colored mulch to repel insects.' }
+};
+
+
+
+/* Get image file — always use original file to preserve quality */
+function getCurrentImageFile() {
+    return new Promise((resolve, reject) => {
+        // PRIORITY 1: Use the original uploaded file (full quality, no re-encoding)
+        if (AppState.selectedFile) {
+            return resolve(AppState.selectedFile);
+        }
+        // PRIORITY 2: File input fallback
+        const fi = document.getElementById('fileInput');
+        if (fi && fi.files && fi.files[0]) {
+            return resolve(fi.files[0]);
+        }
+        // PRIORITY 3: Camera canvas capture (for mobile camera)
+        const canvas = document.getElementById('cameraCanvas');
+        if (canvas && canvas.width > 0) {
+            canvas.toBlob(blob => {
+                if (blob) resolve(new File([blob], 'capture.jpg', { type: 'image/jpeg' }));
+                else reject(new Error('Canvas is empty'));
+            }, 'image/jpeg', 0.95);
+            return;
+        }
+        reject(new Error('No image source available'));
+    });
+}
+
+/* Main analyze function */
+async function analyzeImage() {
+    const imgEl = document.getElementById('imagePreview');
+    if (!imgEl || !imgEl.src || imgEl.style.display === 'none') {
+        alert('Please take or upload a photo first.');
+        return;
+    }
+
+    if (!navigator.onLine) {
+        alert('No internet connection. Please connect to the internet to analyze the image.');
+        return;
+    }
+
+    showLoading('Analyzing crop health with AI...');
+    try {
+        const file = await getCurrentImageFile();
+        const fd = new FormData();
+        fd.append('image', file);
+
+        const res = await fetch(`${API_BASE}/detect`, { method:'POST', body:fd });
+        const data = await res.json();
+        hideLoading();
+
+        AppState.resultSource = 'disease';
+        if (res.ok && data.status === 'clear' && data.prediction_results) {
+            renderRealDiseaseResult(data);
+        } else if (data.status === 'blurry') {
+            renderBlurryResult(data.message || 'Image is too blurry. Please retake.');
+        } else {
+            renderErrorResult(data.error || 'Analysis failed. Please try again.');
+        }
+        navigateTo('screenResult');
+    } catch(err) {
+        hideLoading();
+        renderErrorResult('Server unreachable. Please check your connection and try again.');
+    }
+}
+
+function buildAdvisoryHTML(disease) {
+    const d = LOCAL_ADVISORY[disease] || LOCAL_ADVISORY['Leaf Blight'];
+    return `
+        <div class="result-card">
+            <div class="result-card-header">🩺 Recovery Steps</div>
+            <div class="result-card-body">${d.recovery}</div>
+        </div>
+        <div class="result-card">
+            <div class="result-card-header">🌿 Organic Treatment</div>
+            <div class="result-card-body">${d.organic}</div>
+        </div>
+        <div class="result-card">
+            <div class="result-card-header">💊 Chemical Treatment</div>
+            <div class="result-card-body">${d.chemical}</div>
+        </div>
+        <div class="result-card">
+            <div class="result-card-header">🛡️ Prevention</div>
+            <div class="result-card-body">${d.prevention}</div>
+        </div>
+    `;
+}
+
+function renderRealDiseaseResult(data) {
+    const pr = data.prediction_results;
+    const disease = pr.disease;
+    const conf = pr.confidence;
+    const isHealthy = disease === 'Healthy';
+    const localD = LOCAL_ADVISORY[disease] || {};
+    const emoji = localD.emoji || (isHealthy ? '✅' : '🍂');
+    const type = isHealthy ? 'success' : 'danger';
+
+    const advisory = data.guidance
+        ? `<div class="result-card"><div class="result-card-header">🌿 AI Advisory</div><div class="result-card-body" style="white-space:pre-wrap">${data.guidance}</div></div>`
+        : buildAdvisoryHTML(disease);
+
+    // Get product recommendations for the detected disease
+    const recommendedProducts = isHealthy ? [] : getDiseaseProductRecommendations(disease);
+    const productRecommendations = renderProductRecommendations(
+        recommendedProducts, 
+        '🛒 Recommended Treatments', 
+        'disease'
+    );
+
+    const body = document.getElementById('resultBody');
+    const title = document.getElementById('resultTitle');
+    title.textContent = isHealthy ? 'Analysis Complete' : 'Disease Detected';
+
+    body.innerHTML = `
+        <div class="result-hero result-${type}">
+            <div class="result-emoji">${emoji}</div>
+            <div class="result-name">${disease}</div>
+            <div class="result-confidence">${conf}% Confidence</div>
+        </div>
+        <div class="result-card" style="margin:1rem 0">
+            <div class="result-card-header">📊 Confidence Score</div>
+            <div class="result-card-body">
+                <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:10px;overflow:hidden;margin-top:0.5rem">
+                    <div style="height:100%;width:${conf}%;background:linear-gradient(to right,#3eaf60,#8ae0a0);transition:width 1.2s ease"></div>
+                </div>
+            </div>
+        </div>
+        ${advisory}
+        ${productRecommendations}
+        <button class="btn-glow btn-full" style="margin-top:1.5rem;width:100%" onclick="navigateTo('screenDiseaseDetect')">Scan Another Leaf</button>
+        <button class="btn-ghost btn-full" style="margin-top:0.75rem;width:100%" onclick="navigateTo('screenHome')">Back to Home</button>
+    `;
+    setTimeout(() => {
+        const bar = body.querySelector('[style*="width:0"]');
+        if (bar) bar.style.width = conf + '%';
+    }, 200);
+}
+
+function renderBlurryResult(msg) {
+    const body = document.getElementById('resultBody');
+    document.getElementById('resultTitle').textContent = 'Image Quality Issue';
+    body.innerHTML = `
+        <div class="result-hero result-danger">
+            <div class="result-emoji">⚠️</div>
+            <div class="result-name">Image Too Blurry</div>
+            <div class="result-confidence">${msg}</div>
+        </div>
+        <div class="result-card">
+            <div class="result-card-header">💡 Tips for a better photo</div>
+            <div class="result-card-body"><ul>
+                <li>Hold your phone steady</li>
+                <li>Ensure good lighting</li>
+                <li>Get close to the leaf (15-20 cm)</li>
+                <li>Tap on the leaf to focus before shooting</li>
+            </ul></div>
+        </div>
+        <button class="btn-glow btn-full" style="margin-top:1.5rem;width:100%" onclick="navigateTo('screenDiseaseDetect')">Try Again</button>
+    `;
+}
+
+function renderErrorResult(msg) {
+    const body = document.getElementById('resultBody');
+    document.getElementById('resultTitle').textContent = 'Error';
+    body.innerHTML = `
+        <div class="result-hero result-danger">
+            <div class="result-emoji">❌</div>
+            <div class="result-name">Analysis Failed</div>
+            <div class="result-confidence">${msg}</div>
+        </div>
+        <button class="btn-glow btn-full" style="margin-top:1.5rem;width:100%" onclick="navigateTo('screenDiseaseDetect')">Try Again</button>
+    `;
+}
+
+
+
+/* --- Crop Recommendation Logic --- */
+const CROP_DB = [
+    { name:'Rice', emoji:'🌾', soil:['alluvial','clay','loamy'], tempMin:20, tempMax:37, rainMin:1000, rainMax:3000, season:['kharif'], desc:'Staple grain, needs standing water. Ideal for humid regions.' },
+    { name:'Wheat', emoji:'🌾', soil:['alluvial','loamy','black'], tempMin:10, tempMax:25, rainMin:400, rainMax:1200, season:['rabi'], desc:'Winter crop, needs cool weather and moderate water.' },
+    { name:'Sugarcane', emoji:'🎋', soil:['alluvial','loamy','black'], tempMin:20, tempMax:40, rainMin:750, rainMax:2500, season:['kharif','zaid'], desc:'Tropical cash crop. Needs long sunny days.' },
+    { name:'Cotton', emoji:'☁️', soil:['black','alluvial','red'], tempMin:21, tempMax:40, rainMin:500, rainMax:1500, season:['kharif'], desc:'Important fiber crop. Thrives in black "regur" soil.' },
+    { name:'Maize', emoji:'🌽', soil:['loamy','alluvial','red','sandy'], tempMin:18, tempMax:35, rainMin:500, rainMax:1500, season:['kharif','zaid'], desc:'Versatile cereal. Tolerates various soil conditions.' },
+    { name:'Groundnut', emoji:'🥜', soil:['sandy','loamy','red'], tempMin:20, tempMax:35, rainMin:400, rainMax:1000, season:['kharif','zaid'], desc:'Oilseed crop that enriches soil with nitrogen.' },
+    { name:'Mustard', emoji:'🌼', soil:['alluvial','loamy','sandy'], tempMin:10, tempMax:25, rainMin:250, rainMax:750, season:['rabi'], desc:'Cool weather oilseed. Grows in dry conditions.' },
+    { name:'Tomato', emoji:'🍅', soil:['loamy','red','alluvial'], tempMin:18, tempMax:32, rainMin:400, rainMax:1200, season:['kharif','rabi','zaid'], desc:'High-value vegetable. Can grow year-round if managed.' },
+    { name:'Potato', emoji:'🥔', soil:['loamy','sandy','alluvial'], tempMin:10, tempMax:25, rainMin:300, rainMax:800, season:['rabi'], desc:'Cool weather root crop. High nutritional value.' },
+    { name:'Millet', emoji:'🌾', soil:['sandy','red','laterite'], tempMin:25, tempMax:45, rainMin:200, rainMax:700, season:['kharif'], desc:'Drought-resistant superfood grain.' }
+];
+
+function updateTempDisplay(v) {
+    const el = document.getElementById('tempValue');
+    if (el) el.textContent = v;
+}
+
+function toggleMobileMenu() {
+    const drawer = document.getElementById('mobDrawer');
+    const overlay = document.getElementById('mobOverlay');
+    const isOpen = drawer.style.right === '0px';
+
+    if (isOpen) {
+        drawer.style.right = '-300px';
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    } else {
+        drawer.style.right = '0px';
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function getCropSuggestion() {
+    const soil = document.getElementById('soilType').value;
+    const temp = +document.getElementById('temperature').value;
+    const rain = +document.getElementById('rainfall').value;
+    const season = document.getElementById('season').value;
+
+    if (!soil || !rain || !season) {
+        const field = !soil ? 'soilType' : (!rain ? 'rainfall' : 'season');
+        const el = document.getElementById(field);
+        el.style.borderColor = '#f43f5e';
+        el.focus();
+        setTimeout(() => el.style.borderColor = '', 1000);
+        return;
+    }
+
+    showLoading("Calculating best matches...");
+    setTimeout(() => {
+        hideLoading();
+        AppState.resultSource = 'crop';
+        renderCropResult(soil, temp, rain, season);
+        navigateTo('screenResult');
+    }, 1800);
+}
+
+function renderCropResult(soil, temp, rain, season) {
+    const scored = CROP_DB.map(c => {
+        let score = 0;
+        if (c.soil.includes(soil)) score += 40;
+        if (c.season.includes(season)) score += 30;
+        if (temp >= c.tempMin && temp <= c.tempMax) score += 15;
+        if (rain >= c.rainMin && rain <= c.rainMax) score += 15;
+        return { ...c, score };
+    }).filter(c => c.score > 30).sort((a,b) => b.score - a.score).slice(0, 5);
+
+    const title = document.getElementById('resultTitle');
+    const body = document.getElementById('resultBody');
+    
+    title.textContent = "Crop Recommendations";
+    
+    if (scored.length === 0) {
+        body.innerHTML = `
+            <div class="result-hero result-danger">
+                <div class="result-emoji">🤔</div>
+                <div class="result-name">No Direct Match</div>
+                <div class="result-confidence">Try adjusting your inputs</div>
+            </div>
+            <button class="btn-ghost btn-full" onclick="navigateTo('screenCropForm')">Try Again</button>
+        `;
+        return;
+    }
+
+    // Get product recommendations for all recommended crops
+    const recommendedProducts = getAllCropProductRecommendations(scored);
+    const productRecommendations = renderProductRecommendations(
+        recommendedProducts, 
+        `🛒 Essential Products for Your Recommended Crops`, 
+        'crop'
+    );
+
+    body.innerHTML = `
+        <div class="result-hero result-success">
+            <div class="result-emoji">🎯</div>
+            <div class="result-name">Top Picks for You</div>
+            <div class="result-confidence" style="display:flex; justify-content:center; gap:0.75rem; margin-top:0.5rem">
+                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">🌾 ${soil}</span>
+                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">📅 ${season}</span>
+            </div>
+        </div>
+        <div class="crop-results-list" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
+            ${scored.map((c, i) => `
+                <div class="feat-card glass float-card" style="padding:1.5rem; border-left: 4px solid ${i===0?'#3eaf60':'rgba(255,255,255,0.1)'}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <h3 style="font-size:1.25rem; margin-bottom:0.5rem">${c.emoji} ${c.name}</h3>
+                            <p style="font-size:0.9rem; color:var(--n-300)">${c.desc}</p>
+                        </div>
+                        <div class="glass-sm" style="padding:4px 10px; border-radius:10px; font-weight:800; color:var(--g-300); font-size:0.8rem;">
+                            ${c.score}% Match
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+        ${productRecommendations}
+        <div class="result-card" style="margin-top:2rem">
+            <div class="result-card-header">💡 Pro Tip</div>
+            <div class="result-card-body">The top choice is based on historical yields in similar conditions. Consider crop rotation after this cycle for soil health.</div>
+        </div>
+        <button class="btn-glow btn-full" style="margin-top:1rem" onclick="navigateTo('screenHome')">Back to Home</button>
+    `;
+}
+
+/* --- Crop Recommendation Modes --- */
+let AppLocationData = {};
+
+
+
+function detectUserLocation(isAutomatic = false) {
+    const btn = document.querySelector('button[onclick*="detectUserLocation"]');
+    if (btn) {
+        btn.textContent = isAutomatic ? '📡 Auto-detecting...' : '📡 Detecting...';
+        btn.disabled = true;
+    }
+
+    if (!navigator.geolocation) {
+        alert('Geolocation not supported in your browser');
+        if (btn) {
+            btn.textContent = '📡 Detect';
+            btn.disabled = false;
+        }
+        // Fallback to offline if geolocation unavailable
+        if (isAutomatic) switchCropMode('offline');
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            AppLocationData = { lat, lon };
+            
+            // Fetch weather data
+            await fetchWeatherData(lat, lon);
+            
+            // Display location
+            document.getElementById('locationDisplay').value = `${lat.toFixed(4)}°, ${lon.toFixed(4)}°`;
+            if (btn) {
+                btn.textContent = '✅ Located';
+                setTimeout(() => {
+                    btn.textContent = '📡 Detect';
+                    btn.disabled = false;
+                }, 2000);
+            }
+        },
+        (error) => {
+            console.error('Geolocation error:', error);
+            if (!isAutomatic) {
+                alert('Could not access location. Please enable location permissions.');
+            }
+            if (btn) {
+                btn.textContent = '📡 Detect';
+                btn.disabled = false;
+            }
+            // Alert user if location unavailable
+            if (!isAutomatic) {
+                alert('Could not access location. Please enable location permissions.');
+            }
+            if (btn) {
+                btn.textContent = '📡 Detect';
+                btn.disabled = false;
+            }
+        }
+    );
+}
+
+async function fetchWeatherData(lat, lon) {
+    try {
+        // Using Open-Meteo free API (no API key required)
+        const response = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto`
+        );
+        const data = await response.json();
+        
+        if (data.current) {
+            const current = data.current;
+            const temp = Math.round(current.temperature_2m);
+            const humidity = current.relative_humidity_2m;
+            
+            AppLocationData.temperature = temp;
+            AppLocationData.humidity = humidity;
+            
+            // Update form fields
+            document.getElementById('onlineTemperature').value = temp;
+            document.getElementById('onlineTempValue').textContent = temp;
+            document.getElementById('onlineHumidityValue').textContent = humidity;
+            
+            // Estimate rainfall based on weather code
+            const rainfall = estimateRainfallFromWeather(current.weather_code);
+            AppLocationData.rainfall = rainfall;
+            
+            // Get weather description
+            const weatherDesc = getWeatherDescription(current.weather_code);
+            document.getElementById('weatherDesc').textContent = `${weatherDesc} • Humidity: ${humidity}%`;
+            
+            // Estimate soil type based on location
+            const soilType = await estimateSoilType(lat, lon);
+            AppLocationData.soil = soilType;
+            document.getElementById('estimatedSoil').value = soilType;
+            
+            // Detect season
+            const season = getSeasonFromDate();
+            AppLocationData.season = season;
+            document.getElementById('detectedSeason').value = season;
+            
+            // Enable button
+            document.getElementById('onlineGetBtn').textContent = 'Get Recommendation';
+            document.getElementById('onlineGetBtn').disabled = false;
+        }
+    } catch (error) {
+        console.error('Weather fetch error:', error);
+        document.getElementById('weatherDesc').textContent = '⚠️ Could not fetch weather data. Please try again.';
+    }
+}
+
+function estimateRainfallFromWeather(weatherCode) {
+    // Simple estimation based on WMO weather codes
+    // Light rain: 200-400mm/yr typical
+    // Moderate rain: 600-1200mm/yr
+    // Heavy rain: 1500-3000mm/yr
+    if (weatherCode === 0 || weatherCode === 1) return 400; // Clear/Mainly clear
+    if (weatherCode === 2) return 600; // Partly cloudy
+    if (weatherCode === 3) return 750; // Overcast
+    if (weatherCode >= 45 && weatherCode <= 48) return 1000; // Foggy
+    if (weatherCode >= 51 && weatherCode <= 67) return 1200; // Drizzle/Rain
+    if (weatherCode >= 71 && weatherCode <= 77) return 1500; // Snow
+    if (weatherCode >= 80 && weatherCode <= 82) return 1800; // Rain showers
+    if (weatherCode >= 85 && weatherCode <= 86) return 2000; // Snow showers
+    if (weatherCode >= 80 && weatherCode <= 99) return 2500; // Thunderstorm
+    return 1000; // Default moderate
+}
+
+function getWeatherDescription(weatherCode) {
+    const descriptions = {
+        0: '☀️ Clear sky',
+        1: '🌤️ Mainly clear',
+        2: '⛅ Partly cloudy',
+        3: '☁️ Overcast',
+        45: '🌫️ Foggy',
+        48: '🌫️ Depositing rime fog',
+        51: '🌧️ Light drizzle',
+        53: '🌧️ Moderate drizzle',
+        55: '🌧️ Dense drizzle',
+        61: '🌧️ Slight rain',
+        63: '🌧️ Moderate rain',
+        65: '⛈️ Heavy rain',
+        71: '❄️ Slight snow',
+        73: '❄️ Moderate snow',
+        75: '❄️ Heavy snow',
+        77: '❄️ Snow grains',
+        80: '🌧️ Slight rain showers',
+        81: '🌧️ Moderate rain showers',
+        82: '⛈️ Violent rain showers',
+        85: '❄️ Slight snow showers',
+        86: '❄️ Heavy snow showers',
+        95: '⛈️ Thunderstorm',
+        96: '⛈️ Thunderstorm with hail',
+        99: '⛈️ Thunderstorm with hail'
+    };
+    return descriptions[weatherCode] || '🌍 Variable weather';
+}
+
+async function estimateSoilType(lat, lon) {
+    // Simple heuristic based on latitude and common agricultural regions
+    // This is a simplified model - in production, you'd use soil maps API
+    
+    // For India (main target), estimate based on latitude
+    if (lat >= 25 && lat <= 35) {
+        if (lon >= 72 && lon <= 84) {
+            return 'Black Soil'; // North/Central India typically black soil
+        }
+    }
+    if (lat >= 20 && lat <= 28) {
+        if (lon >= 75 && lon <= 88) {
+            return 'Alluvial'; // Indo-Gangetic plains
+        }
+    }
+    if (lat >= 11 && lat <= 20) {
+        if (lon >= 76 && lon <= 85) {
+            return 'Red Soil'; // South India
+        }
+    }
+    
+    // Default estimation based on general patterns
+    return 'Alluvial'; // Most common in agricultural areas
+}
+
+function getSeasonFromDate() {
+    const month = new Date().getMonth();
+    
+    // For Indian agricultural seasons
+    if (month >= 5 && month <= 9) {
+        return 'kharif'; // June-October: Monsoon season
+    } else if (month >= 10 || month <= 2) {
+        return 'rabi'; // October-February: Winter season
+    } else {
+        return 'zaid'; // March-May: Summer season
+    }
+}
+
+function getCropSuggestionOnline() {
+    if (!AppLocationData.latitude && !AppLocationData.lat) {
+        alert('Please detect your location first');
+        return;
+    }
+
+    const soil = AppLocationData.soil || 'alluvial';
+    const temp = AppLocationData.temperature || 25;
+    const rain = AppLocationData.rainfall || 1000;
+    const season = AppLocationData.season || 'kharif';
+
+    showLoading("Analyzing your location data...");
+    setTimeout(() => {
+        hideLoading();
+        AppState.resultSource = 'crop';
+        renderCropResult(soil, temp, rain, season);
+        navigateTo('screenResult');
+    }, 1500);
+}
+
+function initCropForm() {
+    // Reset online form fields
+    AppLocationData = {};
+    document.getElementById('locationDisplay').value = '';
+    document.getElementById('onlineTempValue').textContent = '--';
+    document.getElementById('onlineHumidityValue').textContent = '--';
+    document.getElementById('estimatedSoil').value = '';
+    document.getElementById('detectedSeason').value = '';
+    document.getElementById('weatherDesc').textContent = 'Weather data will appear after location detection';
+    document.getElementById('onlineGetBtn').textContent = 'Get Recommendation (Detecting Location...)';
+    document.getElementById('onlineGetBtn').disabled = true;
+
+    // Detect location automatically
+    detectUserLocation(true);
+}
+
+function initVoiceAssistant() {
+    // Initialize voice assistant with default language
+    updateVoiceSuggestions();
+    // Reset voice state
+    if (window.recognition) {
+        window.recognition.stop();
+    }
+    
+    // Only reset elements if they exist (screen is active)
+    const transcriptEl = document.getElementById('voiceTranscript');
+    const responseEl = document.getElementById('voiceResponse');
+    const voiceBtnEl = document.getElementById('voiceBtn');
+    
+    if (transcriptEl) transcriptEl.textContent = 'Click the microphone to start speaking...';
+    if (responseEl) responseEl.textContent = '';
+    if (voiceBtnEl) voiceBtnEl.classList.remove('active');
+}
+
+
+
+/* --- Helpers --- */
+function showLoading(txt) {
+    const overlay = document.getElementById('loadingOverlay');
+    document.getElementById('loadingText').textContent = txt;
+    overlay.classList.remove('hidden');
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+function renderDailyTip() {
+    const tips = ["Water crops early morning", "Rotate crops each season", "Use organic compost", "Check soil pH regularly"];
+    const el = document.getElementById('dailyTip');
+    if (el) el.textContent = tips[new Date().getDate() % tips.length];
+}
+
+function updateMetrics() {
+    const m = { temp: '28°C', humid: '65%', moist: '42%' };
+    document.getElementById('mTemp').textContent = m.temp;
+    document.getElementById('mHumid').textContent = m.humid;
+    document.getElementById('mMoist').textContent = m.moist;
+}
+
+// Global escape listener
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        hideLoading();
+        closeLangMenu();
+        if (!document.getElementById('cartModal').classList.contains('hidden')) {
+            toggleCart();
+        }
+    }
+});
+
+/* ================================================
+   PRODUCT RECOMMENDATIONS
+   ================================================ */
+
+// Product recommendation mappings
+const DISEASE_PRODUCT_MAP = {
+    "Apple Scab": [1, 2], // Neem Oil, Copper Fungicide
+    "Bacterial Spot": [1, 3], // Neem Oil, Insecticidal Soap
+    "Black Rot": [2, 1], // Copper Fungicide, Neem Oil
+    "Cedar Apple Rust": [2, 1], // Copper Fungicide, Neem Oil
+    "Early Blight": [2, 1], // Copper Fungicide, Neem Oil
+    "Esca (Black Measles)": [2, 1], // Copper Fungicide, Neem Oil
+    "Leaf Blight": [2, 1], // Copper Fungicide, Neem Oil
+    "Powdery Mildew": [1, 2], // Neem Oil, Copper Fungicide
+    "Downy Mildew": [2, 1], // Copper Fungicide, Neem Oil
+    "Rust": [2, 1], // Copper Fungicide, Neem Oil
+    "Root Rot": [6, 5], // Vermicompost, NPK Fertilizer
+    "Leaf Curl": [1, 3], // Neem Oil, Insecticidal Soap
+    "Septoria Leaf Spot": [2, 1], // Copper Fungicide, Neem Oil
+    "Yellow Leaf Curl Virus": [1, 3] // Neem Oil, Insecticidal Soap
+};
+
+const CROP_PRODUCT_MAP = {
+    "Rice": [5, 6, 9], // NPK, Organic Compost, Garden Sprayer
+    "Wheat": [5, 6, 10], // NPK, Organic Compost, Soil Testing Kit
+    "Sugarcane": [5, 7, 9], // NPK, Vermicompost, Garden Sprayer
+    "Cotton": [5, 8, 9], // NPK, Bone Meal, Garden Sprayer
+    "Maize": [5, 6, 9], // NPK, Organic Compost, Garden Sprayer
+    "Groundnut": [7, 6, 9], // Vermicompost, Organic Compost, Garden Sprayer
+    "Mustard": [8, 6, 10], // Bone Meal, Organic Compost, Soil Testing Kit
+    "Tomato": [5, 6, 13], // NPK, Organic Compost, Tomato Seeds
+    "Potato": [7, 6, 10], // Vermicompost, Organic Compost, Soil Testing Kit
+    "Millet": [8, 6, 10] // Bone Meal, Organic Compost, Soil Testing Kit
+};
+
+function getDiseaseProductRecommendations(disease) {
+    const productIds = DISEASE_PRODUCT_MAP[disease] || [];
+    return productIds.map(id => {
+        // Find product across all categories
+        for (const category in PRODUCTS) {
+            const product = PRODUCTS[category].find(p => p.id === id);
+            if (product) return product;
+        }
+        return null;
+    }).filter(p => p !== null);
+}
+
+function getCropProductRecommendations(cropName) {
+    const productIds = CROP_PRODUCT_MAP[cropName] || [];
+    return productIds.map(id => {
+        // Find product across all categories
+        for (const category in PRODUCTS) {
+            const product = PRODUCTS[category].find(p => p.id === id);
+            if (product) return product;
+        }
+        return null;
+    }).filter(p => p !== null);
+}
+
+function getAllCropProductRecommendations(recommendedCrops) {
+    const allProducts = new Map(); // Use Map to avoid duplicates
+    
+    recommendedCrops.forEach(crop => {
+        const products = getCropProductRecommendations(crop.name);
+        products.forEach(product => {
+            if (!allProducts.has(product.id)) {
+                allProducts.set(product.id, {
+                    ...product,
+                    relevantCrops: [crop.name]
+                });
+            } else {
+                // Add crop to existing product's relevant crops
+                allProducts.get(product.id).relevantCrops.push(crop.name);
+            }
+        });
+    });
+    
+    return Array.from(allProducts.values());
+}
+
+function renderProductRecommendations(products, title, context) {
+    if (products.length === 0) return '';
+    
+    return `
+        <div class="result-card" style="margin-top:1.5rem">
+            <div class="result-card-header">${title}</div>
+            <div class="product-recommendations" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-top:1rem">
+                ${products.map(product => `
+                    <div class="product-rec-card glass-sm" style="padding:1rem; border-radius:12px; cursor:pointer; transition:all 0.3s ease" onclick="addToCart(${product.id}); this.style.background='rgba(62,175,96,0.2)'; setTimeout(() => this.style.background='var(--glass-bg)', 1000)">
+                        <div style="text-align:center; margin-bottom:0.5rem">
+                            <div style="font-size:2rem; margin-bottom:0.25rem">${product.emoji}</div>
+                            <div style="font-weight:600; font-size:0.9rem; color:white">${product.name}</div>
+                        </div>
+                        <div style="text-align:center; color:var(--g-300); font-weight:700; margin-bottom:0.5rem">₹${product.price}</div>
+                        <div style="text-align:center">
+                            <div class="product-stars" style="font-size:0.8rem; margin-bottom:0.25rem">${'⭐'.repeat(Math.floor(product.rating))}</div>
+                            <div style="font-size:0.7rem; color:var(--n-400)">${product.reviews} reviews</div>
+                        </div>
+                        ${product.relevantCrops ? `
+                            <div style="text-align:center; margin:0.5rem 0; font-size:0.7rem; color:var(--n-300)">
+                                For: ${product.relevantCrops.join(', ')}
+                            </div>
+                        ` : ''}
+                        <button class="add-to-cart-btn" style="width:100%; padding:8px; margin-top:0.5rem; font-size:0.8rem" onclick="addToCart(${product.id}); event.stopPropagation();">
+                            Add to Cart
+                        </button>
+                    </div>
+                `).join('')}
+            </div>
+            <div style="text-align:center; margin-top:1rem">
+                <button class="btn-ghost" style="font-size:0.9rem" onclick="navigateTo('screenEcommerce')">View All Products →</button>
+            </div>
+        </div>
+    `;
+}
+
+/* ================================================
+   E-COMMERCE FUNCTIONALITY
+   ================================================ */
+
+// Cart state
+let cart = [];
+let currentCategory = 'pesticides';
+
+// Product database
+const PRODUCTS = {
+    pesticides: [
+        {
+            id: 1,
+            name: 'Neem Oil Pesticide',
+            emoji: '🌿',
+            price: 450,
+            rating: 4.5,
+            reviews: 128,
+            description: 'Organic neem-based pesticide. Effective against aphids, mites, and whiteflies.',
+            category: 'pesticides'
+        },
+        {
+            id: 2,
+            name: 'Copper Fungicide',
+            emoji: '🟫',
+            price: 320,
+            rating: 4.3,
+            reviews: 95,
+            description: 'Controls fungal diseases like blight and mildew. Safe for organic farming.',
+            category: 'pesticides'
+        },
+        {
+            id: 3,
+            name: 'Insecticidal Soap',
+            emoji: '🧼',
+            price: 280,
+            rating: 4.2,
+            reviews: 67,
+            description: 'Natural soap-based insecticide. Kills soft-bodied insects on contact.',
+            category: 'pesticides'
+        },
+        {
+            id: 4,
+            name: 'Pyrethrum Extract',
+            emoji: '🌸',
+            price: 520,
+            rating: 4.6,
+            reviews: 89,
+            description: 'Natural pyrethrum-based insecticide. Fast-acting against flying insects.',
+            category: 'pesticides'
+        }
+    ],
+    fertilizers: [
+        {
+            id: 5,
+            name: 'NPK 20-20-20 Fertilizer',
+            emoji: '🌱',
+            price: 380,
+            rating: 4.4,
+            reviews: 156,
+            description: 'Balanced NPK fertilizer for all crops. Promotes healthy growth and yield.',
+            category: 'fertilizers'
+        },
+        {
+            id: 6,
+            name: 'Organic Compost',
+            emoji: '♻️',
+            price: 250,
+            rating: 4.7,
+            reviews: 203,
+            description: 'Premium organic compost. Improves soil structure and provides nutrients.',
+            category: 'fertilizers'
+        },
+        {
+            id: 7,
+            name: 'Vermicompost',
+            emoji: '🪱',
+            price: 420,
+            rating: 4.5,
+            reviews: 134,
+            description: 'Earthworm compost. Rich in beneficial microbes and plant nutrients.',
+            category: 'fertilizers'
+        },
+        {
+            id: 8,
+            name: 'Bone Meal Fertilizer',
+            emoji: '🦴',
+            price: 290,
+            rating: 4.1,
+            reviews: 78,
+            description: 'Natural phosphorus source. Excellent for root development and flowering.',
+            category: 'fertilizers'
+        }
+    ],
+    tools: [
+        {
+            id: 9,
+            name: 'Garden Sprayer 5L',
+            emoji: '💧',
+            price: 850,
+            rating: 4.3,
+            reviews: 92,
+            description: 'Professional garden sprayer. Adjustable nozzle, comfortable grip.',
+            category: 'tools'
+        },
+        {
+            id: 10,
+            name: 'Soil Testing Kit',
+            emoji: '🧪',
+            price: 650,
+            rating: 4.6,
+            reviews: 145,
+            description: 'Complete soil testing kit. Tests pH, nitrogen, phosphorus, and potassium.',
+            category: 'tools'
+        },
+        {
+            id: 11,
+            name: 'Pruning Shears',
+            emoji: '✂️',
+            price: 320,
+            rating: 4.4,
+            reviews: 87,
+            description: 'Professional pruning shears. Sharp blades, ergonomic design.',
+            category: 'tools'
+        },
+        {
+            id: 12,
+            name: 'Garden Gloves',
+            emoji: '🧤',
+            price: 180,
+            rating: 4.2,
+            reviews: 156,
+            description: 'Durable garden gloves. Waterproof and puncture-resistant.',
+            category: 'tools'
+        }
+    ],
+    seeds: [
+        {
+            id: 13,
+            name: 'Tomato Seeds (Hybrid)',
+            emoji: '🍅',
+            price: 120,
+            rating: 4.5,
+            reviews: 203,
+            description: 'High-yielding tomato seeds. Disease-resistant variety.',
+            category: 'seeds'
+        },
+        {
+            id: 14,
+            name: 'Chili Seeds (Hot)',
+            emoji: '🌶️',
+            price: 90,
+            rating: 4.3,
+            reviews: 178,
+            description: 'Premium chili seeds. High capsaicin content, excellent flavor.',
+            category: 'seeds'
+        },
+        {
+            id: 15,
+            name: 'Basil Seeds',
+            emoji: '🌿',
+            price: 85,
+            rating: 4.4,
+            reviews: 134,
+            description: 'Aromatic basil seeds. Perfect for kitchen gardening.',
+            category: 'seeds'
+        },
+        {
+            id: 16,
+            name: 'Lettuce Seeds',
+            emoji: '🥬',
+            price: 95,
+            rating: 4.1,
+            reviews: 89,
+            description: 'Crisp lettuce seeds. Fast-growing, cool weather variety.',
+            category: 'seeds'
+        }
+    ]
+};
+
+function switchShopCategory(category) {
+    currentCategory = category;
+    
+    // Update active tab
+    document.querySelectorAll('.shop-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-category') === category);
+    });
+    
+    // Render products
+    renderProducts(category);
+}
+
+function renderProducts(category) {
+    const grid = document.getElementById('productsGrid');
+    const products = PRODUCTS[category] || [];
+    
+    grid.innerHTML = products.map(product => `
+        <div class="product-card" onclick="showProductDetails(${product.id})">
+            <div class="product-image">${product.emoji}</div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-desc">${product.description}</div>
+            <div class="product-price">₹${product.price}</div>
+            <div class="product-rating">
+                <div class="product-stars">${'⭐'.repeat(Math.floor(product.rating))}</div>
+                <span class="product-reviews">(${product.reviews})</span>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart(${product.id}); event.stopPropagation();">
+                Add to Cart
+            </button>
+        </div>
+    `).join('');
+}
+
+function showProductDetails(productId) {
+    // Find product across all categories
+    let product = null;
+    for (const category in PRODUCTS) {
+        product = PRODUCTS[category].find(p => p.id === productId);
+        if (product) break;
+    }
+    
+    if (!product) return;
+    
+    // For now, just add to cart. Could expand to show detailed view
+    addToCart(productId);
+}
+
+function addToCart(productId) {
+    // Find product
+    let product = null;
+    for (const category in PRODUCTS) {
+        product = PRODUCTS[category].find(p => p.id === productId);
+        if (product) break;
+    }
+    
+    if (!product) return;
+    
+    // Check if already in cart
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            ...product,
+            quantity: 1
+        });
+    }
+    
+    updateCartUI();
+    
+    // Visual feedback
+    const btn = event.target;
+    if (btn) {
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Added';
+        btn.classList.add('added');
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('added');
+        }, 1500);
+    }
+}
+
+function updateCartUI() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    // Update cart count
+    const cartCountEl = document.getElementById('cartCount');
+    if (count > 0) {
+        cartCountEl.textContent = count;
+        cartCountEl.style.display = 'inline-block';
+    } else {
+        cartCountEl.style.display = 'none';
+    }
+    
+    // Update cart total
+    document.getElementById('cartTotal').textContent = total;
+    
+    // Update cart items
+    const cartItemsEl = document.getElementById('cartItems');
+    cartItemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <div class="cart-item-image">${item.emoji}</div>
+            <div class="cart-item-details">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">₹${item.price}</div>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                </div>
+            </div>
+            <div class="cart-item-remove" onclick="removeFromCart(${item.id})">🗑️</div>
+        </div>
+    `).join('');
+}
+
+function updateQuantity(productId, newQuantity) {
+    if (newQuantity <= 0) {
+        removeFromCart(productId);
+        return;
+    }
+    
+    const item = cart.find(item => item.id === productId);
+    if (item) {
+        item.quantity = newQuantity;
+        updateCartUI();
+    }
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartUI();
+}
+
+function toggleCart() {
+    const modal = document.getElementById('cartModal');
+    modal.classList.toggle('hidden');
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    // Simple checkout simulation
+    alert(`Order placed successfully! Total: ₹${total}\n\nWe'll contact you soon for delivery details.`);
+    
+    // Clear cart
+    cart = [];
+    updateCartUI();
+    toggleCart();
+}
+
+// Initialize e-commerce when navigating to shop
+if (typeof navigateTo !== 'undefined') {
+    const originalNavigateTo = navigateTo;
+    navigateTo = function(screenId) {
+        originalNavigateTo(screenId);
+        if (screenId === 'screenEcommerce') {
+            renderProducts(currentCategory);
+        }
+    };
+}
+
+/* --- Voice Assistant Functionality --- */
+
+// Voice Assistant State
+let voiceRecognition = null;
+let isListening = false;
+let currentVoiceLang = 'en-US';
+
+// Language mappings for speech recognition and synthesis
+const VOICE_LANGUAGES = {
+    'en-US': { name: 'English', recognition: 'en-US', synthesis: 'en-US' },
+    'hi-IN': { name: 'Hindi', recognition: 'hi-IN', synthesis: 'hi-IN' },
+    'kn-IN': { name: 'Kannada', recognition: 'kn-IN', synthesis: 'kn-IN' },
+    'te-IN': { name: 'Telugu', recognition: 'te-IN', synthesis: 'te-IN' },
+    'ta-IN': { name: 'Tamil', recognition: 'ta-IN', synthesis: 'ta-IN' }
+};
+
+// Initialize voice assistant when navigating to voice screen
+if (typeof navigateTo !== 'undefined') {
+    const originalNavigateTo2 = navigateTo;
+    navigateTo = function(screenId) {
+        originalNavigateTo2(screenId);
+        if (screenId === 'screenVoiceAssistant') {
+            initializeVoiceAssistant();
+        }
+    };
+}
+
+function initializeVoiceAssistant() {
+    // Set initial language based on app language
+    const langSelect = document.getElementById('voiceLangSelect');
+    if (langSelect) {
+        langSelect.value = currentVoiceLang;
+        updateVoiceSuggestions();
+    }
+}
+
+function changeVoiceLanguage() {
+    const langSelect = document.getElementById('voiceLangSelect');
+    currentVoiceLang = langSelect.value;
+    updateVoiceSuggestions();
+    
+    // Stop current recognition if running
+    if (isListening) {
+        stopVoiceRecognition();
+    }
+}
+
+function updateVoiceSuggestions() {
+    const suggestions = document.getElementById('voiceSuggestions');
+    const lang = VOICE_LANGUAGES[currentVoiceLang];
+    
+    let suggestionTexts = [];
+    
+    if (currentVoiceLang === 'en-US') {
+        suggestionTexts = [
+            'What diseases affect tomato plants?',
+            'Best crops for alluvial soil?',
+            'How to treat powdery mildew?',
+            'Weather forecast for farming?'
+        ];
+    } else if (currentVoiceLang === 'hi-IN') {
+        suggestionTexts = [
+            'टमाटर के पौधों को कौन सी बीमारियाँ होती हैं?',
+            'दोआब मिट्टी के लिए सबसे अच्छी फसलें?',
+            'पाउडरी मिल्ड्यू का इलाज कैसे करें?',
+            'खेती के लिए मौसम का पूर्वानुमान?'
+        ];
+    } else if (currentVoiceLang === 'kn-IN') {
+        suggestionTexts = [
+            'ಟೊಮೆಟೊ ಸಸ್ಯಗಳಿಗೆ ಯಾವ ರೋಗಗಳು ಬರುತ್ತವೆ?',
+            'ಅಲ್ಯುವಿಯಲ್ ಮಣ್ಣಿಗೆ ಉತ್ತಮ ಬೆಳೆಗಳು?',
+            'ಪೌಡರಿ ಮಿಲ್ಡ್ಯೂವನ್ನು ಹೇಗೆ ಚಿಕಿತ್ಸಿಸುವುದು?',
+            'ಕೃಷಿಗಾಗಿ ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ?'
+        ];
+    } else if (currentVoiceLang === 'te-IN') {
+        suggestionTexts = [
+            'టొమాటో మొక్కలకు ఏ వ్యాధులు వస్తాయి?',
+            'అల్యూవియల్ మట్టికి ఉత్తమ పంటలు?',
+            'పౌడరీ మిల్డ్యూను ఎలా చికిత్సించాలి?',
+            'వ్యవసాయం కోసం వాతావరణ సూచన?'
+        ];
+    } else if (currentVoiceLang === 'ta-IN') {
+        suggestionTexts = [
+            'தக்காளி தாவரங்களுக்கு எந்த நோய்கள் வரும்?',
+            'அலுவியல் மண்ணுக்கு சிறந்த பயிர்கள்?',
+            'பவுடரி மில்டூவை எவ்வாறு சிகிச்சையளிப்பது?',
+            'விவசாயத்திற்கான வானிலை முன்னறிவிப்பு?'
+        ];
+    }
+    
+    suggestions.innerHTML = suggestionTexts.map(text => 
+        `<button class="suggestion-btn" onclick="speakSuggestion('${text}')">${text}</button>`
+    ).join('');
+}
+
+function speakSuggestion(text) {
+    // Set the transcript
+    document.getElementById('userTranscript').textContent = text;
+    
+    // Process the query
+    processVoiceQuery(text);
+}
+
+function toggleVoiceRecognition() {
+    if (isListening) {
+        stopVoiceRecognition();
+    } else {
+        startVoiceRecognition();
+    }
+}
+
+function startVoiceRecognition() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert('Speech recognition is not supported in this browser. Please use Chrome or Edge.');
+        return;
+    }
+
+    // Stop any existing recognition
+    if (voiceRecognition) {
+        voiceRecognition.stop();
+    }
+
+    // Create new recognition instance
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    voiceRecognition = new SpeechRecognition();
+    
+    // Configure recognition
+    voiceRecognition.lang = currentVoiceLang;
+    voiceRecognition.continuous = false;
+    voiceRecognition.interimResults = false;
+    voiceRecognition.maxAlternatives = 1;
+
+    voiceRecognition.onstart = function() {
+        isListening = true;
+        updateVoiceUI();
+        document.getElementById('voiceStatus').textContent = 'Listening... Speak now';
+    };
+
+    voiceRecognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('userTranscript').textContent = transcript;
+        
+        // Process the voice query
+        processVoiceQuery(transcript);
+    };
+
+    voiceRecognition.onerror = function(event) {
+        console.error('Speech recognition error:', event.error);
+        document.getElementById('voiceStatus').textContent = 'Error: ' + event.error;
+        stopVoiceRecognition();
+    };
+
+    voiceRecognition.onend = function() {
+        isListening = false;
+        updateVoiceUI();
+        if (!document.getElementById('userTranscript').textContent) {
+            document.getElementById('voiceStatus').textContent = 'Click the microphone to start speaking';
+        }
+    };
+
+    try {
+        voiceRecognition.start();
+    } catch (error) {
+        console.error('Failed to start speech recognition:', error);
+        document.getElementById('voiceStatus').textContent = 'Failed to start voice recognition';
+    }
+}
+
+function stopVoiceRecognition() {
+    if (voiceRecognition) {
+        voiceRecognition.stop();
+    }
+    isListening = false;
+    updateVoiceUI();
+}
+
+function updateVoiceUI() {
+    const voiceBtn = document.getElementById('voiceBtn');
+    const voiceAnim = document.getElementById('voiceAnim');
+    const voiceBtnIcon = document.getElementById('voiceBtnIcon');
+    const voiceBtnText = document.getElementById('voiceBtnText');
+    
+    if (isListening) {
+        voiceBtn.classList.add('listening');
+        voiceAnim.classList.add('listening');
+        voiceBtnIcon.textContent = '⏹️';
+        voiceBtnText.textContent = 'Stop Listening';
+    } else {
+        voiceBtn.classList.remove('listening');
+        voiceAnim.classList.remove('listening');
+        voiceBtnIcon.textContent = '🎤';
+        voiceBtnText.textContent = 'Start Listening';
+    }
+}
+
+function processVoiceQuery(query) {
+    const responseElement = document.getElementById('aiResponse');
+    responseElement.textContent = 'Processing your question...';
+    
+    // Convert query to lowercase for easier matching
+    const lowerQuery = query.toLowerCase();
+    
+    let response = '';
+    
+    // Disease-related queries
+    if (lowerQuery.includes('disease') || lowerQuery.includes('बीमारी') || lowerQuery.includes('ರೋಗ') || lowerQuery.includes('వ్యాధి') || lowerQuery.includes('நோய்')) {
+        if (lowerQuery.includes('tomato') || lowerQuery.includes('टमाटर') || lowerQuery.includes('ಟೊಮೆಟೊ') || lowerQuery.includes('టొమాటో') || lowerQuery.includes('தக்காளி')) {
+            response = getDiseaseInfo('tomato');
+        } else if (lowerQuery.includes('potato') || lowerQuery.includes('आलू') || lowerQuery.includes('ಆಲೂಗಡ್ಡೆ') || lowerQuery.includes('బంగాళాదుంప') || lowerQuery.includes('உருளைக்கிழங்கு')) {
+            response = getDiseaseInfo('potato');
+        } else {
+            response = 'I can help you identify diseases in tomato, potato, and other crops. Please specify which crop you\'re asking about.';
+        }
+    }
+    
+    // Crop recommendation queries
+    else if (lowerQuery.includes('crop') || lowerQuery.includes('फसल') || lowerQuery.includes('ಬೆಳೆ') || lowerQuery.includes('పంట') || lowerQuery.includes('பயிர்')) {
+        if (lowerQuery.includes('soil') || lowerQuery.includes('मिट्टी') || lowerQuery.includes('ಮಣ್ಣು') || lowerQuery.includes('మట్టి') || lowerQuery.includes('மண்')) {
+            response = 'For alluvial soil, I recommend rice, sugarcane, and cotton. For black soil, try cotton and soybean. For sandy soil, consider groundnut and millet.';
+        } else {
+            response = 'I can recommend crops based on soil type, climate, and season. Please provide more details about your farming conditions.';
+        }
+    }
+    
+    // Treatment queries
+    else if (lowerQuery.includes('treat') || lowerQuery.includes('treatment') || lowerQuery.includes('इलाज') || lowerQuery.includes('ಚಿಕಿತ್ಸೆ') || lowerQuery.includes('చికిత్స') || lowerQuery.includes('சிகிச்சை')) {
+        if (lowerQuery.includes('mildew') || lowerQuery.includes('powdery') || lowerQuery.includes('मिल्ड्यू') || lowerQuery.includes('ಮಿಲ್ಡ್ಯೂ') || lowerQuery.includes('మిల్డ్యూ') || lowerQuery.includes('மில்டூ')) {
+            response = 'For powdery mildew, use copper fungicide or neem oil spray. Ensure good air circulation and avoid overhead watering.';
+        } else if (lowerQuery.includes('blight') || lowerQuery.includes('ब्लाइट') || lowerQuery.includes('ಬ್ಲೈಟ್') || lowerQuery.includes('బ్లైట్') || lowerQuery.includes('பிளைட்')) {
+            response = 'For blight, apply copper fungicide and remove affected plant parts. Improve drainage and avoid working with wet plants.';
+        } else {
+            response = 'I can provide treatment advice for common plant diseases. Please specify the disease you\'re dealing with.';
+        }
+    }
+    
+    // Weather queries
+    else if (lowerQuery.includes('weather') || lowerQuery.includes('मौसम') || lowerQuery.includes('ಹವಾಮಾನ') || lowerQuery.includes('వాతావరణం') || lowerQuery.includes('வானிலை')) {
+        response = 'I can help you understand weather impacts on farming. For current weather data, please check your local weather service or use our weather integration feature.';
+    }
+    
+    // Default response
+    else {
+        response = 'I\'m here to help with farming questions! You can ask me about plant diseases, crop recommendations, treatments, or weather-related farming advice.';
+    }
+    
+    // Speak the response
+    speakResponse(response);
+    
+    // Display the response
+    responseElement.textContent = response;
+}
+
+function getDiseaseInfo(crop) {
+    const diseases = {
+        tomato: 'Common tomato diseases include: 1) Bacterial Spot - treat with copper fungicide, 2) Early Blight - use fungicide sprays, 3) Fusarium Wilt - improve drainage and use resistant varieties.',
+        potato: 'Common potato diseases include: 1) Late Blight - apply copper fungicide, 2) Early Blight - use preventive fungicide sprays, 3) Potato Scab - maintain proper soil pH.'
+    };
+    
+    return diseases[crop] || 'I have information about diseases affecting various crops. Please specify the crop.';
+}
+
+function speakResponse(text) {
+    if (!('speechSynthesis' in window)) {
+        console.log('Speech synthesis not supported');
+        return;
+    }
+
+    // Stop any ongoing speech
+    speechSynthesis.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Set language for speech synthesis
+    utterance.lang = currentVoiceLang;
+    
+    // Adjust voice settings
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 0.8;
+    
+    // Try to find a suitable voice for the language
+    const voices = speechSynthesis.getVoices();
+    const suitableVoice = voices.find(voice => voice.lang.startsWith(currentVoiceLang.split('-')[0]));
+    if (suitableVoice) {
+        utterance.voice = suitableVoice;
+    }
+    
+    speechSynthesis.speak(utterance);
+}
+
+// Load voices when they become available
+if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = function() {
+        console.log('Voices loaded:', speechSynthesis.getVoices().length);
+    };
+}
+
+/* ================================================
+   FLOATING CHATBOT WIDGET — AI-Powered (Groq LLaMA 3)
+   ================================================ */
+
+const GROQ_API_KEY = ""; // Set your API key here
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+// Conversation memory (keeps last 10 turns for context)
+let chatHistory = [
+    {
+        role: "system",
+        content: `You are AgriBot, an elite agricultural scientist and field expert embedded in the "Agri AI" platform. 
+        
+Your mission is to provide definitive, high-accuracy answers to ANY agricultural question. Your knowledge base is vast and covers:
+- In-depth crop science, genetics, and variety selection
+- Advanced pathology (fungal, bacterial, viral, and physiological disorders)
+- Soil chemistry, physics, and restorative biology
+- Modern and traditional fertilizer protocols (precision farming vs. organic)
+- Hydroponics, aquaponics, and greenhouse climate control
+- Global agricultural trends, market economics, and supply chain logistics
+- Veterinary basics for farm animals (cattle, poultry, goats, pigs)
+- Agricultural engineering, tool maintenance, and automation
+- Sustainable and regenerative practices (no-till, cover cropping, carbon farming)
+
+Rules:
+1. AUTHORITY: Speak with the confidence of an expert, but keep it accessible for a farmer.
+2. ACCURACY: If a user asks an agricultural question, ANSWER IT FULLY. Do not decline agricultural queries.
+3. STRUCTURE: Use markdown-like formatting (bullet points, bold text) for readability.
+4. LANGUAGE: Automatically detect and mirror the user's language (Hindi, Kannada, Telugu, Tamil, or English).
+5. LIMITS: Politely decline only non-agricultural/non-rural topics.
+6. VISUALS: Always start with a relevant emoji. Use '🌿' for general farming, '📸' for detection, '🐮' for livestock, etc.`
+    }
+];
+
+let chatOpen = false;
+let chatIsLoading = false;
+
+function toggleChatbot() {
+    chatOpen = !chatOpen;
+    const panel = document.getElementById('chatPanel');
+    const btn   = document.getElementById('chatToggleBtn');
+
+    if (chatOpen) {
+        panel.classList.remove('chat-hidden');
+        panel.style.display = 'flex';
+        btn.textContent = '✕';
+        btn.style.fontSize = '1.2rem';
+        document.getElementById('chatInput').focus();
+    } else {
+        panel.classList.add('chat-hidden');
+        panel.style.display = 'none';
+        btn.textContent = '💬';
+        btn.style.fontSize = '1.6rem';
+    }
+}
+
+// Start hidden properly
+document.addEventListener('DOMContentLoaded', () => {
+    const panel = document.getElementById('chatPanel');
+    if (panel) {
+        panel.classList.add('chat-hidden');
+        panel.style.display = 'none';
+    }
+});
+
+function clearChat() {
+    // Reset conversation history (keep only system prompt)
+    chatHistory = [chatHistory[0]];
+
+    // Clear messages UI
+    const container = document.getElementById('chatMessages');
+    container.innerHTML = `
+        <div style="background:rgba(62,175,96,0.12); border:1px solid rgba(62,175,96,0.2); border-radius:14px 14px 14px 4px; padding:10px 14px; font-size:0.88rem; color:#d1fae5; max-width:85%; align-self:flex-start;">
+            👋 Hi! I'm your Agri AI assistant. Ask me anything about crops, diseases, or farming!
+        </div>`;
+
+    // Show suggestions again
+    const sugg = document.getElementById('chatSuggestions');
+    if (sugg) sugg.style.display = 'flex';
+}
+
+function sendChatSuggestion(text) {
+    document.getElementById('chatInput').value = text;
+    sendChatMessage();
+    const sugg = document.getElementById('chatSuggestions');
+    if (sugg) sugg.style.display = 'none';
+}
+
+async function sendChatMessage() {
+    if (chatIsLoading) return;
+    const input = document.getElementById('chatInput');
+    const msg   = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+
+    appendChatMsg(msg, 'user');
+    chatIsLoading = true;
+
+    // Add to history
+    chatHistory.push({ role: 'user', content: msg });
+    // Keep history under 22 entries (system + 10 turns)
+    if (chatHistory.length > 22) {
+        chatHistory = [chatHistory[0], ...chatHistory.slice(-20)];
+    }
+
+    // Show animated typing dots
+    const typingId = appendTypingIndicator();
+
+    try {
+        let reply;
+        if (!navigator.onLine) {
+            // OFFLINE: use local knowledge
+            reply = getLocalFallback(msg);
+        } else {
+            reply = await callGroqAPI(chatHistory);
+        }
+
+        // Add AI reply to history
+        chatHistory.push({ role: 'assistant', content: reply });
+
+        removeTypingIndicator(typingId);
+        appendChatMsg(reply, 'bot');
+    } catch (err) {
+        console.error('Chat error:', err);
+        removeTypingIndicator(typingId);
+        // Try local knowledge first, show a proper error if not found
+        const localReply = getLocalFallback(msg, true);
+        chatHistory.push({ role: 'assistant', content: localReply });
+        appendChatMsg(localReply, 'bot');
+    }
+
+    chatIsLoading = false;
+}
+
+async function callGroqAPI(messages) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000); // 20s timeout
+
+    try {
+        // Call our own Flask backend — no CORS issues, API key stays server-side
+        const response = await fetch(`${API_BASE}/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages }),
+            signal: controller.signal
+        });
+
+        clearTimeout(timeout);
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            console.error('Chat backend error:', data.error || response.status);
+            throw new Error(data.error || `Server error ${response.status}`);
+        }
+
+        return data.reply;
+    } catch (err) {
+        clearTimeout(timeout);
+        if (err.name === 'AbortError') throw new Error('Request timed out after 20s');
+        throw err;
+    }
+}
+
+function appendTypingIndicator() {
+    const container = document.getElementById('chatMessages');
+    const id = 'typing-' + Date.now();
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'typing-indicator';
+    div.innerHTML = `
+        <span></span>
+        <span></span>
+        <span></span>
+        <small style="margin-left: 8px; color: var(--n-500); font-weight: 600;">AgriBot is thinking...</small>`;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    return id;
+}
+
+function removeTypingIndicator(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+}
+
+function appendChatMsg(text, role, isTyping = false) {
+    const container = document.getElementById('chatMessages');
+    const id = 'msg-' + Date.now() + Math.random().toString(36).slice(2);
+
+    const div = document.createElement('div');
+    div.id = id;
+    
+    if (role === 'user') {
+        div.className = 'chat-msg user-msg';
+        div.style.cssText = 'background:var(--g-600); color:white; border-radius:18px 18px 4px 18px; padding:12px 16px; font-size:0.95rem; max-width:85%; align-self:flex-end; box-shadow:var(--sh-md);';
+    } else {
+        div.className = 'chat-msg ai-msg';
+        div.style.cssText = 'background:var(--white); color:var(--n-800); border:1px solid var(--border); border-radius:18px 18px 18px 4px; padding:12px 16px; font-size:0.95rem; max-width:90%; align-self:flex-start; box-shadow:var(--sh-sm); line-height:1.6;';
+    }
+
+    if (isTyping) div.style.opacity = '0.6';
+    
+    // Convert newlines to breaks or handle as pre-wrap
+    div.style.whiteSpace = 'pre-wrap';
+    div.textContent = text;
+
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    return id;
+}
+
+/* --- Offline Fallback (when no internet) --- */
+function getLocalFallback(q, isApiError = false) {
+    const lower = q.toLowerCase();
+
+    for (const [disease, info] of Object.entries(LOCAL_ADVISORY)) {
+        if (lower.includes(disease.toLowerCase())) {
+            return `🌿 ${disease}:\n• Recovery: ${info.recovery}\n• Organic: ${info.organic}\n• Chemical: ${info.chemical}\n• Prevention: ${info.prevention}`;
+        }
+    }
+    for (const crop of CROP_DB) {
+        if (lower.includes(crop.name.toLowerCase())) {
+            return `${crop.emoji} ${crop.name}:\n${crop.desc}\n• Best Season: ${crop.season.join(', ')}\n• Soil: ${crop.soil.join(', ')}\n• Temp: ${crop.tempMin}–${crop.tempMax}°C\n• Rainfall: ${crop.rainMin}–${crop.rainMax} mm/yr`;
+        }
+    }
+    if (lower.includes('kharif')) return '🌧️ Kharif crops (June–Nov): Rice, Cotton, Maize, Groundnut, Millet.';
+    if (lower.includes('rabi'))   return '❄️ Rabi crops (Nov–Apr): Wheat, Mustard, Potato, Chickpea.';
+    if (lower.includes('zaid'))   return '☀️ Zaid crops (Mar–Jun): Maize, Tomato, Groundnut, Watermelon.';
+    if (lower.includes('organic') || lower.includes('pest')) return '🌿 Organic pest control: Neem oil, garlic spray, yellow sticky traps, Bacillus subtilis, companion planting.';
+    if (lower.includes('fertilizer') || lower.includes('npk')) return '🧪 NPK Guide:\n• N (Urea): leaf growth\n• P (DAP): root development\n• K (MOP): fruit quality & disease resistance';
+    if (lower.includes('irrigat') || lower.includes('water')) return '💧 Best irrigation: Drip (most efficient), Sprinkler (vegetables), Furrow (row crops). Water early morning.';
+    if (lower.match(/^(hi|hello|hey|namaste)/)) return '👋 Hello! I\'m AgriBot — your farming assistant. Ask me anything about crops, diseases, soil, fertilizers, or irrigation!';
+
+    // Default — different message depending on context
+    if (!navigator.onLine) {
+        return '📴 You\'re offline. Try asking about specific crops or diseases — I have some local knowledge available!';
+    }
+    if (isApiError) {
+        return '⚠️ AI service is temporarily unavailable. Try asking about a specific crop or disease name — I can answer from local knowledge!';
+    }
+    return '🌱 I didn\'t catch that. Try asking something like:\n• "Best crops for black soil?"\n• "How to treat late blight?"\n• "Kharif season crops?"';
+}
+
+
