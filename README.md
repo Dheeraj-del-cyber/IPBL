@@ -23,14 +23,7 @@ This project provides a **Smart Agriculture Assistant** that:
 - Generates AI-based advisory using LLM  
 - Recommends suitable crops using machine learning  
 
----
-
-## 🧠 System Architecture
-
-![System Architecture](assets/pipeline.png)
-
----
-
+----
 ## ⚙️ Tech Stack
 
 ### AI / ML
