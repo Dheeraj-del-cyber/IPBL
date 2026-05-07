@@ -1091,31 +1091,91 @@ input[type=range]::-webkit-slider-thumb {
 .info-card-text h3 { font-size: 1.2rem; font-weight: 800; color: var(--n-950); margin-bottom: 0.25rem; }
 .info-card-text p { font-size: 0.95rem; color: var(--n-600); line-height: 1.4; }
 
+/* --- Language Quick Pick (Desktop + Global) --- */
+.lang-quick-pick {
+    max-width: 700px;
+    margin: 2rem auto;
+    text-align: center;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2rem 2.5rem;
+    box-shadow: var(--sh-md);
+}
+
+.lang-quick-pick > p {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--n-500);
+    margin-bottom: 1.25rem;
+}
+
+.lang-grid-mini {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.lang-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--n-800);
+    cursor: pointer;
+    transition: all 0.25s var(--easing);
+    box-shadow: var(--sh-sm);
+    white-space: nowrap;
+}
+
+.lang-pill span {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.lang-pill:hover {
+    border-color: var(--g-400);
+    background: var(--g-50);
+    color: var(--g-800);
+    transform: translateY(-3px);
+    box-shadow: var(--sh-md);
+}
+
+.lang-pill.active {
+    background: var(--g-600);
+    border-color: var(--g-600);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
 /* --- Mobile / PWA Specifics --- */
 @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .nav-burger { display: flex; }
-    
-    .hero-title { font-size: 3rem; }
-    .hero-btns { flex-direction: column; }
-    .quick-actions-grid { grid-template-columns: 1fr; }
-    .quick-action-btn { font-size: 1rem; padding: 1rem; }
-    
-    .detect-grid { grid-template-columns: 1fr; }
-    .camera-area { aspect-ratio: 4/3; max-width: 100%; }
-    
-    .hero-stats { gap: 1.2rem; }
 
-    /* Bottom Nav Bar */
+    /* ── Nav: hide desktop links & hamburger (bottom-nav handles it) ── */
+    .nav-links  { display: none; }
+    .nav-burger { display: none; }   /* removed — bottom nav replaces it */
+    .nav-cta    { display: none; }
+
+    /* ── Bottom Nav Bar ── */
     .bottom-nav {
         display: flex;
         position: fixed;
         bottom: 0; left: 0;
         width: 100%;
-        height: 75px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(15px);
+        height: 70px;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         border-top: 1px solid var(--border);
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
         z-index: 2000;
         justify-content: space-around;
         align-items: center;
@@ -1127,85 +1187,116 @@ input[type=range]::-webkit-slider-thumb {
         flex-direction: column;
         align-items: center;
         text-decoration: none;
-        gap: 4px;
-        color: var(--n-500);
-        transition: 0.3s;
+        gap: 3px;
+        color: var(--n-400);
+        transition: all 0.25s;
         flex: 1;
+        padding: 0.5rem 0;
+        border-radius: var(--radius-md);
     }
 
-    .bottom-nav-icon {
-        font-size: 1.5rem;
-    }
-
+    .bottom-nav-icon { font-size: 1.45rem; transition: transform 0.25s; }
     .bottom-nav-text {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.4px;
     }
 
-    .bottom-nav-link.active {
-        color: var(--g-600);
-    }
-
+    .bottom-nav-link.active { color: var(--g-600); }
     .bottom-nav-link.active .bottom-nav-icon {
-        transform: translateY(-4px) scale(1.1);
-        text-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+        transform: translateY(-3px) scale(1.15);
     }
 
-    /* Language Quick Pick */
-    .lang-quick-pick {
-        margin: 2rem auto;
+    /* ── Screen Padding (clear bottom nav) ── */
+    .screen { padding-bottom: 90px; }
+
+    /* ── Hero Section ── */
+    .hero-title  { font-size: 2.4rem; letter-spacing: -1px; }
+    .hero-desc   { font-size: 1rem; }
+    .hero-btns   {
+        flex-direction: column;
+        gap: 0.85rem;
+        align-items: stretch;
+    }
+    .hero-stats  { gap: 1.2rem; padding: 1.5rem; }
+
+    /* ── Hero Buttons (full-width on mobile) ── */
+    .btn-glow,
+    .btn-glow.hero-primary {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
         text-align: center;
-    }
-
-    .lang-grid-mini {
-        display: flex;
-        flex-wrap: wrap;
         justify-content: center;
-        gap: 0.75rem;
-    }
-
-    .lang-pill {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 0.6rem 1.2rem;
-        background: var(--white);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-full);
-        font-weight: 700;
-        font-size: 0.9rem;
-        color: var(--n-800);
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: var(--sh-sm);
     }
 
-    .lang-pill:hover {
-        border-color: var(--g-400);
-        background: var(--g-50);
-        transform: translateY(-2px);
+    .btn-ghost {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        text-align: center;
     }
 
-    .lang-pill span {
-        font-size: 1.1rem;
+    /* ── Back Button (compact on mobile) ── */
+    .btn-back {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        flex-shrink: 0;
     }
 
-    /* Adjust screen padding for bottom nav */
-    .screen {
-        padding-bottom: 100px;
+    /* ── Quick Actions (single column) ── */
+    .quick-actions-grid { grid-template-columns: 1fr; }
+    .quick-action-btn   {
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+        min-height: 60px;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 1rem;
     }
+    .action-icon { font-size: 2rem; }
 
-    /* Larger tap targets for farmers */
-    .btn-glow, .btn-ghost, .quick-action-btn, .feat-card, .info-card {
-        padding: 1.5rem !important;
-        min-height: 48px;
+    /* ── Language Quick Pick ── */
+    .lang-quick-pick {
+        margin: 1.25rem auto;
+        padding: 1.25rem 1rem;
+        border-radius: var(--radius-lg);
     }
+    .lang-grid-mini { gap: 0.5rem; }
+    .lang-pill      { padding: 0.5rem 0.9rem; font-size: 0.8rem; }
 
-    .nav-cta {
-        display: none; /* Hide top CTA on mobile, use bottom nav or hero instead */
+    /* ── Feature Cards ── */
+    .feat-grid  { grid-template-columns: 1fr; gap: 1rem; }
+    .feat-card  {
+        padding: 1.5rem;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
     }
+    .feat-icon-wrap { margin: 0; width: 60px; height: 60px; flex-shrink: 0; font-size: 1.75rem; }
+    .feat-card h3   { font-size: 1.15rem; margin-bottom: 0.25rem; }
+    .feat-card p    { font-size: 0.9rem; }
+
+    /* ── Disease Detection ── */
+    .detect-grid    { grid-template-columns: 1fr; gap: 1.5rem; }
+    .upload-drop-zone { aspect-ratio: 4/3; }
+    .detect-side    { display: none; }   /* hide sidebar tips on mobile (info is in the UI) */
+
+    /* ── Crop Form ── */
+    .crop-form-card { padding: 1.5rem 1.25rem; }
+    .crop-mode-bar  { padding: 0.75rem 1rem; }
+    .crop-mode-btn  { width: 100%; justify-content: center; padding: 0.85rem 1rem; font-size: 0.95rem; }
+    .detect-location-btn { padding: 0.75rem 1.1rem; font-size: 0.9rem; }
+
+    /* ── Section / Workflow ── */
+    .section-card   { padding: 2rem 1rem; }
+    .workflow-grid  { gap: 2rem; }
+    .workflow-item  { padding: 2rem 1rem; }
 }
 
 /* Modals & Popups */

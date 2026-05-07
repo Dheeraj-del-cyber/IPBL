@@ -91,24 +91,7 @@
         </a>
     </nav>
 
-    <!-- Mobile Drawer Overlay -->
-    <div id="mobOverlay" class="hidden" onclick="toggleMobileMenu()"></div>
-
-    <!-- Mobile Drawer -->
-    <div id="mobDrawer" class="glass mob-drawer">
-        <div class="drawer-header">
-            <span>Menu</span>
-            <button class="drawer-close" onclick="toggleMobileMenu()">✕</button>
-        </div>
-        <a href="#" class="nav-link" data-screen="screenHome" onclick="navigateTo('screenHome'); toggleMobileMenu(); return false;">Home</a>
-        <a href="#" class="nav-link" data-screen="screenDiseaseDetect" onclick="navigateTo('screenDiseaseDetect'); toggleMobileMenu(); return false;">Disease Detection</a>
-        <a href="#" class="nav-link" data-screen="screenCropForm" onclick="navigateTo('screenCropForm'); toggleMobileMenu(); return false;">Crop Recommendation</a>
-
-        <a href="#" class="nav-link" data-screen="screenEcommerce" onclick="navigateTo('screenEcommerce'); toggleMobileMenu(); return false;">Shop</a>
-
-        <hr class="drawer-hr">
-        <button class="btn-glow drawer-cta" onclick="navigateTo('screenDiseaseDetect'); toggleMobileMenu();">Scan Now</button>
-    </div>
+    <!-- Mobile Drawer removed: bottom nav handles mobile navigation -->
 
     <!-- Home Screen -->
     <main class="screen active" id="screenHome">
@@ -125,8 +108,8 @@
             </div>
 
             <!-- Language Quick Pick -->
-            <div class="lang-quick-pick container">
-                <p style="font-weight: 700; margin-bottom: 1rem; color: var(--n-600);">Select Your Language</p>
+            <div class="lang-quick-pick">
+                <p>Select Your Language</p>
                 <div class="lang-grid-mini">
                     <button class="lang-pill" onclick="setLanguage('en')"><span>🇬🇧</span> English</button>
                     <button class="lang-pill" onclick="setLanguage('hi')"><span>🇮🇳</span> हिन्दी</button>
