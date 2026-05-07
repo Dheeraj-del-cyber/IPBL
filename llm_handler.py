@@ -4,7 +4,7 @@ import json
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 # User provided API key
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "") # Set your API key in environment variables
 
 # OFFLINE FALLBACK DATA
 # Expert-verified advice for the 11 classes your model detects

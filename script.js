@@ -1740,7 +1740,7 @@ if ('speechSynthesis' in window) {
    FLOATING CHATBOT WIDGET — AI-Powered (Groq LLaMA 3)
    ================================================ */
 
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = ""; // Set your API key here
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 // Conversation memory (keeps last 10 turns for context)
