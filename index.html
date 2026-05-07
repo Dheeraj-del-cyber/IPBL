@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="style.css">
     
     <!-- PWA -->
-
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4caf50">
 </head>
 <body>
 
@@ -240,17 +241,17 @@
     <main class="screen" id="screenDiseaseDetect">
         <div class="container">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
-                <button class="glass-sm" style="padding:10px 20px; color:white; border:none; cursor:pointer;" onclick="navigateTo('screenHome')" data-i18n="back">Back</button>
-                <h2 data-i18n="pageDetect">Disease Detection</h2>
+                <button class="btn-back" onclick="navigateTo('screenHome')" data-i18n="back">← Back</button>
+                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="pageDetect">Disease Detection</h2>
             </div>
             
             <div class="detect-grid">
                 <div class="detect-main">
                     <!-- Upload Drop Zone -->
-                    <div class="upload-drop-zone glass" id="cameraArea" onclick="triggerUpload()" id="dropZone">
+                    <div class="upload-drop-zone" id="cameraArea" onclick="triggerUpload()">
                         <div class="camera-ph" id="cameraPlaceholder">
                             <div class="camera-ph-icon">📂</div>
-                            <p style="font-size:1.1rem; font-weight:700; color:var(--white); margin-bottom:0.5rem">Upload Leaf Image</p>
+                            <p style="font-size:1.1rem; font-weight:700; color:var(--n-700); margin-bottom:0.5rem">Upload Leaf Image</p>
                             <p style="color:var(--n-400); font-size:0.9rem">Drag & drop or click to browse</p>
                             <p style="color:var(--n-500); font-size:0.8rem; margin-top:0.5rem">JPG / PNG supported</p>
                         </div>
@@ -272,17 +273,17 @@
                 </div>
 
                 <aside class="detect-side">
-                    <div class="glass" style="padding:2rem; margin-bottom:1rem;">
-                        <h3 style="margin-bottom:1rem">Disease Scan Steps</h3>
-                        <ol style="padding-left:1rem; color:var(--n-300); line-height:2">
-                            <li>Click <b>Choose File</b> and upload crop leaf</li>
-                            <li>Tap <b>Analyze Now</b> for disease report</li>
+                    <div class="detect-info-card" style="margin-bottom:1rem;">
+                        <h3 style="margin-bottom:1rem; font-size:1.2rem; font-weight:800; color:var(--soil-900);">🔍 Disease Scan Steps</h3>
+                        <ol style="padding-left:1.25rem; color:var(--n-700); line-height:2.2; font-size:0.97rem;">
+                            <li>Click <b style="color:var(--g-700);">Choose File</b> and upload crop leaf</li>
+                            <li>Tap <b style="color:var(--g-700);">Analyze Now</b> for disease report</li>
                             <li>Follow treatment and prevention tips</li>
                         </ol>
                     </div>
-                    <div class="glass" style="padding:1.5rem;">
-                        <h4 style="margin-bottom:0.75rem; color:var(--g-300)">📸 Good Photo Tips</h4>
-                        <ul style="padding-left:1rem; color:var(--n-400); font-size:0.9rem; line-height:1.9">
+                    <div class="detect-info-card">
+                        <h4 style="margin-bottom:0.75rem; color:var(--g-700); font-size:1rem; font-weight:800;">📸 Good Photo Tips</h4>
+                        <ul style="padding-left:1.25rem; color:var(--n-600); font-size:0.9rem; line-height:2;">
                             <li>Good natural lighting</li>
                             <li>Fill frame with the leaf</li>
                             <li>Avoid motion blur</li>
@@ -299,47 +300,45 @@
     <main class="screen" id="screenCropForm">
         <div class="container">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
-                <button class="glass-sm" style="padding:10px 20px; color:white; border:none; cursor:pointer;" onclick="navigateTo('screenHome')" data-i18n="back">Back</button>
-                <h2 data-i18n="pageCrop">Crop Recommendation</h2>
+                <button class="btn-back" onclick="navigateTo('screenHome')" data-i18n="back">← Back</button>
+                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="pageCrop">Crop Recommendation</h2>
             </div>
 
             <!-- Mode Selector -->
-            <div class="form-glass glass" style="margin-bottom:1.5rem; padding:1rem">
+            <div class="crop-mode-bar" style="margin-bottom:1.5rem;">
                 <div style="display:flex; gap:1rem; justify-content:center; align-items:center; flex-wrap:wrap">
-                    <button class="glass-sm active" id="modeOnlineBtn" style="padding:8px 20px; border:2px solid #3eaf60; color:white; cursor:pointer; border-radius:8px; background:rgba(62,175,96,0.3); font-weight:600; transition:0.3s">📍 Recommendation by Location</button>
+                    <button class="crop-mode-btn active" id="modeOnlineBtn">📍 Recommendation by Location</button>
                 </div>
             </div>
 
-
-
             <!-- Online Mode Form -->
-            <div class="form-glass glass" id="onlineCropForm">
+            <div class="crop-form-card" id="onlineCropForm">
                 <div class="form-group">
                     <label class="form-label">📍 Your Location</label>
-                    <div style="display:flex; gap:0.5rem">
+                    <div style="display:flex; gap:0.75rem; align-items:center;">
                         <input type="text" class="glass-input" id="locationDisplay" placeholder="Click button to detect location" readonly style="flex:1">
-                        <button class="glass-sm" style="padding:10px 16px; color:white; border:none; cursor:pointer; border-radius:8px; background:rgba(62,175,96,0.3); white-space:nowrap" onclick="detectUserLocation()">📡 Detect</button>
+                        <button class="detect-location-btn" onclick="detectUserLocation()">📡 Detect</button>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label"><span data-i18n="labelTemp">Temperature</span>: <span id="onlineTempValue">--</span>°C</label>
-                    <input type="range" min="10" max="45" value="25" class="glass-input" id="onlineTemperature" disabled>
+                    <label class="form-label"><span data-i18n="labelTemp">Temperature</span>: <span id="onlineTempValue" style="color:var(--g-600); font-weight:900;">--</span>°C</label>
+                    <input type="range" min="10" max="45" value="25" class="glass-input crop-range" id="onlineTemperature" disabled>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">☔ Current Humidity: <span id="onlineHumidityValue">--</span>%</label>
-                    <div class="glass-input" style="padding:10px; background:rgba(255,255,255,0.05); border-radius:8px; border:1px solid rgba(255,255,255,0.1)">
+                    <label class="form-label">☔ Current Humidity: <span id="onlineHumidityValue" style="color:var(--accent-sky); font-weight:900;">--</span>%</label>
+                    <div class="weather-info-box">
                         <span id="weatherDesc">Weather data will appear after location detection</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">🌱 Estimated Soil Type</label>
-                    <input type="text" class="glass-input" id="estimatedSoil" readonly style="background:rgba(255,255,255,0.05)">
+                    <input type="text" class="glass-input" id="estimatedSoil" readonly>
                 </div>
                 <div class="form-group">
                     <label class="form-label" data-i18n="labelSeason">Season</label>
-                    <input type="text" class="glass-input" id="detectedSeason" readonly style="background:rgba(255,255,255,0.05)">
+                    <input type="text" class="glass-input" id="detectedSeason" readonly>
                 </div>
-                <button class="btn-glow btn-full" style="width:100%" onclick="getCropSuggestionOnline()" id="onlineGetBtn">Get Recommendation (Detecting Location...)</button>
+                <button class="btn-glow" style="width:100%; padding:1.25rem; font-size:1.05rem; font-weight:800;" onclick="getCropSuggestionOnline()" id="onlineGetBtn">🌾 Get Recommendation (Detecting Location...)</button>
             </div>
         </div>
     </main>
@@ -348,8 +347,8 @@
     <main class="screen" id="screenResult">
         <div class="container">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
-                <button class="glass-sm" style="padding:10px 20px; color:white; border:none; cursor:pointer;" onclick="goBackFromResult()" data-i18n="back">Back</button>
-                <h2 id="resultTitle">Results</h2>
+                <button class="btn-back" onclick="goBackFromResult()" data-i18n="back">← Back</button>
+                <h2 id="resultTitle" style="color:var(--n-950); font-size:1.75rem; font-weight:900;">Results</h2>
             </div>
             <div id="resultBody" class="result-wrap"></div>
         </div>
@@ -361,8 +360,8 @@
     <main class="screen" id="screenEcommerce">
         <div class="container">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
-                <button class="glass-sm" style="padding:10px 20px; color:white; border:none; cursor:pointer;" onclick="navigateTo('screenHome')" data-i18n="back">Back</button>
-                <h2 data-i18n="pageShop">Agri Shop</h2>
+                <button class="btn-back" onclick="navigateTo('screenHome')" data-i18n="back">← Back</button>
+                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="pageShop">Agri Shop</h2>
             </div>
 
             <!-- Cart Icon -->
@@ -400,8 +399,6 @@
             </div>
         </div>
     </div>
-</div>
-
     <!-- Floating Chatbot Widget -->
     <div id="chatbotWidget">
 

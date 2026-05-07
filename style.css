@@ -133,6 +133,14 @@ body {
     -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent);
 }
 
+/* --- Layout --- */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
 /* --- Surface Utilities --- */
 .glass {
     background: var(--surface);
@@ -2087,4 +2095,148 @@ input[type=range]::-webkit-slider-thumb {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
     30% { transform: translateY(-4px); opacity: 1; }
 }
+
+/* ================================================
+   FIXED PAGE COMPONENTS — Light Theme Corrections
+   ================================================ */
+
+/* --- Back Button (visible on light backgrounds) --- */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--n-800);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s var(--easing);
+    box-shadow: var(--sh-sm);
+    white-space: nowrap;
+}
+
+.btn-back:hover {
+    border-color: var(--g-400);
+    color: var(--g-700);
+    background: var(--g-50);
+    transform: translateX(-3px);
+    box-shadow: var(--sh-md);
+}
+
+/* --- Disease Detection Sidebar Cards --- */
+.detect-info-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--sh-md);
+}
+
+/* --- Crop Recommendation Mode Bar --- */
+.crop-mode-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.5rem;
+    box-shadow: var(--sh-sm);
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.crop-mode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--g-600);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(76, 175, 80, 0.3);
+    transition: all 0.3s var(--easing);
+}
+
+.crop-mode-btn:hover {
+    background: var(--g-700);
+    box-shadow: 0 6px 18px rgba(76, 175, 80, 0.4);
+    transform: translateY(-2px);
+}
+
+/* --- Crop Form Card (replaces broken dark-mode combo) --- */
+.crop-form-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: var(--sh-xl);
+}
+
+/* --- Detect Location Button --- */
+.detect-location-btn {
+    padding: 0.9rem 1.5rem;
+    background: var(--g-600);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25);
+    transition: all 0.3s var(--easing);
+}
+
+.detect-location-btn:hover {
+    background: var(--g-700);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.35);
+    transform: translateY(-2px);
+}
+
+/* --- Weather Info Box --- */
+.weather-info-box {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    color: var(--n-700);
+    font-size: 1rem;
+    min-height: 3.25rem;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Range Slider light-theme fix --- */
+input[type=range].crop-range::-webkit-slider-runnable-track {
+    background: var(--g-100);
+    height: 6px;
+}
+
+input[type=range].crop-range::-webkit-slider-thumb {
+    background: var(--g-600);
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+/* --- Result Cards (fix dark-mode bg remnants) --- */
+.result-card {
+    background: var(--white) !important;
+    border: 1px solid var(--border) !important;
+}
+
+.result-card-header {
+    color: var(--g-700) !important;
+}
+
+.result-card-body {
+    color: var(--n-700);
+}
+
 
