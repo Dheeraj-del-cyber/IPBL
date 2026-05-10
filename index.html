@@ -50,6 +50,8 @@
 
                 <a href="#" class="nav-link" data-screen="screenEcommerce"
                     onclick="navigateTo('screenEcommerce'); return false;" data-i18n="navShop">Shop</a>
+                <a href="#" class="nav-link" data-screen="screenIoT"
+                    onclick="navigateTo('screenIoT'); return false;">IoT Monitor</a>
 
             </div>
             <div class="nav-right">
@@ -97,6 +99,10 @@
             onclick="navigateTo('screenEcommerce'); return false;">
             <span class="bottom-nav-icon">🛒</span>
             <span class="bottom-nav-text">Shop</span>
+        </a>
+        <a href="#" class="bottom-nav-link" data-screen="screenIoT" onclick="navigateTo('screenIoT'); return false;">
+            <span class="bottom-nav-icon">📊</span>
+            <span class="bottom-nav-text">IoT</span>
         </a>
         <a href="#" class="bottom-nav-link" onclick="toggleChatbot(); return false;">
             <span class="bottom-nav-icon">💬</span>
@@ -219,6 +225,11 @@
                     <div class="feat-icon-wrap feat-purple">🛒</div>
                     <h3 data-i18n="featShop">Agri Shop</h3>
                     <p data-i18n="featShopDesc">Buy pesticides, fertilizers & tools.</p>
+                </div>
+                <div class="feat-card glass float-card" onclick="navigateTo('screenIoT')">
+                    <div class="feat-icon-wrap feat-blue">📊</div>
+                    <h3>Smart Monitor</h3>
+                    <p>Live soil moisture tracking.</p>
                 </div>
             </div>
         </section>
@@ -368,7 +379,84 @@
         </div>
     </main>
 
+    <!-- IoT Monitor Screen -->
+    <main class="screen" id="screenIoT">
+        <div class="container">
+            <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
+                <button class="btn-back" onclick="navigateTo('screenHome')">← Back</button>
+                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;">IoT Smart Monitor</h2>
+            </div>
 
+            <div class="iot-dashboard">
+                <!-- Moisture Gauge Card -->
+                <div class="iot-card glass">
+                    <div class="iot-card-header">
+                        <span class="iot-icon">💧</span>
+                        <h3>Soil Moisture</h3>
+                    </div>
+                    <div class="moisture-display">
+                        <div class="moisture-gauge">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+                                <circle id="moistureProgress" class="gauge-fill" cx="50" cy="50" r="45"
+                                    style="stroke-dasharray: 283; stroke-dashoffset: 283;"></circle>
+                            </svg>
+                            <div class="gauge-value">
+                                <span id="moistureValue">0</span>%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iot-status">
+                        <span id="moistureStatusBadge" class="status-badge status-unknown">Fetching...</span>
+                        <p class="last-update">Last Updated: <span id="lastUpdated">--:--:--</span></p>
+                    </div>
+                </div>
+
+                <!-- Recommendation Card -->
+                <div class="iot-card glass">
+                    <div class="iot-card-header">
+                        <span class="iot-icon">💡</span>
+                        <h3>AI Recommendation</h3>
+                    </div>
+                    <div class="iot-recommendation-box">
+                        <p id="iotRecommendation">Please wait for sensor data...</p>
+                    </div>
+                    <div class="iot-info-grid">
+                        <div class="iot-info-item">
+                            <span class="info-label">Optimal Range</span>
+                            <span class="info-value">40% - 70%</span>
+                        </div>
+                        <div class="iot-info-item">
+                            <span class="info-label">Connection</span>
+                            <span class="info-value" id="connectionStatus" style="color:var(--g-600)">Live</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor Setup Guide -->
+            <div class="iot-setup-card glass" style="margin-top: 2rem;">
+                <h3>🛠️ How to Connect Your Sensor</h3>
+                <p>Connect your ESP8266/ESP32 to this IP address to see live data.</p>
+                <div class="setup-steps">
+                    <div class="step">
+                        <strong>1. Setup ESP</strong>
+                        <p>Upload the provided code to your ESP board.</p>
+                    </div>
+                    <div class="step">
+                        <strong>2. Connect Sensor</strong>
+                        <p>Attach Moisture Sensor to Pin A0.</p>
+                    </div>
+                    <div class="step">
+                        <strong>3. See Live Data</strong>
+                        <p>Data will refresh automatically every 5 seconds.</p>
+                    </div>
+                </div>
+                <button class="btn-ghost" onclick="copyESPCode()" style="margin-top: 1rem; width: 100%;">📋 Copy Arduino
+                    Code</button>
+            </div>
+        </div>
+    </main>
 
     <!-- E-commerce Screen -->
     <main class="screen" id="screenEcommerce">
@@ -479,7 +567,7 @@
 
     <footer class="farm-footer">
         <div class="container farm-footer-inner" style="justify-content: center;">
-            <p style="font-weight: 300; opacity: 0.7;">DEVELOPED BY DHEERAJ KOILA </p>
+            <p style="font-weight: 300; opacity: 0.9;">IPBL PROJECT 2026 </p>
         </div>
     </footer>
 

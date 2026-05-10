@@ -9,7 +9,9 @@ const AppState = {
     resultSource: null,
     cameraStream: null,
     facingMode: 'environment',
-    currentLang: localStorage.getItem('agri-lang') || 'en'
+    currentLang: localStorage.getItem('agri-lang') || 'en',
+    iotInterval: null,
+    lastMoisture: 0
 };
 
 
@@ -177,6 +179,8 @@ function navigateTo(screenId) {
     if (screenId === 'screenDiseaseDetect') initUploadZone();
     if (screenId === 'screenCropForm') initCropForm();
     if (screenId === 'screenEcommerce') renderProducts(currentCategory);
+    if (screenId === 'screenIoT') startIoTMonioting();
+    else stopIoTMonioting();
 }
 
 function goBackFromResult() {
@@ -364,25 +368,11 @@ function resetDetection() {
     document.getElementById('fileInput').value = '';
 }
 
+
 /* =====================================================
-   BACKEND INTEGRATION — Real Flask API + Offline Queue
+   BACKEND INTEGRATION — Real Flask API
    ===================================================== */
 const API_BASE = 'http://127.0.0.1:5000';
-
-/* Local Advisory Knowledge Base (100% Offline Fallback) */
-const LOCAL_ADVISORY = {
-    "Apple Scab":            { emoji:'🍎', recovery:'Prune infected leaves; improve air circulation.', organic:'Neem oil or sulfur-based organic fungicides.', chemical:'Fungicides with Captan or Myclobutanil.', prevention:'Plant resistant varieties; clear fallen leaves.' },
-    "Bacterial Spot":        { emoji:'🦠', recovery:'Remove infected plants immediately.', organic:'Copper-based sprays or Bacillus subtilis (Serenade).', chemical:'Fixed copper products in early morning.', prevention:'Avoid overhead watering; use certified seeds.' },
-    "Black Rot":             { emoji:'🍇', recovery:'Cut out mummified fruit and cankers.', organic:'Lime-sulfur sprays during dormant season.', chemical:'Mancozeb or Ziram fungicides.', prevention:'Ensure good drainage and plant spacing.' },
-    "Cedar Apple Rust":      { emoji:'🍊', recovery:'Remove nearby cedar galls when possible.', organic:'Potassium bicarbonate sprays.', chemical:'Immunox or other systemic fungicides.', prevention:'Avoid planting apples near Junipers/Cedars.' },
-    "Early Blight":          { emoji:'🍅', recovery:'Remove bottom leaves showing spots; mulch base.', organic:'Compost tea or Bacillus amyloliquefaciens.', chemical:'Chlorothalonil or Copper-based fungicides.', prevention:'Rotate crops every 3 years; keep leaves dry.' },
-    "Esca (Black Measles)":  { emoji:'🍷', recovery:'Careful pruning of affected wood in dry weather.', organic:'Trichoderma-based biocontrol agents.', chemical:'Systemic triazole fungicides.', prevention:'Disinfect pruning tools between every cut.' },
-    "Healthy":               { emoji:'✅', recovery:'Plant is healthy! No action needed.', organic:'Continue using organic compost.', chemical:'No chemicals required.', prevention:'Regular monitoring and balanced watering.' },
-    "Late Blight":           { emoji:'🔴', recovery:'Remove entire plant immediately; bag it.', organic:'Strict copper sprays (preventive only).', chemical:'Systemic fungicides like Ridomil Gold.', prevention:'Destroy volunteer plants; choose resistant hybrids.' },
-    "Leaf Blight":           { emoji:'🍂', recovery:'Increase plant spacing to lower humidity.', organic:'Garlic-based sprays or baking soda solution.', chemical:'Mancozeb or Propiconazole.', prevention:'Avoid working in the field when leaves are wet.' },
-    "Septoria Leaf Spot":    { emoji:'🟡', recovery:'Drip irrigation only; remove spotted leaves.', organic:'Actinovate biological fungicide.', chemical:'Chlorothalonil every 7–10 days.', prevention:'Clean all tools with bleach after use.' },
-    "Yellow Leaf Curl Virus":{ emoji:'🌿', recovery:'Cannot be cured; focus on whitefly control.', organic:'Yellow sticky traps; mineral oil sprays.', chemical:'Imidacloprid targets whiteflies (virus vector).', prevention:'Use silver-colored mulch to repel insects.' }
-};
 
 
 
@@ -449,40 +439,16 @@ async function analyzeImage() {
     }
 }
 
-function buildAdvisoryHTML(disease) {
-    const d = LOCAL_ADVISORY[disease] || LOCAL_ADVISORY['Leaf Blight'];
-    return `
-        <div class="result-card">
-            <div class="result-card-header">🩺 Recovery Steps</div>
-            <div class="result-card-body">${d.recovery}</div>
-        </div>
-        <div class="result-card">
-            <div class="result-card-header">🌿 Organic Treatment</div>
-            <div class="result-card-body">${d.organic}</div>
-        </div>
-        <div class="result-card">
-            <div class="result-card-header">💊 Chemical Treatment</div>
-            <div class="result-card-body">${d.chemical}</div>
-        </div>
-        <div class="result-card">
-            <div class="result-card-header">🛡️ Prevention</div>
-            <div class="result-card-body">${d.prevention}</div>
-        </div>
-    `;
-}
 
 function renderRealDiseaseResult(data) {
     const pr = data.prediction_results;
     const disease = pr.disease;
     const conf = pr.confidence;
     const isHealthy = disease === 'Healthy';
-    const localD = LOCAL_ADVISORY[disease] || {};
-    const emoji = localD.emoji || (isHealthy ? '✅' : '🍂');
+    const emoji = isHealthy ? '✅' : '🍂';
     const type = isHealthy ? 'success' : 'danger';
 
-    const advisory = data.guidance
-        ? `<div class="result-card"><div class="result-card-header">🌿 AI Advisory</div><div class="result-card-body" style="white-space:pre-wrap">${data.guidance}</div></div>`
-        : buildAdvisoryHTML(disease);
+    const advisory = `<div class="result-card"><div class="result-card-header">🌿 AI Advisory</div><div class="result-card-body" style="white-space:pre-wrap">${data.guidance}</div></div>`;
 
     // Get product recommendations for the detected disease
     const recommendedProducts = isHealthy ? [] : getDiseaseProductRecommendations(disease);
@@ -503,10 +469,22 @@ function renderRealDiseaseResult(data) {
             <div class="result-confidence">${conf}% Confidence</div>
         </div>
         <div class="result-card" style="margin:1rem 0">
-            <div class="result-card-header">📊 Confidence Score</div>
+            <div class="result-card-header">📊 Analysis Metrics</div>
             <div class="result-card-body">
-                <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:10px;overflow:hidden;margin-top:0.5rem">
-                    <div style="height:100%;width:${conf}%;background:linear-gradient(to right,#3eaf60,#8ae0a0);transition:width 1.2s ease"></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem">
+                    <span>AI Confidence:</span>
+                    <span style="font-weight:700; color:var(--g-600)">${conf}%</span>
+                </div>
+                <div style="background:rgba(0,0,0,0.05); border-radius:10px; height:8px; overflow:hidden; margin-bottom:1rem">
+                    <div style="height:100%; width:${conf}%; background:var(--g-500)"></div>
+                </div>
+                
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem">
+                    <span>Soil Moisture (IoT):</span>
+                    <span style="font-weight:700; color:var(--accent-sky)">${data.moisture || 0}%</span>
+                </div>
+                <div style="background:rgba(0,0,0,0.05); border-radius:10px; height:8px; overflow:hidden">
+                    <div style="height:100%; width:${data.moisture || 0}%; background:var(--accent-sky)"></div>
                 </div>
             </div>
         </div>
@@ -1977,6 +1955,142 @@ function getLocalFallback(q, isApiError = false) {
         return '⚠️ AI service is temporarily unavailable. Try asking about a specific crop or disease name — I can answer from local knowledge!';
     }
     return '🌱 I didn\'t catch that. Try asking something like:\n• "Best crops for black soil?"\n• "How to treat late blight?"\n• "Kharif season crops?"';
+}
+
+/* =====================================================
+   IOT MONITORING LOGIC
+   ===================================================== */
+
+function startIoTMonioting() {
+    fetchIoTData(); // Initial fetch
+    if (AppState.iotInterval) clearInterval(AppState.iotInterval);
+    AppState.iotInterval = setInterval(fetchIoTData, 5000); // Fetch every 5 seconds
+}
+
+function stopIoTMonioting() {
+    if (AppState.iotInterval) {
+        clearInterval(AppState.iotInterval);
+        AppState.iotInterval = null;
+    }
+}
+
+async function fetchIoTData() {
+    try {
+        const res = await fetch(`${API_BASE}/get_moisture`);
+        if (!res.ok) throw new Error('Failed to fetch sensor data');
+        const data = await res.json();
+        updateIoTUI(data);
+    } catch (err) {
+        console.error('IoT Fetch Error:', err);
+        const connStatus = document.getElementById('connectionStatus');
+        if (connStatus) {
+            connStatus.textContent = 'Offline';
+            connStatus.style.color = 'var(--accent-rose)';
+        }
+    }
+}
+
+function updateIoTUI(data) {
+    const moisture = data.moisture || 0;
+    const lastUpdated = data.last_updated || '--:--:--';
+    
+    // Update Value & Last Updated
+    const valEl = document.getElementById('moistureValue');
+    const updateEl = document.getElementById('lastUpdated');
+    const connStatus = document.getElementById('connectionStatus');
+    
+    if (valEl) valEl.textContent = moisture;
+    if (updateEl) updateEl.textContent = lastUpdated;
+    if (connStatus) {
+        connStatus.textContent = 'Live';
+        connStatus.style.color = 'var(--g-600)';
+    }
+
+    // Update Gauge
+    const circle = document.getElementById('moistureProgress');
+    if (circle) {
+        const radius = circle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+        const offset = circumference - (moisture / 100) * circumference;
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = offset;
+    }
+
+    // Update Status Badge & Recommendation
+    const badge = document.getElementById('moistureStatusBadge');
+    const recBox = document.getElementById('iotRecommendation');
+    
+    if (badge) {
+        badge.className = 'status-badge'; // reset
+        if (moisture < 30) {
+            badge.classList.add('status-dry');
+            badge.textContent = 'Too Dry';
+            if (recBox) recBox.textContent = '🚨 Soil moisture is low! Start irrigation immediately to prevent crop wilting.';
+        } else if (moisture >= 30 && moisture <= 75) {
+            badge.classList.add('status-good');
+            badge.textContent = 'Optimal';
+            if (recBox) recBox.textContent = '✅ Soil moisture is at an ideal level for most crops. No action needed.';
+        } else {
+            badge.classList.add('status-wet');
+            badge.textContent = 'Too Wet';
+            if (recBox) recBox.textContent = '⚠️ Soil is saturated. Stop irrigation and ensure proper drainage to avoid root rot.';
+        }
+    }
+    
+    AppState.lastMoisture = moisture;
+}
+
+function copyESPCode() {
+    const code = `
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+#include <WiFiClient.h>
+
+// WiFi Settings
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
+
+// Server Settings (Your Computer IP)
+const char* serverUrl = "http://192.168.1.XX:5000/update_moisture"; // Replace XX with your IP
+
+const int sensorPin = A0;
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("Connected!");
+}
+
+void loop() {
+  if (WiFi.status() == WL_CONNECTED) {
+    int sensorValue = analogRead(sensorPin);
+    // Convert 0-1023 to 0-100% (reverse if needed depending on sensor)
+    int moisturePercent = map(sensorValue, 1023, 0, 0, 100); 
+    
+    WiFiClient client;
+    HTTPClient http;
+    http.begin(client, serverUrl);
+    http.addHeader("Content-Type", "application/json");
+    
+    String payload = "{\\"moisture\\":" + String(moisturePercent) + "}";
+    int httpResponseCode = http.POST(payload);
+    
+    Serial.print("Moisture: "); Serial.print(moisturePercent);
+    Serial.print("% | Response: "); Serial.println(httpResponseCode);
+    
+    http.end();
+  }
+  delay(5000); // Send data every 5 seconds
+}
+    `.trim();
+
+    navigator.clipboard.writeText(code).then(() => {
+        alert('ESP8266/ESP32 Code copied to clipboard! Paste it in Arduino IDE.');
+    });
 }
 
 

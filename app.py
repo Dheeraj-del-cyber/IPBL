@@ -86,15 +86,17 @@ def detect():
     elif "Grape" in disease_name or "Esca" in disease_name: crop_type = "Grape"
     elif "Tomato" in disease_name or "Curl" in disease_name: crop_type = "Tomato"
     
-    # Call LLM
-    guidance = llm_handler.get_agricultural_guidance(disease_name, crop_type)
+    # Call LLM with Moisture Context
+    current_moisture = iot_data.get("moisture", 0)
+    guidance = llm_handler.get_agricultural_guidance(disease_name, crop_type, moisture=current_moisture)
     
     # FINAL OUTPUT
     return jsonify({
         "status": "clear",
         "message": "Plant leaf detected and successfully analyzed.",
         "prediction_results": prediction,
-        "guidance": guidance.get("full_guidance", "Guidance not available.")
+        "guidance": guidance.get("full_guidance", "Guidance not available."),
+        "moisture": current_moisture
     })
 
 # ---------------------------------------------------------------
@@ -135,6 +137,30 @@ def chat():
         print(f"Chat API Error: {e}")
         return jsonify({"error": str(e), "success": False}), 500
 
+# ---------------------------------------------------------------
+# IOT MONITORING - Moisture Sensor Integration
+# ---------------------------------------------------------------
+iot_data = {
+    "moisture": 0,
+    "last_updated": "Never"
+}
+
+@app.route('/update_moisture', methods=['POST'])
+def update_moisture():
+    data = request.get_json()
+    if not data or 'moisture' not in data:
+        return jsonify({"error": "No moisture value provided"}), 400
+    
+    import datetime
+    iot_data["moisture"] = data['moisture']
+    iot_data["last_updated"] = datetime.datetime.now().strftime("%H:%M:%S")
+    
+    return jsonify({"success": True, "received": iot_data["moisture"]})
+
+@app.route('/get_moisture', methods=['GET'])
+def get_moisture():
+    return jsonify(iot_data)
+
 if __name__ == '__main__':
     # Threaded=True for responsiveness
-    app.run(debug=True, port=5000, threaded=True)
+    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
