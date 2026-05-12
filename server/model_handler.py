@@ -23,7 +23,8 @@ CLASS_NAMES = [
 
 # Initialization
 MODEL = None
-MODEL_PATH = 'model.h5'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'model.h5')
 
 def load_model():
     global MODEL
