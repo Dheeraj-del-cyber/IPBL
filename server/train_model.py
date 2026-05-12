@@ -10,8 +10,8 @@ import numpy as np
 from sklearn.utils import class_weight
 
 # Configuration
-TRAIN_DIR = 'dataset_combined/train'
-VAL_DIR = 'dataset_combined/val'
+TRAIN_DIR = '../data/dataset_combined/train'
+VAL_DIR = '../data/dataset_combined/val'
 MODEL_NAME = 'model.h5'
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 16 
