@@ -4,11 +4,23 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from PIL import Image
 import io
+import os
 import model_handler 
 import llm_handler # New Integration
 
-app = Flask(__name__)
+# Set static folder to the web directory (located one level up)
+app = Flask(__name__, static_folder='../web', static_url_path='')
 CORS(app) # Enable CORS for development
+
+@app.route('/')
+def index():
+    """Serve the index.html file from the web folder."""
+    return app.send_static_file('index.html')
+
+@app.route('/web/<path:path>')
+def send_web(path):
+    """Serve other static assets from the web folder."""
+    return app.send_static_file(path)
 
 def blur_check(image_bytes, threshold=100.0):
     """
@@ -115,7 +127,7 @@ def chat():
         messages = [messages[0]] + messages[-20:]
 
     payload = {
-        "model": "llama-3-8b-8192",
+        "model": "llama-3.1-8b-instant",
         "messages": messages,
         "temperature": 0.6,
         "max_tokens": 600

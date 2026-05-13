@@ -19,11 +19,12 @@ def get_agricultural_guidance(disease_name, crop_type="plant", moisture=None):
     This tool is strictly ONLINE and requires a valid GROQ_API_KEY.
     """
     
-    if not GROQ_API_KEY:
+    if not GROQ_API_KEY or GROQ_API_KEY.startswith("gsk_rDBp5"):
         return {
-            "full_guidance": "⚠️ GROQ API Key is missing. Please set the GROQ_API_KEY environment variable to enable AI guidance.",
+            "full_guidance": "⚠️ Your GROQ API Key is missing or invalid. Please update the GROQ_API_KEY in the 'server/.env' file to enable AI guidance.",
             "success": False
         }
+
 
     moisture_context = f"The current soil moisture level is {moisture}%." if moisture is not None else "Soil moisture data is unavailable."
     
@@ -39,7 +40,7 @@ Based on both the detected disease and the current moisture level, provide 4-5 b
 Format as plain text, no markdown headers."""
 
     payload = {
-        "model": "llama-3-8b-8192",
+        "model": "llama-3.1-8b-instant",
         "messages": [
             {"role": "system", "content": "You are a village-friendly expert agronomist. You use both visual disease detection and real-time IoT sensor data (moisture) to provide the most accurate farming advice."},
             {"role": "user", "content": prompt}
