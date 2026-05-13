@@ -444,6 +444,36 @@ function renderRealDiseaseResult(data) {
 
     const advisory = `<div class="result-card"><div class="result-card-header">🌿 AI Advisory</div><div class="result-card-body" style="white-space:pre-wrap">${data.guidance}</div></div>`;
 
+    const body = document.getElementById('resultBody');
+    const title = document.getElementById('resultTitle');
+    title.textContent = isHealthy ? 'Analysis Complete' : 'Disease Detected';
+
+    body.innerHTML = `
+        <div class="result-hero result-${type}">
+            <div class="result-emoji">${emoji}</div>
+            <div class="result-name">${disease}</div>
+            <div class="result-confidence">${conf}% Confidence</div>
+        </div>
+        <div class="result-card" style="margin:1rem 0">
+            <div class="result-card-header">📊 Analysis Metrics</div>
+            <div class="result-card-body">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem">
+                    <span>AI Confidence:</span>
+                    <span style="font-weight:700; color:var(--g-600)">${conf}%</span>
+                </div>
+                <div style="background:rgba(0,0,0,0.05); border-radius:10px; height:8px; overflow:hidden; margin-bottom:1rem">
+                    <div style="height:100%; width:${conf}%; background:var(--g-500)"></div>
+                </div>
+                
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem">
+                    <span>Soil Moisture (IoT):</span>
+                    <span style="font-weight:700; color:var(--accent-sky)">${AppState.lastMoisture || 0}%</span>
+                </div>
+                <div style="background:rgba(0,0,0,0.05); border-radius:10px; height:8px; overflow:hidden">
+                    <div style="height:100%; width:${AppState.lastMoisture || 0}%; background:var(--accent-sky)"></div>
+                </div>
+            </div>
+        </div>
         ${advisory}
         <button class="btn-glow btn-full" style="margin-top:1.5rem;width:100%" onclick="navigateTo('screenDiseaseDetect')">Scan Another Leaf</button>
         <button class="btn-ghost btn-full" style="margin-top:0.75rem;width:100%" onclick="navigateTo('screenHome')">Back to Home</button>
@@ -577,6 +607,29 @@ function renderCropResult(soil, temp, rain, season) {
         return;
     }
 
+    body.innerHTML = `
+        <div class="result-hero result-success">
+            <div class="result-emoji">🎯</div>
+            <div class="result-name">Top Picks for You</div>
+            <div class="result-confidence" style="display:flex; justify-content:center; gap:0.75rem; margin-top:0.5rem">
+                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">🌾 ${soil}</span>
+                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">📅 ${season}</span>
+            </div>
+        </div>
+        <div class="crop-results-list" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
+            ${scored.map((c, i) => `
+                <div class="feat-card glass float-card" style="padding:1.5rem; border-left: 4px solid ${i===0?'#3eaf60':'rgba(255,255,255,0.1)'}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <h3 style="font-size:1.25rem; margin-bottom:0.5rem">${c.emoji} ${c.name}</h3>
+                            <p style="font-size:0.9rem; color:var(--n-300)">${c.desc}</p>
+                        </div>
+                        <div class="glass-sm" style="padding:4px 10px; border-radius:10px; font-weight:800; color:var(--g-300); font-size:0.8rem;">
+                            ${c.score}% Match
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
         </div>
         <div class="result-card" style="margin-top:2rem">
             <div class="result-card-header">💡 Pro Tip</div>
@@ -1381,6 +1434,52 @@ function appendChatMsg(text, role, isTyping = false) {
     container.scrollTop = container.scrollHeight;
     return id;
 }
+
+/* --- Local Advisory Data --- */
+const LOCAL_ADVISORY = {
+    "Tomato Bacterial Spot": {
+        recovery: "70-85% if treated early.",
+        organic: "Spray neem oil or copper-based fungicides. Remove infected leaves.",
+        chemical: "Use Streptomycin or copper oxychloride sprays.",
+        prevention: "Use certified seeds, rotate crops, and avoid overhead irrigation."
+    },
+    "Tomato Early Blight": {
+        recovery: "80-90% with proper fungicide application.",
+        organic: "Apply Bacillus subtilis or compost tea. Improve air circulation.",
+        chemical: "Use Chlorothalonil or Mancozeb fungicides.",
+        prevention: "Rotate crops, mulch soil, and keep foliage dry."
+    },
+    "Tomato Late Blight": {
+        recovery: "Low if widespread; needs immediate action.",
+        organic: "Copper sprays and removal of all infected plants.",
+        chemical: "Use Ridomil Gold or other systemic fungicides.",
+        prevention: "Plant resistant varieties and monitor during humid weather."
+    },
+    "Tomato Leaf Mold": {
+        recovery: "Good in greenhouses with humidity control.",
+        organic: "Increase ventilation and reduce humidity. Use vinegar sprays.",
+        chemical: "Use Difenoconazole or similar fungicides.",
+        prevention: "Ensure high spacing between plants and use drip irrigation."
+    },
+    "Potato Early Blight": {
+        recovery: "High with timely fungicide use.",
+        organic: "Use crop rotation and maintain plant vigor with compost.",
+        chemical: "Apply Mancozeb or Chlorothalonil.",
+        prevention: "Avoid nitrogen deficiency and overhead watering."
+    },
+    "Potato Late Blight": {
+        recovery: "Critical; can destroy crops in days.",
+        organic: "Immediate removal of infected plants; copper sprays.",
+        chemical: "Use Metalaxyl or Cymoxanil-based products.",
+        prevention: "Use healthy tubers and avoid planting near tomatoes."
+    },
+    "Healthy": {
+        recovery: "100% - Maintain current care.",
+        organic: "Continue using organic fertilizers and natural pest control.",
+        chemical: "No chemical intervention needed.",
+        prevention: "Continue monitoring and regular soil testing."
+    }
+};
 
 /* --- Offline Fallback (when no internet) --- */
 function getLocalFallback(q, isApiError = false) {
