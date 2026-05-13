@@ -7,7 +7,7 @@ load_dotenv()
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 # Use the key from .env or fallback to hardcoded (for testing)
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 def test_key():
     print(f"Testing Key: {GROQ_API_KEY[:10]}...")

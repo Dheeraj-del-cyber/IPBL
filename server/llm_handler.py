@@ -11,7 +11,7 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # --- SET YOUR API KEY HERE ---
 # You can also set it in a .env file as: GROQ_API_KEY=your_key_here
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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") 
+GROQ_API_KEY = os.getenv("GROQ_API_KEY") 
 
 def get_agricultural_guidance(disease_name, crop_type="plant", moisture=None):
     """
@@ -19,7 +19,7 @@ def get_agricultural_guidance(disease_name, crop_type="plant", moisture=None):
     This tool is strictly ONLINE and requires a valid GROQ_API_KEY.
     """
     
-    if not GROQ_API_KEY or GROQ_API_KEY.startswith("gsk_rDBp5"):
+    if not GROQ_API_KEY:
         return {
             "full_guidance": "⚠️ Your GROQ API Key is missing or invalid. Please update the GROQ_API_KEY in the 'server/.env' file to enable AI guidance.",
             "success": False
