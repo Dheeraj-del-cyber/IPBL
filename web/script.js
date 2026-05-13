@@ -19,7 +19,7 @@ const AppState = {
 /* --- Translations --- */
 const TRANSLATIONS = {
     en: {
-        navHome: 'Home', navDetect: 'Detect', navCrops: 'Crops', navShop: 'Shop', navScan: 'Start Scan',
+        navHome: 'Home', navDetect: 'Detect', navCrops: 'Crops', navScan: 'Start Scan',
         heroBadge: '🚜 Farmer Support App',
         heroTitle1: 'Healthy Crops', heroTitle2: 'Better Income',
         heroDesc: 'Identify crop disease, get exact treatment steps, and select suitable crops by season and soil - fast and simple.',
@@ -29,17 +29,16 @@ const TRANSLATIONS = {
         secFeaturesDesc: 'Everything you need for better farming decisions — powered by AI.',
         featDetect: 'Detect Disease', featDetectDesc: 'Scan crop leaves with your camera for instant AI disease diagnosis.',
         featCrop: 'Suggest Crop', featCropDesc: 'Get the best crops for your soil type and climate for maximum yield.',
-        featShop: 'Agri Shop', featShopDesc: 'Buy pesticides, fertilizers, tools and seeds online.',
         featVoice: 'Voice Input', featVoiceDesc: 'Speak your question in your language. Our AI will guide you.',
         secDashboard: 'Dashboard', secDashboardTitle: 'Farm Metrics', metricTemp: 'Temp', metricHumid: 'Humid', metricMoist: 'Moisture', metricHealth: 'Health',
-        back: 'Back', pageDetect: 'Disease Detection', pageCrop: 'Crop Recommendation', pageShop: 'Agri Shop',
+        back: 'Back', pageDetect: 'Disease Detection', pageCrop: 'Crop Recommendation',
         cameraPrompt: 'Take a photo of the affected leaf', cameraHint: 'Use camera or upload an image',
         upload: 'Upload', flip: 'Flip', retake: 'Retake', analyze: 'Analyze Now',
         labelSoil: 'Soil Type', labelTemp: 'Temperature', labelRain: 'Rainfall', labelSeason: 'Season',
         getSuggestion: 'Get Recommendation', searchPH: 'Search crops or diseases...'
     },
     hi: {
-        navHome: 'होम', navDetect: 'पहचानें', navCrops: 'फसलें', navShop: 'दुकान', navScan: 'स्कैन करें',
+        navHome: 'होम', navDetect: 'पहचानें', navCrops: 'फसलें', navScan: 'स्कैन करें',
         heroBadge: '🌱 AI-संचालित कृषि',
         heroTitle1: 'स्मार्ट खेती', heroTitle2: 'हुई आसान',
         heroDesc: 'पौधों की बीमारियों को तुरंत पहचानें, AI फसल सुझाव प्राप्त करें, और खेती का ज्ञान प्राप्त करें - सब कुछ सरल।',
@@ -49,17 +48,16 @@ const TRANSLATIONS = {
         secFeaturesDesc: 'बेहतर खेती के फैसलों के लिए सब कुछ — AI द्वारा संचालित।',
         featDetect: 'बीमारी पहचानें', featDetectDesc: 'त्वरित बीमारी निदान के लिए अपने कैमरे से पत्तियों को स्कैन करें।',
         featCrop: 'फसल सुझाव', featCropDesc: 'अपनी मिट्टी और जलवायु के लिए सर्वोत्तम फसलें प्राप्त करें।',
-        featShop: 'कृषि दुकान', featShopDesc: 'कीटनाशक, उर्वरक, औजार और बीज ऑनलाइन खरीदें।',
         featVoice: 'वॉयस इनपुट', featVoiceDesc: 'अपनी भाषा में बोलें। हमारी AI आपकी सहायता करेगी।',
         secDashboard: 'डैशबोर्ड', secDashboardTitle: 'खेत के आँकड़े', metricTemp: 'तापमान', metricHumid: 'नमी', metricMoist: 'मिट्टी की नमी', metricHealth: 'मिट्टी का स्वास्थ्य',
-        back: 'पीछे', pageDetect: 'बीमारी की पहचान', pageCrop: 'फसल सुझाव', pageShop: 'कृषि दुकान',
+        back: 'पीछे', pageDetect: 'बीमारी की पहचान', pageCrop: 'फसल सुझाव',
         cameraPrompt: 'प्रभावित पत्ते की फोटो लें', cameraHint: 'कैमरे का उपयोग करें या इमेज अपलोड करें',
         upload: 'अपलोड', flip: 'पलटें', retake: 'फिर से लें', analyze: 'अभी विश्लेषण करें',
         labelSoil: 'मिट्टी का प्रकार', labelTemp: 'तापमान', labelRain: 'वर्षा', labelSeason: 'मौसम',
         getSuggestion: 'सुझाव प्राप्त करें', searchPH: 'फसलें या बीमारियाँ खोजें...'
     },
     kn: {
-        navHome: 'ಹೋಮ್', navDetect: 'ಗುರುತಿಸಿ', navCrops: 'ಬೆಳೆಗಳು', navShop: 'ಅಂಗಡಿ', navScan: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
+        navHome: 'ಹೋಮ್', navDetect: 'ಗುರುತಿಸಿ', navCrops: 'ಬೆಳೆಗಳು', navScan: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
         heroBadge: '🌱 AI-ಚಾಲಿತ ಕೃಷಿ',
         heroTitle1: 'ಸ್ಮಾರ್ಟ್ ಕೃಷಿ', heroTitle2: 'ಸುಲಭವಾಗಿದೆ',
         heroDesc: 'ಸಸ್ಯ ರೋಗಗಳನ್ನು ತಕ್ಷಣ ಪತ್ತೆಹಚ್ಚಿ, AI ಬೆಳೆ ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ ಮತ್ತು ಕೃಷಿ ಜ್ಞಾನವನ್ನು ಪಡೆದುಕೊಳ್ಳಿ - ಎಲ್ಲವೂ ಸರಳ.',
@@ -68,15 +66,14 @@ const TRANSLATIONS = {
         secFeatures: 'ವೈಶಿಷ್ಟ್ಯಗಳು', secFeaturesTitle: 'ಸ್ಮಾರ್ಟ್ ಕೃಷಿ ಪರಿಕರಗಳು', secFeaturesDesc: 'ಉತ್ತಮ ಕೃಷಿ ನಿರ್ಧಾರಗಳಿಗೆ ಎಲ್ಲವೂ.',
         featDetect: 'ರೋಗ ಪತ್ತೆಹಚ್ಚಿ', featDetectDesc: 'ತಕ್ಷಣ AI ರೋಗ ನಿರ್ಣಯಕ್ಕಾಗಿ ಎಲೆಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.',
         featCrop: 'ಬೆಳೆ ಶಿಫಾರಸು', featCropDesc: 'ನಿಮ್ಮ ಜಮೀನಿಗೆ ಉತ್ತಮ ಬೆಳೆಗಳನ್ನು ಹುಡುಕಿ.',
-        featShop: 'ಕೃಷಿ ಅಂಗಡಿ', featShopDesc: 'ಕೀಟನಾಶಕ, ಗೊಬ್ಬರ, ಉಪಕರಣ ಮತ್ತು ಬೀಜಗಳನ್ನು ಖರೀದಿಸಿ.',
         secDashboard: 'ಡ್ಯಾಶ್‌ಬೋರ್ಡ್', metricTemp: 'ತಾಪಮಾನ', metricHumid: 'ಆರ್ದ್ರತೆ', metricMoist: 'ಮಣ್ಣಿನ ತೇವಾಂಶ', metricHealth: 'ಮಣ್ಣಿನ ಆರೋಗ್ಯ',
-        back: 'ಹಿಂದೆ', pageDetect: 'ರೋಗ ಪತ್ತೆಹಚ್ಚುವಿಕೆ', pageCrop: 'ಬೆಳೆ ಶಿಫಾರಸು', pageShop: 'ಕೃಷಿ ಅಂಗಡಿ',
+        back: 'ಹಿಂದೆ', pageDetect: 'ರೋಗ ಪತ್ತೆಹಚ್ಚುವಿಕೆ', pageCrop: 'ಬೆಳೆ ಶಿಫಾರಸು',
         cameraPrompt: 'ಬಾಧಿತ ಎಲೆಯ ಫೋಟೋ ತೆಗೆದುಕೊಳ್ಳಿ', flip: 'ತಿರುಗಿಸಿ', retake: 'ಮತ್ತೆ ತೆಗೆಯಿರಿ', analyze: 'ವಿಶ್ಲೇಷಿಸಿ',
         labelSoil: 'ಮಣ್ಣಿನ ಪ್ರಕಾರ', labelTemp: 'ತಾಪಮಾನ', labelRain: 'ಮಳೆ', labelSeason: 'ಋತು',
         getSuggestion: 'ಶಿಫಾರಸು ಪಡೆಯಿರಿ', searchPH: 'ಬೆಳೆ ಅಥವಾ ರೋಗಗಳನ್ನು ಹುಡುಕಿ...'
     },
     te: {
-        navHome: 'హోమ్', navDetect: 'గుర్తించండి', navCrops: 'పంటలు', navShop: 'షాప్', navScan: 'స్కాన్ చేయండి',
+        navHome: 'హోమ్', navDetect: 'గుర్తించండి', navCrops: 'పంటలు', navScan: 'స్కాన్ చేయండి',
         heroBadge: '🌱 AI-ఆధారిత వ్యవసాయం',
         heroTitle1: 'స్మార్ట్ వ్యవసాయం', heroTitle2: 'సులభంగా',
         heroDesc: 'మొక్కల వ్యాధులను తక్షణమే గుర్తించండి, AI పంట సిఫార్సులను పొందండి మరియు వ్యవసాయ జ్ఞానాన్ని యాక్సెస్ చేయండి - అంతా సరళంగా.',
@@ -85,26 +82,24 @@ const TRANSLATIONS = {
         secFeatures: 'ఫీచర్లు', secFeaturesTitle: 'స్మార్ట్ వ్యవసాయ సాధనాలు', secFeaturesDesc: 'మెరుగైన వ్యవసాయ నిర్ణయాలకు అన్నీ.',
         featDetect: 'వ్యాధి గుర్తింపు', featDetectDesc: 'తక్షణ AI రోగ నిర్ధారణ కోసం ఆకులను స్కాన్ చేయండి.',
         featCrop: 'పంట సూచన', featCropDesc: 'మీ పొలానికి అత్యుత్తమ పంటలు కనుగొనండి.',
-        featShop: 'వ్యవసాయ దుకాణం', featShopDesc: 'పురుగుమందులు, ఎరువులు, పరికరాలు & విత్తనాలు కొనండి.',
         secDashboard: 'డ్యాష్‌బోర్డ్', metricTemp: 'ఉష్ణోగ్రత', metricHumid: 'తేమ', metricMoist: 'మట్టి తేమ', metricHealth: 'మట్టి ఆరోగ్యం',
-        back: 'వెనుకకు', pageDetect: 'వ్యాధి గుర్తింపు', pageCrop: 'పంట సిఫార్సు', pageShop: 'వ్యవసాయ దుకాణం',
+        back: 'వెనుకకు', pageDetect: 'వ్యాధి గుర్తింపు', pageCrop: 'పంట సిఫార్సు',
         cameraPrompt: 'ప్రభావిత ఆకు ఫోటో తీయండి', flip: 'తిప్పండి', retake: 'మళ్ళీ తీయండి', analyze: 'విశ్లేషించండి',
         labelSoil: 'మట్టి రకం', labelTemp: 'ఉష్ణోగ్రత', labelRain: 'వర్షపాతం', labelSeason: 'సీజన్',
         getSuggestion: 'సూచన పొందండి', searchPH: 'పంటలు లేదా వ్యాధుల కోసం వెతకండి...'
     },
     ta: {
-        navHome: 'முகப்பு', navDetect: 'கண்டறி', navCrops: 'பயிர்கள்', navShop: 'கடை', navScan: 'ஸ்கேன் செய்',
+        navHome: 'முகப்பு', navDetect: 'கண்டறி', navCrops: 'பயிர்கள்', navScan: 'ஸ்கேன் செய்',
         heroBadge: '🌱 AI-ஆல் இயக்கப்படும் விவசாயம்',
         heroTitle1: 'ஸ்மார்ட் விவசாயம்', heroTitle2: 'எளிதாக',
         heroDesc: 'தாவர நோய்களை உடனடியாகக் கண்டறியவும், AI பயிர் பரிந்துரைகளைப் பெறவும் மற்றும் விவசாய அறிவை அணுகவும் - அனைத்தும் எளிமையாக.',
         heroBtn1: 'நோயைக் கண்டறி', heroBtn2: 'பயிர் ஆலோசனை பெறு',
         statCrops: 'பயிர்கள்', statDiseases: 'நோய்கள்', statLangs: 'மொழிகள்',
-        secFeatures: 'அம்சங்கள்', secFeaturesTitle: 'ஸ்மார்ட் விவசாய கருவிகள்', secFeaturesDesc: 'சிறந்த விவசாய முடிவுகளுக்கு அனைத்தும்.',
+        secFeatures: 'அம்சங்கள்', secFeaturesTitle: 'ஸ்கார்ட் விவசாய கருவிகள்', secFeaturesDesc: 'சிறந்த விவசாய முடிவுகளுக்கு அனைத்தும்.',
         featDetect: 'நோய் கண்டறிதல்', featDetectDesc: 'உடனடி AI நோய் கண்டறிவதற்கு இலைகளை ஸ்கேன் செய்யுங்கள்.',
         featCrop: 'பயிர் பரிந்துரை', featCropDesc: 'உங்கள் பண்ணைக்கு சிறந்த பயிர்களை கண்டறியுங்கள்.',
-        featShop: 'விவசாய கடை', featShopDesc: 'பூச்சிக்கொல்லிகள், உரங்கள், கருவிகள் & விதைகளை வாங்குங்கள்.',
         secDashboard: 'டாஷ்போர்டு', metricTemp: 'வெப்பநிலை', metricHumid: 'ஈரப்பதம்', metricMoist: 'மண் ஈரப்பதம்', metricHealth: 'மண் ஆரோக்கியம்',
-        back: 'பின்னால்', pageDetect: 'நோய் கண்டறிதல்', pageCrop: 'பயிர் பரிந்துரை', pageShop: 'விவசாய கடை',
+        back: 'பின்னால்', pageDetect: 'நோய் கண்டறிதல்', pageCrop: 'பயிர் பரிந்துரை',
         cameraPrompt: 'பாதிக்கப்பட்ட இலையை புகைப்படம் எடுக்கவும்', flip: 'திருப்பு', retake: 'மீண்டும் எடு', analyze: 'பகுப்பாய்வு செய்',
         labelSoil: 'மண் வகை', labelTemp: 'வெப்பநிலை', labelRain: 'மழைப்பொழிவு', labelSeason: 'பருவம்',
         getSuggestion: 'பரிந்துரை பெறு', searchPH: 'பயிர்கள் அல்லது நோய்களைத் தேடுங்கள்...'
@@ -178,7 +173,6 @@ function navigateTo(screenId) {
     // Sub-initializers
     if (screenId === 'screenDiseaseDetect') initUploadZone();
     if (screenId === 'screenCropForm') initCropForm();
-    if (screenId === 'screenEcommerce') renderProducts(currentCategory);
     if (screenId === 'screenIoT') startIoTMonioting();
     else stopIoTMonioting();
 }
@@ -450,46 +444,7 @@ function renderRealDiseaseResult(data) {
 
     const advisory = `<div class="result-card"><div class="result-card-header">🌿 AI Advisory</div><div class="result-card-body" style="white-space:pre-wrap">${data.guidance}</div></div>`;
 
-    // Get product recommendations for the detected disease
-    const recommendedProducts = isHealthy ? [] : getDiseaseProductRecommendations(disease);
-    const productRecommendations = renderProductRecommendations(
-        recommendedProducts, 
-        '🛒 Recommended Treatments', 
-        'disease'
-    );
-
-    const body = document.getElementById('resultBody');
-    const title = document.getElementById('resultTitle');
-    title.textContent = isHealthy ? 'Analysis Complete' : 'Disease Detected';
-
-    body.innerHTML = `
-        <div class="result-hero result-${type}">
-            <div class="result-emoji">${emoji}</div>
-            <div class="result-name">${disease}</div>
-            <div class="result-confidence">${conf}% Confidence</div>
-        </div>
-        <div class="result-card" style="margin:1rem 0">
-            <div class="result-card-header">📊 Analysis Metrics</div>
-            <div class="result-card-body">
-                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem">
-                    <span>AI Confidence:</span>
-                    <span style="font-weight:700; color:var(--g-600)">${conf}%</span>
-                </div>
-                <div style="background:rgba(0,0,0,0.05); border-radius:10px; height:8px; overflow:hidden; margin-bottom:1rem">
-                    <div style="height:100%; width:${conf}%; background:var(--g-500)"></div>
-                </div>
-                
-                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem">
-                    <span>Soil Moisture (IoT):</span>
-                    <span style="font-weight:700; color:var(--accent-sky)">${data.moisture || 0}%</span>
-                </div>
-                <div style="background:rgba(0,0,0,0.05); border-radius:10px; height:8px; overflow:hidden">
-                    <div style="height:100%; width:${data.moisture || 0}%; background:var(--accent-sky)"></div>
-                </div>
-            </div>
-        </div>
         ${advisory}
-        ${productRecommendations}
         <button class="btn-glow btn-full" style="margin-top:1.5rem;width:100%" onclick="navigateTo('screenDiseaseDetect')">Scan Another Leaf</button>
         <button class="btn-ghost btn-full" style="margin-top:0.75rem;width:100%" onclick="navigateTo('screenHome')">Back to Home</button>
     `;
@@ -622,39 +577,7 @@ function renderCropResult(soil, temp, rain, season) {
         return;
     }
 
-    // Get product recommendations for all recommended crops
-    const recommendedProducts = getAllCropProductRecommendations(scored);
-    const productRecommendations = renderProductRecommendations(
-        recommendedProducts, 
-        `🛒 Essential Products for Your Recommended Crops`, 
-        'crop'
-    );
-
-    body.innerHTML = `
-        <div class="result-hero result-success">
-            <div class="result-emoji">🎯</div>
-            <div class="result-name">Top Picks for You</div>
-            <div class="result-confidence" style="display:flex; justify-content:center; gap:0.75rem; margin-top:0.5rem">
-                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">🌾 ${soil}</span>
-                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">📅 ${season}</span>
-            </div>
         </div>
-        <div class="crop-results-list" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
-            ${scored.map((c, i) => `
-                <div class="feat-card glass float-card" style="padding:1.5rem; border-left: 4px solid ${i===0?'#3eaf60':'rgba(255,255,255,0.1)'}">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div>
-                            <h3 style="font-size:1.25rem; margin-bottom:0.5rem">${c.emoji} ${c.name}</h3>
-                            <p style="font-size:0.9rem; color:var(--n-300)">${c.desc}</p>
-                        </div>
-                        <div class="glass-sm" style="padding:4px 10px; border-radius:10px; font-weight:800; color:var(--g-300); font-size:0.8rem;">
-                            ${c.score}% Match
-                        </div>
-                    </div>
-                </div>
-            `).join('')}
-        </div>
-        ${productRecommendations}
         <div class="result-card" style="margin-top:2rem">
             <div class="result-card-header">💡 Pro Tip</div>
             <div class="result-card-body">The top choice is based on historical yields in similar conditions. Consider crop rotation after this cycle for soil health.</div>
@@ -945,477 +868,11 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         hideLoading();
         closeLangMenu();
-        if (!document.getElementById('cartModal').classList.contains('hidden')) {
-            toggleCart();
-        }
+
     }
 });
 
-/* ================================================
-   PRODUCT RECOMMENDATIONS
-   ================================================ */
 
-// Product recommendation mappings
-const DISEASE_PRODUCT_MAP = {
-    "Apple Scab": [1, 2], // Neem Oil, Copper Fungicide
-    "Bacterial Spot": [1, 3], // Neem Oil, Insecticidal Soap
-    "Black Rot": [2, 1], // Copper Fungicide, Neem Oil
-    "Cedar Apple Rust": [2, 1], // Copper Fungicide, Neem Oil
-    "Early Blight": [2, 1], // Copper Fungicide, Neem Oil
-    "Esca (Black Measles)": [2, 1], // Copper Fungicide, Neem Oil
-    "Leaf Blight": [2, 1], // Copper Fungicide, Neem Oil
-    "Powdery Mildew": [1, 2], // Neem Oil, Copper Fungicide
-    "Downy Mildew": [2, 1], // Copper Fungicide, Neem Oil
-    "Rust": [2, 1], // Copper Fungicide, Neem Oil
-    "Root Rot": [6, 5], // Vermicompost, NPK Fertilizer
-    "Leaf Curl": [1, 3], // Neem Oil, Insecticidal Soap
-    "Septoria Leaf Spot": [2, 1], // Copper Fungicide, Neem Oil
-    "Yellow Leaf Curl Virus": [1, 3] // Neem Oil, Insecticidal Soap
-};
-
-const CROP_PRODUCT_MAP = {
-    "Rice": [5, 6, 9], // NPK, Organic Compost, Garden Sprayer
-    "Wheat": [5, 6, 10], // NPK, Organic Compost, Soil Testing Kit
-    "Sugarcane": [5, 7, 9], // NPK, Vermicompost, Garden Sprayer
-    "Cotton": [5, 8, 9], // NPK, Bone Meal, Garden Sprayer
-    "Maize": [5, 6, 9], // NPK, Organic Compost, Garden Sprayer
-    "Groundnut": [7, 6, 9], // Vermicompost, Organic Compost, Garden Sprayer
-    "Mustard": [8, 6, 10], // Bone Meal, Organic Compost, Soil Testing Kit
-    "Tomato": [5, 6, 13], // NPK, Organic Compost, Tomato Seeds
-    "Potato": [7, 6, 10], // Vermicompost, Organic Compost, Soil Testing Kit
-    "Millet": [8, 6, 10] // Bone Meal, Organic Compost, Soil Testing Kit
-};
-
-function getDiseaseProductRecommendations(disease) {
-    const productIds = DISEASE_PRODUCT_MAP[disease] || [];
-    return productIds.map(id => {
-        // Find product across all categories
-        for (const category in PRODUCTS) {
-            const product = PRODUCTS[category].find(p => p.id === id);
-            if (product) return product;
-        }
-        return null;
-    }).filter(p => p !== null);
-}
-
-function getCropProductRecommendations(cropName) {
-    const productIds = CROP_PRODUCT_MAP[cropName] || [];
-    return productIds.map(id => {
-        // Find product across all categories
-        for (const category in PRODUCTS) {
-            const product = PRODUCTS[category].find(p => p.id === id);
-            if (product) return product;
-        }
-        return null;
-    }).filter(p => p !== null);
-}
-
-function getAllCropProductRecommendations(recommendedCrops) {
-    const allProducts = new Map(); // Use Map to avoid duplicates
-    
-    recommendedCrops.forEach(crop => {
-        const products = getCropProductRecommendations(crop.name);
-        products.forEach(product => {
-            if (!allProducts.has(product.id)) {
-                allProducts.set(product.id, {
-                    ...product,
-                    relevantCrops: [crop.name]
-                });
-            } else {
-                // Add crop to existing product's relevant crops
-                allProducts.get(product.id).relevantCrops.push(crop.name);
-            }
-        });
-    });
-    
-    return Array.from(allProducts.values());
-}
-
-function renderProductRecommendations(products, title, context) {
-    if (products.length === 0) return '';
-    
-    return `
-        <div class="result-card" style="margin-top:1.5rem">
-            <div class="result-card-header">${title}</div>
-            <div class="product-recommendations" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-top:1rem">
-                ${products.map(product => `
-                    <div class="product-rec-card glass-sm" style="padding:1rem; border-radius:12px; cursor:pointer; transition:all 0.3s ease" onclick="addToCart(${product.id}); this.style.background='rgba(62,175,96,0.2)'; setTimeout(() => this.style.background='var(--glass-bg)', 1000)">
-                        <div style="text-align:center; margin-bottom:0.5rem">
-                            <div style="font-size:2rem; margin-bottom:0.25rem">${product.emoji}</div>
-                            <div style="font-weight:600; font-size:0.9rem; color:white">${product.name}</div>
-                        </div>
-                        <div style="text-align:center; color:var(--g-300); font-weight:700; margin-bottom:0.5rem">₹${product.price}</div>
-                        <div style="text-align:center">
-                            <div class="product-stars" style="font-size:0.8rem; margin-bottom:0.25rem">${'⭐'.repeat(Math.floor(product.rating))}</div>
-                            <div style="font-size:0.7rem; color:var(--n-400)">${product.reviews} reviews</div>
-                        </div>
-                        ${product.relevantCrops ? `
-                            <div style="text-align:center; margin:0.5rem 0; font-size:0.7rem; color:var(--n-300)">
-                                For: ${product.relevantCrops.join(', ')}
-                            </div>
-                        ` : ''}
-                        <button class="add-to-cart-btn" style="width:100%; padding:8px; margin-top:0.5rem; font-size:0.8rem" onclick="addToCart(${product.id}); event.stopPropagation();">
-                            Add to Cart
-                        </button>
-                    </div>
-                `).join('')}
-            </div>
-            <div style="text-align:center; margin-top:1rem">
-                <button class="btn-ghost" style="font-size:0.9rem" onclick="navigateTo('screenEcommerce')">View All Products →</button>
-            </div>
-        </div>
-    `;
-}
-
-/* ================================================
-   E-COMMERCE FUNCTIONALITY
-   ================================================ */
-
-// Cart state
-let cart = [];
-let currentCategory = 'pesticides';
-
-// Product database
-const PRODUCTS = {
-    pesticides: [
-        {
-            id: 1,
-            name: 'Neem Oil Pesticide',
-            emoji: '🌿',
-            price: 450,
-            rating: 4.5,
-            reviews: 128,
-            description: 'Organic neem-based pesticide. Effective against aphids, mites, and whiteflies.',
-            category: 'pesticides'
-        },
-        {
-            id: 2,
-            name: 'Copper Fungicide',
-            emoji: '🟫',
-            price: 320,
-            rating: 4.3,
-            reviews: 95,
-            description: 'Controls fungal diseases like blight and mildew. Safe for organic farming.',
-            category: 'pesticides'
-        },
-        {
-            id: 3,
-            name: 'Insecticidal Soap',
-            emoji: '🧼',
-            price: 280,
-            rating: 4.2,
-            reviews: 67,
-            description: 'Natural soap-based insecticide. Kills soft-bodied insects on contact.',
-            category: 'pesticides'
-        },
-        {
-            id: 4,
-            name: 'Pyrethrum Extract',
-            emoji: '🌸',
-            price: 520,
-            rating: 4.6,
-            reviews: 89,
-            description: 'Natural pyrethrum-based insecticide. Fast-acting against flying insects.',
-            category: 'pesticides'
-        }
-    ],
-    fertilizers: [
-        {
-            id: 5,
-            name: 'NPK 20-20-20 Fertilizer',
-            emoji: '🌱',
-            price: 380,
-            rating: 4.4,
-            reviews: 156,
-            description: 'Balanced NPK fertilizer for all crops. Promotes healthy growth and yield.',
-            category: 'fertilizers'
-        },
-        {
-            id: 6,
-            name: 'Organic Compost',
-            emoji: '♻️',
-            price: 250,
-            rating: 4.7,
-            reviews: 203,
-            description: 'Premium organic compost. Improves soil structure and provides nutrients.',
-            category: 'fertilizers'
-        },
-        {
-            id: 7,
-            name: 'Vermicompost',
-            emoji: '🪱',
-            price: 420,
-            rating: 4.5,
-            reviews: 134,
-            description: 'Earthworm compost. Rich in beneficial microbes and plant nutrients.',
-            category: 'fertilizers'
-        },
-        {
-            id: 8,
-            name: 'Bone Meal Fertilizer',
-            emoji: '🦴',
-            price: 290,
-            rating: 4.1,
-            reviews: 78,
-            description: 'Natural phosphorus source. Excellent for root development and flowering.',
-            category: 'fertilizers'
-        }
-    ],
-    tools: [
-        {
-            id: 9,
-            name: 'Garden Sprayer 5L',
-            emoji: '💧',
-            price: 850,
-            rating: 4.3,
-            reviews: 92,
-            description: 'Professional garden sprayer. Adjustable nozzle, comfortable grip.',
-            category: 'tools'
-        },
-        {
-            id: 10,
-            name: 'Soil Testing Kit',
-            emoji: '🧪',
-            price: 650,
-            rating: 4.6,
-            reviews: 145,
-            description: 'Complete soil testing kit. Tests pH, nitrogen, phosphorus, and potassium.',
-            category: 'tools'
-        },
-        {
-            id: 11,
-            name: 'Pruning Shears',
-            emoji: '✂️',
-            price: 320,
-            rating: 4.4,
-            reviews: 87,
-            description: 'Professional pruning shears. Sharp blades, ergonomic design.',
-            category: 'tools'
-        },
-        {
-            id: 12,
-            name: 'Garden Gloves',
-            emoji: '🧤',
-            price: 180,
-            rating: 4.2,
-            reviews: 156,
-            description: 'Durable garden gloves. Waterproof and puncture-resistant.',
-            category: 'tools'
-        }
-    ],
-    seeds: [
-        {
-            id: 13,
-            name: 'Tomato Seeds (Hybrid)',
-            emoji: '🍅',
-            price: 120,
-            rating: 4.5,
-            reviews: 203,
-            description: 'High-yielding tomato seeds. Disease-resistant variety.',
-            category: 'seeds'
-        },
-        {
-            id: 14,
-            name: 'Chili Seeds (Hot)',
-            emoji: '🌶️',
-            price: 90,
-            rating: 4.3,
-            reviews: 178,
-            description: 'Premium chili seeds. High capsaicin content, excellent flavor.',
-            category: 'seeds'
-        },
-        {
-            id: 15,
-            name: 'Basil Seeds',
-            emoji: '🌿',
-            price: 85,
-            rating: 4.4,
-            reviews: 134,
-            description: 'Aromatic basil seeds. Perfect for kitchen gardening.',
-            category: 'seeds'
-        },
-        {
-            id: 16,
-            name: 'Lettuce Seeds',
-            emoji: '🥬',
-            price: 95,
-            rating: 4.1,
-            reviews: 89,
-            description: 'Crisp lettuce seeds. Fast-growing, cool weather variety.',
-            category: 'seeds'
-        }
-    ]
-};
-
-function switchShopCategory(category) {
-    currentCategory = category;
-    
-    // Update active tab
-    document.querySelectorAll('.shop-tab').forEach(tab => {
-        tab.classList.toggle('active', tab.getAttribute('data-category') === category);
-    });
-    
-    // Render products
-    renderProducts(category);
-}
-
-function renderProducts(category) {
-    const grid = document.getElementById('productsGrid');
-    const products = PRODUCTS[category] || [];
-    
-    grid.innerHTML = products.map(product => `
-        <div class="product-card" onclick="showProductDetails(${product.id})">
-            <div class="product-image">${product.emoji}</div>
-            <div class="product-name">${product.name}</div>
-            <div class="product-desc">${product.description}</div>
-            <div class="product-price">₹${product.price}</div>
-            <div class="product-rating">
-                <div class="product-stars">${'⭐'.repeat(Math.floor(product.rating))}</div>
-                <span class="product-reviews">(${product.reviews})</span>
-            </div>
-            <button class="add-to-cart-btn" onclick="addToCart(${product.id}); event.stopPropagation();">
-                Add to Cart
-            </button>
-        </div>
-    `).join('');
-}
-
-function showProductDetails(productId) {
-    // Find product across all categories
-    let product = null;
-    for (const category in PRODUCTS) {
-        product = PRODUCTS[category].find(p => p.id === productId);
-        if (product) break;
-    }
-    
-    if (!product) return;
-    
-    // For now, just add to cart. Could expand to show detailed view
-    addToCart(productId);
-}
-
-function addToCart(productId) {
-    // Find product
-    let product = null;
-    for (const category in PRODUCTS) {
-        product = PRODUCTS[category].find(p => p.id === productId);
-        if (product) break;
-    }
-    
-    if (!product) return;
-    
-    // Check if already in cart
-    const existingItem = cart.find(item => item.id === productId);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            ...product,
-            quantity: 1
-        });
-    }
-    
-    updateCartUI();
-    
-    // Visual feedback
-    const btn = event.target;
-    if (btn) {
-        const originalText = btn.textContent;
-        btn.textContent = '✓ Added';
-        btn.classList.add('added');
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.classList.remove('added');
-        }, 1500);
-    }
-}
-
-function updateCartUI() {
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-    // Update cart count
-    const cartCountEl = document.getElementById('cartCount');
-    if (count > 0) {
-        cartCountEl.textContent = count;
-        cartCountEl.style.display = 'inline-block';
-    } else {
-        cartCountEl.style.display = 'none';
-    }
-    
-    // Update cart total
-    document.getElementById('cartTotal').textContent = total;
-    
-    // Update cart items
-    const cartItemsEl = document.getElementById('cartItems');
-    cartItemsEl.innerHTML = cart.map(item => `
-        <div class="cart-item">
-            <div class="cart-item-image">${item.emoji}</div>
-            <div class="cart-item-details">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">₹${item.price}</div>
-                <div class="cart-item-quantity">
-                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                </div>
-            </div>
-            <div class="cart-item-remove" onclick="removeFromCart(${item.id})">🗑️</div>
-        </div>
-    `).join('');
-}
-
-function updateQuantity(productId, newQuantity) {
-    if (newQuantity <= 0) {
-        removeFromCart(productId);
-        return;
-    }
-    
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        item.quantity = newQuantity;
-        updateCartUI();
-    }
-}
-
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCartUI();
-}
-
-function toggleCart() {
-    const modal = document.getElementById('cartModal');
-    modal.classList.toggle('hidden');
-}
-
-function checkout() {
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-    // Simple checkout simulation
-    alert(`Order placed successfully! Total: ₹${total}\n\nWe'll contact you soon for delivery details.`);
-    
-    // Clear cart
-    cart = [];
-    updateCartUI();
-    toggleCart();
-}
-
-// Initialize e-commerce when navigating to shop
-if (typeof navigateTo !== 'undefined') {
-    const originalNavigateTo = navigateTo;
-    navigateTo = function(screenId) {
-        originalNavigateTo(screenId);
-        if (screenId === 'screenEcommerce') {
-            renderProducts(currentCategory);
-        }
-    };
-}
 
 /* --- Voice Assistant Functionality --- */
 
