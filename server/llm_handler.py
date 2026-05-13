@@ -28,25 +28,27 @@ def get_agricultural_guidance(disease_name, crop_type="plant", moisture=None):
 
     moisture_context = f"The current soil moisture level is {moisture}%." if moisture is not None else "Soil moisture data is unavailable."
     
-    prompt = f"""Expert Mode: A farmer has a {crop_type} plant with '{disease_name}'. 
+    prompt = f"""A farmer has a {crop_type} plant with '{disease_name}'. 
 {moisture_context}
 
-Based on both the detected disease and the current moisture level, provide 4-5 bullet points including:
-- Quick Recovery Steps (Adjusted for moisture: e.g., if too wet, suggest drainage; if too dry, suggest irrigation)
-- Best Organic/Sustainable Cure
-- Recommended Chemical (if organic fails)
-- Future Prevention Strategy (Specific to irrigation and moisture management)
+Provide an expert agricultural treatment plan in JSON format with these exact keys:
+- 'recovery': list of strings (quick recovery steps)
+- 'organic': list of strings (organic/sustainable cures)
+- 'chemical': list of strings (recommended chemical solutions)
+- 'prevention': list of strings (future prevention strategies)
 
-Format as plain text, no markdown headers."""
+Ensure the advice is specific to the detected disease and current moisture level."""
 
     payload = {
         "model": "llama-3.1-8b-instant",
         "messages": [
-            {"role": "system", "content": "You are a village-friendly expert agronomist. You use both visual disease detection and real-time IoT sensor data (moisture) to provide the most accurate farming advice."},
+            {"role": "system", "content": "You are a professional agronomist. Output ONLY valid JSON."},
             {"role": "user", "content": prompt}
         ],
-        "temperature": 0.5
+        "temperature": 0.4,
+        "response_format": { "type": "json_object" }
     }
+
 
     try:
         response = requests.post(GROQ_API_URL, 

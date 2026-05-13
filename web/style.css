@@ -2208,3 +2208,72 @@ input[type=range].crop-range::-webkit-slider-thumb {
 }
 
 
+/* --- Advisory Grid & Cards --- */
+.advisory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.advisory-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--sh-md);
+    transition: all 0.3s var(--easing);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.advisory-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sh-lg);
+    border-color: var(--g-200);
+}
+
+.advisory-icon {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+.advisory-card h4 {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.advisory-card ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.advisory-card li {
+    font-size: 0.9rem;
+    color: var(--n-600);
+    line-height: 1.5;
+}
+
+/* Specific Card Themes */
+.advisory-recovery { border-top: 4px solid var(--accent-rose); }
+.advisory-recovery h4 { color: #e11d48; }
+
+.advisory-organic { border-top: 4px solid var(--g-500); }
+.advisory-organic h4 { color: var(--g-700); }
+
+.advisory-chemical { border-top: 4px solid var(--soil-500); }
+.advisory-chemical h4 { color: var(--soil-700); }
+
+.advisory-prevention { border-top: 4px solid var(--accent-sky); }
+.advisory-prevention h4 { color: #0284c7; }
+
+@media (max-width: 600px) {
+    .advisory-grid {
+        grid-template-columns: 1fr;
+    }
+}

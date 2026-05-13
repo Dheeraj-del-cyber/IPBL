@@ -442,7 +442,37 @@ function renderRealDiseaseResult(data) {
     const emoji = isHealthy ? '✅' : '🍂';
     const type = isHealthy ? 'success' : 'danger';
 
-    const advisory = `<div class="result-card"><div class="result-card-header">🌿 AI Advisory</div><div class="result-card-body" style="white-space:pre-wrap">${data.guidance}</div></div>`;
+    let advisoryHtml = '';
+    try {
+        const g = JSON.parse(data.guidance);
+        advisoryHtml = `
+            <div class="advisory-grid">
+                <div class="advisory-card advisory-recovery">
+                    <div class="advisory-icon">⚡</div>
+                    <h4>Quick Recovery</h4>
+                    <ul>${g.recovery.map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+                <div class="advisory-card advisory-organic">
+                    <div class="advisory-icon">🌿</div>
+                    <h4>Organic Cure</h4>
+                    <ul>${g.organic.map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+                <div class="advisory-card advisory-chemical">
+                    <div class="advisory-icon">🧪</div>
+                    <h4>Chemical Info</h4>
+                    <ul>${g.chemical.map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+                <div class="advisory-card advisory-prevention">
+                    <div class="advisory-icon">🛡️</div>
+                    <h4>Prevention</h4>
+                    <ul>${g.prevention.map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+            </div>
+        `;
+    } catch (e) {
+        // Fallback to plain text if JSON parsing fails
+        advisoryHtml = `<div class="result-card"><div class="result-card-header">🌿 AI Advisory</div><div class="result-card-body" style="white-space:pre-wrap">${data.guidance}</div></div>`;
+    }
 
     const body = document.getElementById('resultBody');
     const title = document.getElementById('resultTitle');
@@ -454,6 +484,7 @@ function renderRealDiseaseResult(data) {
             <div class="result-name">${disease}</div>
             <div class="result-confidence">${conf}% Confidence</div>
         </div>
+        
         <div class="result-card" style="margin:1rem 0">
             <div class="result-card-header">📊 Analysis Metrics</div>
             <div class="result-card-body">
@@ -474,15 +505,17 @@ function renderRealDiseaseResult(data) {
                 </div>
             </div>
         </div>
-        ${advisory}
-        <button class="btn-glow btn-full" style="margin-top:1.5rem;width:100%" onclick="navigateTo('screenDiseaseDetect')">Scan Another Leaf</button>
-        <button class="btn-ghost btn-full" style="margin-top:0.75rem;width:100%" onclick="navigateTo('screenHome')">Back to Home</button>
+
+        <h3 style="margin: 2rem 0 1rem; color: var(--n-900); font-weight: 800;">Expert Treatment Plan</h3>
+        ${advisoryHtml}
+
+        <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem;">
+            <button class="btn-glow btn-full" style="width:100%" onclick="navigateTo('screenDiseaseDetect')">Scan Another Leaf</button>
+            <button class="btn-ghost btn-full" style="width:100%" onclick="navigateTo('screenHome')">Back to Home</button>
+        </div>
     `;
-    setTimeout(() => {
-        const bar = body.querySelector('[style*="width:0"]');
-        if (bar) bar.style.width = conf + '%';
-    }, 200);
 }
+
 
 function renderBlurryResult(msg) {
     const body = document.getElementById('resultBody');
