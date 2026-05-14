@@ -419,6 +419,104 @@
                 </div>
             </div>
 
+            <!-- Stats Row -->
+            <div class="iot-stats-row">
+                <div class="iot-stat-pill glass">
+                    <span class="iot-stat-icon">📉</span>
+                    <div>
+                        <span class="iot-stat-label">Min Today</span>
+                        <span class="iot-stat-val" id="moistureMin">--</span><span style="font-size:0.8rem;color:var(--n-400);">%</span>
+                    </div>
+                </div>
+                <div class="iot-stat-pill glass">
+                    <span class="iot-stat-icon">📈</span>
+                    <div>
+                        <span class="iot-stat-label">Max Today</span>
+                        <span class="iot-stat-val" id="moistureMax">--</span><span style="font-size:0.8rem;color:var(--n-400);">%</span>
+                    </div>
+                </div>
+                <div class="iot-stat-pill glass">
+                    <span class="iot-stat-icon">≈</span>
+                    <div>
+                        <span class="iot-stat-label">Average</span>
+                        <span class="iot-stat-val" id="moistureAvg">--</span><span style="font-size:0.8rem;color:var(--n-400);">%</span>
+                    </div>
+                </div>
+                <div class="iot-stat-pill glass">
+                    <span class="iot-stat-icon">📡</span>
+                    <div>
+                        <span class="iot-stat-label">Readings</span>
+                        <span class="iot-stat-val" id="moistureCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live History Chart -->
+            <div class="iot-chart-card glass">
+                <div class="iot-card-header" style="width:100%;">
+                    <span class="iot-icon">📊</span>
+                    <h3>Live Moisture History</h3>
+                    <span style="margin-left:auto;font-size:0.75rem;color:var(--n-400);font-weight:600;">Last 20 Readings</span>
+                </div>
+                <div class="iot-chart-wrap">
+                    <canvas id="moistureChart"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <span><span class="legend-dot" style="background:#ef4444;"></span> Dry &lt;30%</span>
+                    <span><span class="legend-dot" style="background:#22c55e;"></span> Optimal 30–75%</span>
+                    <span><span class="legend-dot" style="background:#0ea5e9;"></span> Wet &gt;75%</span>
+                </div>
+            </div>
+
+            <!-- Weather + Health Row -->
+            <div class="iot-bottom-grid">
+                <!-- Field Weather -->
+                <div class="iot-card glass" style="align-items:flex-start;">
+                    <div class="iot-card-header">
+                        <span class="iot-icon">🌤️</span>
+                        <h3>Field Weather</h3>
+                    </div>
+                    <div id="iotWeatherContent" class="iot-weather-content">
+                        <p style="color:var(--n-400);font-size:0.9rem;text-align:center;width:100%;padding:1rem 0;">Detecting location...</p>
+                    </div>
+                    <button class="btn-ghost" onclick="fetchIoTWeather()" style="margin-top:auto;width:100%;padding:0.75rem;font-size:0.9rem;">🔄 Refresh Weather</button>
+                </div>
+
+                <!-- Soil Health Score -->
+                <div class="iot-card glass" style="align-items:flex-start;">
+                    <div class="iot-card-header">
+                        <span class="iot-icon">🌱</span>
+                        <h3>Soil Health Score</h3>
+                    </div>
+                    <div class="iot-health-display">
+                        <div class="health-ring-wrap">
+                            <svg viewBox="0 0 80 80" class="health-ring-svg">
+                                <circle class="health-ring-bg" cx="40" cy="40" r="34"/>
+                                <circle id="healthRingFill" class="health-ring-fill" cx="40" cy="40" r="34"
+                                    style="stroke-dasharray:214;stroke-dashoffset:214;"/>
+                            </svg>
+                            <div class="health-ring-text">
+                                <span id="healthScore">--</span>
+                                <small>/100</small>
+                            </div>
+                        </div>
+                        <div class="health-details">
+                            <div id="healthGrade" class="health-grade">Waiting...</div>
+                            <p id="healthTip" style="font-size:0.85rem;color:var(--n-600);margin-top:0.5rem;line-height:1.5;">Connect sensor to get your soil health score.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Banner -->
+            <div id="iotAlertBanner" class="iot-alert-banner hidden">
+                <span id="iotAlertIcon" style="font-size:1.5rem;">⚠️</span>
+                <div style="flex:1;">
+                    <strong id="iotAlertTitle" style="display:block;font-size:1rem;">Alert</strong>
+                    <p id="iotAlertMsg" style="font-size:0.875rem;color:var(--n-100);margin-top:0.25rem;">--</p>
+                </div>
+                <button onclick="document.getElementById('iotAlertBanner').classList.add('hidden')" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:rgba(255,255,255,0.7);">✕</button>
+            </div>
 
         </div>
     </main>

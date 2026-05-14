@@ -1551,9 +1551,11 @@ function getLocalFallback(q, isApiError = false) {
    ===================================================== */
 
 function startIoTMonioting() {
-    fetchIoTData(); // Initial fetch
+    IoTHistory = [];
+    fetchIoTData();
     if (AppState.iotInterval) clearInterval(AppState.iotInterval);
-    AppState.iotInterval = setInterval(fetchIoTData, 5000); // Fetch every 5 seconds
+    AppState.iotInterval = setInterval(fetchIoTData, 5000);
+    if (!IoTWeatherLoaded) fetchIoTWeather();
 }
 
 function stopIoTMonioting() {
@@ -1627,8 +1629,202 @@ function updateIoTUI(data) {
     }
     
     AppState.lastMoisture = moisture;
+
+    // Enhanced features
+    IoTHistory.push(moisture);
+    if (IoTHistory.length > 20) IoTHistory.shift();
+    updateIoTStats();
+    drawMoistureChart();
+    updateHealthScore(moisture);
+    updateIoTAlert(moisture);
 }
 
+/* =====================================================
+   IOT ENHANCED HELPER FUNCTIONS
+   ===================================================== */
 
+let IoTHistory = [];
+let IoTWeatherLoaded = false;
 
+function updateIoTStats() {
+    if (IoTHistory.length === 0) return;
+    const min = Math.min(...IoTHistory);
+    const max = Math.max(...IoTHistory);
+    const avg = Math.round(IoTHistory.reduce((a, b) => a + b, 0) / IoTHistory.length);
+    const minEl = document.getElementById('moistureMin');
+    const maxEl = document.getElementById('moistureMax');
+    const avgEl = document.getElementById('moistureAvg');
+    const countEl = document.getElementById('moistureCount');
+    if (minEl) minEl.textContent = min;
+    if (maxEl) maxEl.textContent = max;
+    if (avgEl) avgEl.textContent = avg;
+    if (countEl) countEl.textContent = IoTHistory.length;
+}
 
+function drawMoistureChart() {
+    const canvas = document.getElementById('moistureChart');
+    if (!canvas || IoTHistory.length < 2) return;
+    const wrap = canvas.parentElement;
+    const W = wrap.clientWidth || 400;
+    const H = wrap.clientHeight || 120;
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+
+    const dryY  = H - (30 / 100) * H;
+    const wetY  = H - (75 / 100) * H;
+
+    // Zone backgrounds
+    ctx.fillStyle = 'rgba(239,68,68,0.07)';  ctx.fillRect(0, dryY, W, H - dryY);
+    ctx.fillStyle = 'rgba(34,197,94,0.07)';  ctx.fillRect(0, wetY, W, dryY - wetY);
+    ctx.fillStyle = 'rgba(14,165,233,0.07)'; ctx.fillRect(0, 0, W, wetY);
+
+    // Threshold lines
+    ctx.setLineDash([5, 5]);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(239,68,68,0.35)';  ctx.beginPath(); ctx.moveTo(0,dryY); ctx.lineTo(W,dryY); ctx.stroke();
+    ctx.strokeStyle = 'rgba(14,165,233,0.35)'; ctx.beginPath(); ctx.moveTo(0,wetY); ctx.lineTo(W,wetY); ctx.stroke();
+    ctx.setLineDash([]);
+
+    const stepX = (IoTHistory.length > 1) ? W / (IoTHistory.length - 1) : W;
+
+    // Gradient fill
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, 'rgba(3,169,244,0.25)');
+    grad.addColorStop(1, 'rgba(3,169,244,0.01)');
+    ctx.beginPath();
+    IoTHistory.forEach((v, i) => {
+        const x = i * stepX, y = H - (v / 100) * H;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+    ctx.fillStyle = grad; ctx.fill();
+
+    // Line
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(3,169,244,0.9)';
+    ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    IoTHistory.forEach((v, i) => {
+        const x = i * stepX, y = H - (v / 100) * H;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Dots
+    IoTHistory.forEach((v, i) => {
+        const x = i * stepX, y = H - (v / 100) * H;
+        const isLast = i === IoTHistory.length - 1;
+        ctx.beginPath();
+        ctx.arc(x, y, isLast ? 5 : 3, 0, Math.PI * 2);
+        ctx.fillStyle = v < 30 ? '#ef4444' : v > 75 ? '#0ea5e9' : '#22c55e';
+        ctx.fill();
+        if (isLast) { ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke(); }
+    });
+}
+
+function updateHealthScore(moisture) {
+    let score, grade, tip;
+    if (moisture >= 40 && moisture <= 65) {
+        score = 90 + Math.round(Math.random() * 9);
+        grade = '🌟 Excellent'; tip = 'Perfect moisture balance. Crops are thriving in ideal conditions!';
+    } else if (moisture >= 30 && moisture < 40) {
+        score = 65 + Math.round((moisture - 30) * 2.5);
+        grade = '✅ Good'; tip = 'Slightly low. Consider a light irrigation soon.';
+    } else if (moisture > 65 && moisture <= 75) {
+        score = 70 + Math.round((75 - moisture) * 2);
+        grade = '✅ Good'; tip = 'Slightly above optimal. Ensure good drainage is in place.';
+    } else if (moisture < 30) {
+        score = Math.max(10, moisture * 2);
+        grade = '🔴 Critical'; tip = 'Soil is very dry! Irrigate immediately to prevent crop stress.';
+    } else {
+        score = Math.max(20, 100 - moisture);
+        grade = '⚠️ Poor'; tip = 'Soil oversaturated. Stop watering and check drainage channels.';
+    }
+    score = Math.min(100, score);
+
+    const scoreEl = document.getElementById('healthScore');
+    const gradeEl = document.getElementById('healthGrade');
+    const tipEl   = document.getElementById('healthTip');
+    const ring    = document.getElementById('healthRingFill');
+
+    if (scoreEl) scoreEl.textContent = score;
+    if (gradeEl) {
+        gradeEl.textContent = grade;
+        gradeEl.className = 'health-grade';
+        if (score >= 80) gradeEl.classList.add('grade-excellent');
+        else if (score >= 60) gradeEl.classList.add('grade-good');
+        else if (score >= 40) gradeEl.classList.add('grade-warn');
+        else gradeEl.classList.add('grade-bad');
+    }
+    if (tipEl) tipEl.textContent = tip;
+    if (ring) {
+        const circ = 2 * Math.PI * 34;
+        ring.style.strokeDasharray  = circ;
+        ring.style.strokeDashoffset = circ - (score / 100) * circ;
+        ring.style.stroke = score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#ef4444';
+    }
+}
+
+function updateIoTAlert(moisture) {
+    const banner = document.getElementById('iotAlertBanner');
+    const icon   = document.getElementById('iotAlertIcon');
+    const title  = document.getElementById('iotAlertTitle');
+    const msg    = document.getElementById('iotAlertMsg');
+    if (!banner) return;
+    if (moisture < 20) {
+        banner.classList.remove('hidden', 'alert-wet');
+        banner.classList.add('alert-dry');
+        if (icon)  icon.textContent  = '🚨';
+        if (title) title.textContent = 'Critical: Soil Dangerously Dry!';
+        if (msg)   msg.textContent   = `Moisture at ${moisture}%. Immediate irrigation required. Crops may wilt within hours.`;
+    } else if (moisture > 85) {
+        banner.classList.remove('hidden', 'alert-dry');
+        banner.classList.add('alert-wet');
+        if (icon)  icon.textContent  = '🌊';
+        if (title) title.textContent = 'Warning: Soil Waterlogged!';
+        if (msg)   msg.textContent   = `Moisture at ${moisture}%. Risk of root rot. Stop irrigation and check drainage.`;
+    } else {
+        banner.classList.add('hidden');
+    }
+}
+
+async function fetchIoTWeather() {
+    const content = document.getElementById('iotWeatherContent');
+    if (!content) return;
+    content.innerHTML = '<p style="color:var(--n-400);font-size:0.9rem;text-align:center;padding:1rem 0;">📡 Detecting location...</p>';
+    if (!navigator.geolocation) {
+        content.innerHTML = '<p style="color:var(--accent-warning);">Geolocation not supported.</p>';
+        return;
+    }
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        try {
+            const res  = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,apparent_temperature&timezone=auto`);
+            const data = await res.json();
+            if (!data.current) throw new Error();
+            const c    = data.current;
+            const temp = Math.round(c.temperature_2m);
+            const feels = Math.round(c.apparent_temperature);
+            const hum  = c.relative_humidity_2m;
+            const wind = Math.round(c.wind_speed_10m);
+            const icons = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'⛈️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️'};
+            const wIcon = icons[c.weather_code] || '🌍';
+            content.innerHTML = `
+                <div class="iot-weather-main">
+                    <div class="weather-big-icon">${wIcon}</div>
+                    <div><div class="weather-temp">${temp}°C</div><div class="weather-feels">Feels like ${feels}°C</div></div>
+                </div>
+                <div class="iot-weather-stats">
+                    <div class="iot-weather-stat"><span>💧</span><span>${hum}%</span><small>Humidity</small></div>
+                    <div class="iot-weather-stat"><span>💨</span><span>${wind} km/h</span><small>Wind</small></div>
+                    <div class="iot-weather-stat"><span>📍</span><span>${lat.toFixed(2)}°N</span><small>Location</small></div>
+                </div>`;
+            IoTWeatherLoaded = true;
+        } catch (e) {
+            content.innerHTML = '<p style="color:var(--accent-warning);">⚠️ Could not load weather.</p>';
+        }
+    }, () => {
+        content.innerHTML = '<p style="color:var(--accent-warning);">⚠️ Location access denied.</p>';
+    });
+}
