@@ -1,12 +1,8 @@
-import cv2
-import numpy as np
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from PIL import Image
-import io
 import os
-import model_handler 
-import llm_handler # New Integration
+import model_handler
+import llm_handler
 
 # Set static folder to the web directory (located one level up)
 app = Flask(__name__, static_folder='../web', static_url_path='')
@@ -22,23 +18,6 @@ def send_web(path):
     """Serve other static assets from the web folder."""
     return app.send_static_file(path)
 
-def blur_check(image_bytes, threshold=100.0):
-    """
-    Stage 1: Blur Detection (Laplacian Variance Method)
-    Returns: Variance, ErrorMessage
-    """
-    try:
-        nparr = np.frombuffer(image_bytes, np.uint8)
-        img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
-        
-        if img is None:
-            return None, "Invalid image format or corrupted file."
-
-        # Compute Laplacian variance
-        laplacian_var = cv2.Laplacian(img, cv2.CV_64F).var()
-        return laplacian_var, None
-    except Exception as e:
-        return None, str(e)
 
 @app.route('/detect', methods=['POST'])
 def detect():
@@ -51,25 +30,9 @@ def detect():
 
     # Read image bytes
     img_bytes = file.read()
-    
-    # -------------------------------------------------------------
-    # STAGE 1: BLUR CHECK
-    # -------------------------------------------------------------
-    var, error = blur_check(img_bytes)
-    if error:
-        return jsonify({"error": error}), 400
-    
-    threshold = 30.0
-    if var < threshold:
-        return jsonify({
-            "status": "blurry",
-            "message": "Image is blurry. Please hold steady and take a clearer photo.",
-            "error": "Image is blurry. Please capture a closer and clearer photo.",
-            "variance": round(var, 2)
-        }), 400
 
     # -------------------------------------------------------------
-    # STAGE 2: PLANT CHECK (Green Pixel Check)
+    # STAGE 1: PLANT CHECK (Green Pixel Check)
     # -------------------------------------------------------------
     is_plant, green_percentage = model_handler.plant_check(img_bytes)
     if not is_plant:
