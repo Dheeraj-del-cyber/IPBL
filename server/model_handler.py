@@ -88,12 +88,8 @@ def predict_image(image_bytes):
         # Load base image
         base_img = Image.open(io.BytesIO(image_bytes))
         
-        # Create 3 views for TTA (Original, Horizontal Flip, Vertical Flip)
-        views = [
-            base_img,
-            base_img.transpose(Image.FLIP_LEFT_RIGHT),
-            base_img.transpose(Image.FLIP_TOP_BOTTOM)
-        ]
+        # Disable TTA for cloud deployment to save RAM and speed up
+        views = [base_img]
         
         all_probs = []
         for view in views:
