@@ -1629,57 +1629,6 @@ function updateIoTUI(data) {
     AppState.lastMoisture = moisture;
 }
 
-function copyESPCode() {
-    const code = `
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-#include <WiFiClient.h>
 
-// WiFi Settings
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
-
-// Server Settings (Your Computer IP)
-const char* serverUrl = "http://192.168.1.XX:5000/update_moisture"; // Replace XX with your IP
-
-const int sensorPin = A0;
-
-void setup() {
-  Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("Connected!");
-}
-
-void loop() {
-  if (WiFi.status() == WL_CONNECTED) {
-    int sensorValue = analogRead(sensorPin);
-    // Convert 0-1023 to 0-100% (reverse if needed depending on sensor)
-    int moisturePercent = map(sensorValue, 1023, 0, 0, 100); 
-    
-    WiFiClient client;
-    HTTPClient http;
-    http.begin(client, serverUrl);
-    http.addHeader("Content-Type", "application/json");
-    
-    String payload = "{\\"moisture\\":" + String(moisturePercent) + "}";
-    int httpResponseCode = http.POST(payload);
-    
-    Serial.print("Moisture: "); Serial.print(moisturePercent);
-    Serial.print("% | Response: "); Serial.println(httpResponseCode);
-    
-    http.end();
-  }
-  delay(5000); // Send data every 5 seconds
-}
-    `.trim();
-
-    navigator.clipboard.writeText(code).then(() => {
-        alert('ESP8266/ESP32 Code copied to clipboard! Paste it in Arduino IDE.');
-    });
-}
 
 
