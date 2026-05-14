@@ -21,8 +21,8 @@ wheels/
 .installed.cfg
 *.egg
 
-# ML Models
-*.h5
+# ML Models (keeping .h5 tracked so Render can access it)
+# *.h5   <-- intentionally NOT ignored, needed for deployment
 *.keras
 *.tflite
 *.onnx
