@@ -2,9 +2,7 @@ flask
 flask-cors
 opencv-python-headless
 numpy
-Pillow
-torch
-torchvision
+Pillow~
 tensorflow-cpu==2.20.0
 requests
 python-dotenv
