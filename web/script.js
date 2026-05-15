@@ -364,9 +364,12 @@ function resetDetection() {
 
 
 /* =====================================================
-   BACKEND INTEGRATION — Real Flask API
-   ===================================================== */
-const API_BASE = window.location.protocol === 'file:' ? 'http://127.0.0.1:5000' : '';
+    BACKEND INTEGRATION — Real Flask API
+    ===================================================== */
+// Resolve API base from (in order): injected runtime config, meta tag, or same-origin
+const API_BASE = (typeof window.__API_BASE__ !== 'undefined' && window.__API_BASE__) ||
+     document.querySelector('meta[name="api-base"]')?.content ||
+     (window.location.protocol === 'file:' ? 'http://127.0.0.1:5000' : '');
 
 
 

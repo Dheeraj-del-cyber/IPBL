@@ -4,13 +4,33 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import os
+import logging
+from dotenv import load_dotenv
+load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
+
 import model_handler
 import llm_handler
 
 # Set static folder to the web directory (located one level up)
 app = Flask(__name__, static_folder='../web', static_url_path='')
-CORS(app) # Enable CORS for development
+
+# Production-safe CORS: read allowed origins from env (comma-separated)
+allowed = os.getenv('ALLOWED_ORIGINS', '')
+if allowed:
+    origins = [o.strip() for o in allowed.split(',') if o.strip()]
+    CORS(app, resources={r"/*": {"origins": origins}})
+else:
+    # Default: allow all origins only in non-production modes
+    CORS(app)
+
+# Security / upload limits
+app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH', 8 * 1024 * 1024))  # 8 MB default
+
+# Logging: integrate with gunicorn if present
+logger = logging.getLogger('gunicorn.error')
+if logger.handlers:
+    app.logger.handlers = logger.handlers
+    app.logger.setLevel(logger.level)
 
 @app.route('/')
 def index():
@@ -141,5 +161,26 @@ def get_moisture():
     return jsonify(iot_data)
 
 if __name__ == '__main__':
-    # Threaded=True for responsiveness
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    # Threaded=True for responsiveness when running locally
+    debug_mode = os.getenv('FLASK_DEBUG', '0') in ['1', 'true', 'True']
+    app.run(debug=debug_mode, host='0.0.0.0', port=int(os.getenv('PORT', 5000)), threaded=True)
+
+
+# ---------- Production-friendly error handlers ----------
+@app.errorhandler(413)
+def too_large(e):
+    return jsonify({"error": "Uploaded file is too large (max 8MB)."}), 413
+
+
+@app.errorhandler(404)
+def not_found(e):
+    # If the request expects JSON (API), return JSON
+    if request.path.startswith('/api') or request.path.startswith('/detect') or request.path.startswith('/chat'):
+        return jsonify({"error": "Not found"}), 404
+    return app.send_static_file('index.html')
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    app.logger.exception('Unhandled Exception: %s', e)
+    return jsonify({"error": "Internal server error"}), 500

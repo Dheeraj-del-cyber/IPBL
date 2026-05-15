@@ -1,0 +1,13 @@
+{
+  "name": "agri-ai-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prepare-config": "node prepare_config.js",
+    "vercel-build": "node prepare_config.js",
+    "build": "node prepare_config.js"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
