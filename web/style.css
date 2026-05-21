@@ -2629,6 +2629,10 @@ input[type=range].crop-range::-webkit-slider-thumb {
     .iot-stats-row { grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 768px) {
+    .field-weather-card { display: none; }
+}
+
 @media (max-width: 640px) {
     .iot-stats-row { grid-template-columns: repeat(2, 1fr); }
     .iot-bottom-grid { grid-template-columns: 1fr; }
