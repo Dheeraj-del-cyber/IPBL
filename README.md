@@ -1,6 +1,6 @@
 🌿 Smart Agriculture Assistant
 
-An AI-powered system for crop disease detection, intelligent advisory, and crop recommendation — designed to assist farmers with modern technology.
+An AI-powered system for crop disease detection and intelligent advisory — designed to assist farmers with modern technology.
 
 ---
 
