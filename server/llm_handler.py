@@ -13,7 +13,7 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 # You can also set it in a .env file as: GROQ_API_KEY=your_key_here
 GROQ_API_KEY = os.getenv("GROQ_API_KEY") 
 
-def get_agricultural_guidance(disease_name, crop_type="plant", moisture=None):
+def get_agricultural_guidance(disease_name, crop_type="plant", moisture=None, language="English"):
     """
     Calls Groq LLM for expert agricultural advice.
     This tool is strictly ONLINE and requires a valid GROQ_API_KEY.
@@ -37,7 +37,8 @@ Provide an expert agricultural treatment plan in JSON format with these exact ke
 - 'chemical': list of strings (recommended chemical solutions)
 - 'prevention': list of strings (future prevention strategies)
 
-Ensure the advice is specific to the detected disease and current moisture level."""
+Ensure the advice is specific to the detected disease and current moisture level.
+CRITICAL: You MUST respond in {language}. All values in the JSON output MUST be in {language} (except keys which remain English)."""
 
     payload = {
         "model": "llama-3.1-8b-instant",

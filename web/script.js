@@ -34,7 +34,12 @@ const TRANSLATIONS = {
         cameraPrompt: 'Take a photo of the affected leaf', cameraHint: 'Use camera or upload an image',
         upload: 'Upload', flip: 'Flip', retake: 'Retake', analyze: 'Analyze Now',
         labelSoil: 'Soil Type', labelTemp: 'Temperature', labelRain: 'Rainfall', labelSeason: 'Season',
-        getSuggestion: 'Get Recommendation', searchPH: 'Search crops or diseases...'
+        getSuggestion: 'Get Recommendation', searchPH: 'Search crops or diseases...',
+        chatGreeting: '👋 Hi! I\'m your Agri AI assistant. Ask me anything about crops, diseases, or farming!',
+        chatPlaceholder: 'Ask about diseases or farming...',
+        iotDry: 'Too Dry', iotDryRec: '🚨 Soil moisture is low! Start irrigation immediately to prevent crop wilting.',
+        iotOpt: 'Optimal', iotOptRec: '✅ Soil moisture is at an ideal level for most crops. No action needed.',
+        iotWet: 'Too Wet', iotWetRec: '⚠️ Soil is saturated. Stop irrigation and ensure proper drainage to avoid root rot.'
     },
     hi: {
         navHome: 'होम', navDetect: 'पहचानें', navCrops: 'फसलें', navScan: 'स्कैन करें',
@@ -53,7 +58,12 @@ const TRANSLATIONS = {
         cameraPrompt: 'प्रभावित पत्ते की फोटो लें', cameraHint: 'कैमरे का उपयोग करें या इमेज अपलोड करें',
         upload: 'अपलोड', flip: 'पलटें', retake: 'फिर से लें', analyze: 'अभी विश्लेषण करें',
         labelSoil: 'मिट्टी का प्रकार', labelTemp: 'तापमान', labelRain: 'वर्षा', labelSeason: 'मौसम',
-        getSuggestion: 'सुझाव प्राप्त करें', searchPH: 'फसलें या बीमारियाँ खोजें...'
+        getSuggestion: 'सुझाव प्राप्त करें', searchPH: 'फसलें या बीमारियाँ खोजें...',
+        chatGreeting: '👋 नमस्ते! मैं आपका कृषि AI सहायक हूँ। मुझसे फसल, बीमारी या खेती के बारे में कुछ भी पूछें!',
+        chatPlaceholder: 'बीमारियों या खेती के बारे में पूछें...',
+        iotDry: 'बहुत सूखा', iotDryRec: '🚨 मिट्टी की नमी कम है! फसल को सूखने से बचाने के लिए तुरंत सिंचाई शुरू करें।',
+        iotOpt: 'अनुकूल', iotOptRec: '✅ अधिकांश फसलों के लिए मिट्टी की नमी आदर्श स्तर पर है। किसी कार्रवाई की आवश्यकता नहीं है।',
+        iotWet: 'बहुत गीला', iotWetRec: '⚠️ मिट्टी संतृप्त है। जड़ सड़न से बचने के लिए सिंचाई रोकें और उचित जल निकासी सुनिश्चित करें।'
     },
     kn: {
         navHome: 'ಹೋಮ್', navDetect: 'ಗುರುತಿಸಿ', navCrops: 'ಬೆಳೆಗಳು', navScan: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
@@ -69,7 +79,12 @@ const TRANSLATIONS = {
         back: 'ಹಿಂದೆ', pageDetect: 'ರೋಗ ಪತ್ತೆಹಚ್ಚುವಿಕೆ', pageCrop: 'ಬೆಳೆ ಶಿಫಾರಸು',
         cameraPrompt: 'ಬಾಧಿತ ಎಲೆಯ ಫೋಟೋ ತೆಗೆದುಕೊಳ್ಳಿ', flip: 'ತಿರುಗಿಸಿ', retake: 'ಮತ್ತೆ ತೆಗೆಯಿರಿ', analyze: 'ವಿಶ್ಲೇಷಿಸಿ',
         labelSoil: 'ಮಣ್ಣಿನ ಪ್ರಕಾರ', labelTemp: 'ತಾಪಮಾನ', labelRain: 'ಮಳೆ', labelSeason: 'ಋತು',
-        getSuggestion: 'ಶಿಫಾರಸು ಪಡೆಯಿರಿ', searchPH: 'ಬೆಳೆ ಅಥವಾ ರೋಗಗಳನ್ನು ಹುಡುಕಿ...'
+        getSuggestion: 'ಶಿಫಾರಸು ಪಡೆಯಿರಿ', searchPH: 'ಬೆಳೆ ಅಥವಾ ರೋಗಗಳನ್ನು ಹುಡುಕಿ...',
+        chatGreeting: '👋 ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ ಕೃಷಿ AI ಸಹಾಯಕ. ಬೆಳೆ, ರೋಗ ಅಥವಾ ಕೃಷಿಯ ಬಗ್ಗೆ ಏನಾದರೂ ಕೇಳಿ!',
+        chatPlaceholder: 'ರೋಗ ಅಥವಾ ಕೃಷಿಯ ಬಗ್ಗೆ ಕೇಳಿ...',
+        iotDry: 'ತುಂಬಾ ಒಣಗಿದೆ', iotDryRec: '🚨 ಮಣ್ಣಿನ ತೇವಾಂಶ ಕಡಿಮೆಯಾಗಿದೆ! ಬೆಳೆ ಒಣಗುವುದನ್ನು ತಡೆಯಲು ತಕ್ಷಣ ನೀರಾವರಿ ಪ್ರಾರಂಭಿಸಿ.',
+        iotOpt: 'ಸೂಕ್ತ', iotOptRec: '✅ ಹೆಚ್ಚಿನ ಬೆಳೆಗಳಿಗೆ ಮಣ್ಣಿನ ತೇವಾಂಶವು ಆದರ್ಶ ಮಟ್ಟದಲ್ಲಿದೆ. ಯಾವುದೇ ಕ್ರಮದ ಅಗತ್ಯವಿಲ್ಲ.',
+        iotWet: 'ತುಂಬಾ ಒದ್ದೆ', iotWetRec: '⚠️ ಮಣ್ಣು ಸ್ಯಾಚುರೇಟೆಡ್ ಆಗಿದೆ. ಬೇರು ಕೊಳೆಯುವುದನ್ನು ತಡೆಯಲು ನೀರಾವರಿ ನಿಲ್ಲಿಸಿ ಮತ್ತು ಸರಿಯಾದ ಒಳಚರಂಡಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.'
     },
     te: {
         navHome: 'హోమ్', navDetect: 'గుర్తించండి', navCrops: 'పంటలు', navScan: 'స్కాన్ చేయండి',
@@ -85,7 +100,12 @@ const TRANSLATIONS = {
         back: 'వెనుకకు', pageDetect: 'వ్యాధి గుర్తింపు', pageCrop: 'పంట సిఫార్సు',
         cameraPrompt: 'ప్రభావిత ఆకు ఫోటో తీయండి', flip: 'తిప్పండి', retake: 'మళ్ళీ తీయండి', analyze: 'విశ్లేషించండి',
         labelSoil: 'మట్టి రకం', labelTemp: 'ఉష్ణోగ్రత', labelRain: 'వర్షపాతం', labelSeason: 'సీజన్',
-        getSuggestion: 'సూచన పొందండి', searchPH: 'పంటలు లేదా వ్యాధుల కోసం వెతకండి...'
+        getSuggestion: 'సూచన పొందండి', searchPH: 'పంటలు లేదా వ్యాధుల కోసం వెతకండి...',
+        chatGreeting: '👋 నమస్కారం! నేను మీ వ్యవసాయ AI సహాయకుడిని. పంటలు, వ్యాధులు లేదా వ్యవసాయం గురించి ఏదైనా అడగండి!',
+        chatPlaceholder: 'వ్యాధులు లేదా వ్యవసాయం గురించి అడగండి...',
+        iotDry: 'చాలా పొడి', iotDryRec: '🚨 నేల తేమ తక్కువగా ఉంది! పంట ఎండిపోకుండా వెంటనే నీటిపారుదల ప్రారంభించండి.',
+        iotOpt: 'ఆప్టిమల్', iotOptRec: '✅ చాలా పంటలకు నేల తేమ ఆదర్శవంతమైన స్థాయిలో ఉంది. ఎటువంటి చర్య అవసరం లేదు.',
+        iotWet: 'చాలా తడి', iotWetRec: '⚠️ నేల సంతృప్తమైంది. రూట్ తెగులును నివారించడానికి నీటిపారుదలని ఆపివేసి సరైన డ్రైనేజీని నిర్ధారించండి.'
     },
     ta: {
         navHome: 'முகப்பு', navDetect: 'கண்டறி', navCrops: 'பயிர்கள்', navScan: 'ஸ்கேன் செய்',
@@ -101,7 +121,12 @@ const TRANSLATIONS = {
         back: 'பின்னால்', pageDetect: 'நோய் கண்டறிதல்', pageCrop: 'பயிர் பரிந்துரை',
         cameraPrompt: 'பாதிக்கப்பட்ட இலையை புகைப்படம் எடுக்கவும்', flip: 'திருப்பு', retake: 'மீண்டும் எடு', analyze: 'பகுப்பாய்வு செய்',
         labelSoil: 'மண் வகை', labelTemp: 'வெப்பநிலை', labelRain: 'மழைப்பொழிவு', labelSeason: 'பருவம்',
-        getSuggestion: 'பரிந்துரை பெறு', searchPH: 'பயிர்கள் அல்லது நோய்களைத் தேடுங்கள்...'
+        getSuggestion: 'பரிந்துரை பெறு', searchPH: 'பயிர்கள் அல்லது நோய்களைத் தேடுங்கள்...',
+        chatGreeting: '👋 வணக்கம்! நான் உங்கள் விவசாய AI உதவியாளர். பயிர்கள், நோய்கள் அல்லது விவசாயம் பற்றி எதையும் கேளுங்கள்!',
+        chatPlaceholder: 'நோய்கள் அல்லது விவசாயம் பற்றி கேளுங்கள்...',
+        iotDry: 'மிகவும் வறண்டது', iotDryRec: '🚨 மண் ஈரப்பதம் குறைவாக உள்ளது! பயிர் வாடுவதை தடுக்க உடனடியாக பாசனத்தை தொடங்கவும்.',
+        iotOpt: 'உகந்தது', iotOptRec: '✅ பெரும்பாலான பயிர்களுக்கு மண் ஈரப்பதம் சிறந்த அளவில் உள்ளது. எந்த நடவடிக்கையும் தேவையில்லை.',
+        iotWet: 'மிகவும் ஈரமானது', iotWetRec: '⚠️ மண் நிறைவுற்றது. வேர் அழுகலைத் தவிர்க்க நீர்ப்பாசனத்தை நிறுத்தி, சரியான வடிகால் வசதியை உறுதி செய்யவும்.'
     }
 };
 
@@ -116,6 +141,7 @@ const LANG_META = {
 /* --- Core Initialization --- */
 window.addEventListener('load', () => {
     applyLanguage(AppState.currentLang);
+    updateChatSystemPrompt(AppState.currentLang);
     initApp();
     setupPhotoButtons();
 });
@@ -187,6 +213,19 @@ function setLanguage(lang) {
     localStorage.setItem('agri-lang', lang);
     applyLanguage(lang);
     closeLangMenu();
+    updateChatSystemPrompt(lang);
+    
+    // Auto-refresh disease result if currently shown to trigger translation in new language
+    // We cannot automatically re-run AI inference without the user knowing, so we just clear it or let it be.
+    // However, updating the chat greeting is a good idea.
+    if (typeof chatHistory !== 'undefined' && chatHistory.length <= 1) {
+        clearChat();
+    }
+    
+    // Refresh dynamic content instantly
+    if (AppState.currentScreen === 'screenIoT' && typeof fetchIoTData === 'function') {
+        fetchIoTData();
+    }
 }
 
 function applyLanguage(lang) {
@@ -203,6 +242,25 @@ function applyLanguage(lang) {
         const key = el.getAttribute('data-i18n-placeholder');
         if (dict[key]) el.placeholder = dict[key];
     });
+
+    // Update dynamic elements like chat input
+    const chatInput = document.getElementById('chatInput');
+    if (chatInput && dict['chatPlaceholder']) {
+        chatInput.placeholder = dict['chatPlaceholder'];
+    }
+
+    // Sync voice assistant language if available
+    const voiceLangMap = {
+        'en': 'en-US',
+        'hi': 'hi-IN',
+        'kn': 'kn-IN',
+        'te': 'te-IN',
+        'ta': 'ta-IN'
+    };
+    if (typeof currentVoiceLang !== 'undefined') {
+        currentVoiceLang = voiceLangMap[lang] || 'en-US';
+        if (typeof updateVoiceSuggestions === 'function') updateVoiceSuggestions();
+    }
 
     // Update Selector
     const meta = LANG_META[lang];
@@ -362,6 +420,10 @@ async function analyzeImage() {
         const file = await getCurrentImageFile();
         const fd = new FormData();
         fd.append('image', file);
+        
+        // ADD LANGUAGE
+        const langMeta = LANG_META[AppState.currentLang] || LANG_META['en'];
+        fd.append('language', langMeta.name);
 
         const res = await fetch(`${API_BASE}/detect`, { method:'POST', body:fd });
         const data = await res.json();
@@ -898,17 +960,43 @@ Your mission is to provide definitive, high-accuracy answers to ANY agricultural
 - Global agricultural trends, market economics, and supply chain logistics
 - Veterinary basics for farm animals (cattle, poultry, goats, pigs)
 - Agricultural engineering, tool maintenance, and automation
+        - Sustainable and regenerative practices (no-till, cover cropping, carbon farming)
+
+Rules:
+1. AUTHORITY: Speak with the confidence of an expert, but keep it accessible for a farmer.
+2. ACCURACY: If a user asks an agricultural question, ANSWER IT FULLY. Do not decline agricultural queries.
+3. STRUCTURE: Use markdown-like formatting (bullet points, bold text) for readability.
+4. LANGUAGE: You MUST ALWAYS respond entirely in English.
+5. LIMITS: Politely decline only non-agricultural/non-rural topics.
+6. VISUALS: Always start with a relevant emoji. Use '🌿' for general farming, '📸' for detection, '🐮' for livestock, etc.`
+    }
+];
+
+function updateChatSystemPrompt(lang) {
+    if (typeof chatHistory !== 'undefined' && chatHistory[0]) {
+        const langName = LANG_META[lang]?.name || 'English';
+        chatHistory[0].content = `You are AgriBot, an elite agricultural scientist and field expert embedded in the "Agri AI" platform. 
+        
+Your mission is to provide definitive, high-accuracy answers to ANY agricultural question. Your knowledge base is vast and covers:
+- In-depth crop science, genetics, and variety selection
+- Advanced pathology (fungal, bacterial, viral, and physiological disorders)
+- Soil chemistry, physics, and restorative biology
+- Modern and traditional fertilizer protocols (precision farming vs. organic)
+- Hydroponics, aquaponics, and greenhouse climate control
+- Global agricultural trends, market economics, and supply chain logistics
+- Veterinary basics for farm animals (cattle, poultry, goats, pigs)
+- Agricultural engineering, tool maintenance, and automation
 - Sustainable and regenerative practices (no-till, cover cropping, carbon farming)
 
 Rules:
 1. AUTHORITY: Speak with the confidence of an expert, but keep it accessible for a farmer.
 2. ACCURACY: If a user asks an agricultural question, ANSWER IT FULLY. Do not decline agricultural queries.
 3. STRUCTURE: Use markdown-like formatting (bullet points, bold text) for readability.
-4. LANGUAGE: Automatically detect and mirror the user's language (Hindi, Kannada, Telugu, Tamil, or English).
+4. LANGUAGE: You MUST ALWAYS respond entirely in ${langName}. Do not use English unless the selected language is English.
 5. LIMITS: Politely decline only non-agricultural/non-rural topics.
-6. VISUALS: Always start with a relevant emoji. Use '🌿' for general farming, '📸' for detection, '🐮' for livestock, etc.`
+6. VISUALS: Always start with a relevant emoji. Use '🌿' for general farming, '📸' for detection, '🐮' for livestock, etc.`;
     }
-];
+}
 
 let chatOpen = false;
 let chatIsLoading = false;
@@ -959,14 +1047,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function clearChat() {
     // Reset conversation history (keep only system prompt)
-    chatHistory = [chatHistory[0]];
+    if (typeof chatHistory !== 'undefined' && chatHistory.length > 0) {
+        chatHistory = [chatHistory[0]];
+    }
 
     // Clear messages UI
     const container = document.getElementById('chatMessages');
-    container.innerHTML = `
-        <div style="background:rgba(62,175,96,0.12); border:1px solid rgba(62,175,96,0.2); border-radius:14px 14px 14px 4px; padding:10px 14px; font-size:0.88rem; color:#d1fae5; max-width:85%; align-self:flex-start;">
-            👋 Hi! I'm your Agri AI assistant. Ask me anything about crops, diseases, or farming!
-        </div>`;
+    const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
+    const greetingMsg = dict.chatGreeting || "👋 Hi! I'm your Agri AI assistant. Ask me anything about crops, diseases, or farming!";
+    
+    if (container) {
+        container.innerHTML = `
+            <div class="chat-msg ai-msg" style="background:rgba(62,175,96,0.12); border:1px solid rgba(62,175,96,0.2); border-radius:14px 14px 14px 4px; padding:10px 14px; font-size:0.88rem; color:#d1fae5; max-width:85%; align-self:flex-start;">
+                ${greetingMsg}
+            </div>`;
+    }
 
     // Show suggestions again
     const sugg = document.getElementById('chatSuggestions');
@@ -1237,21 +1332,22 @@ function updateIoTUI(data) {
     // Update Status Badge & Recommendation
     const badge = document.getElementById('moistureStatusBadge');
     const recBox = document.getElementById('iotRecommendation');
+    const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
     
     if (badge) {
         badge.className = 'status-badge'; // reset
         if (moisture < 30) {
             badge.classList.add('status-dry');
-            badge.textContent = 'Too Dry';
-            if (recBox) recBox.textContent = '🚨 Soil moisture is low! Start irrigation immediately to prevent crop wilting.';
+            badge.textContent = dict.iotDry || 'Too Dry';
+            if (recBox) recBox.textContent = dict.iotDryRec || '🚨 Soil moisture is low! Start irrigation immediately to prevent crop wilting.';
         } else if (moisture >= 30 && moisture <= 75) {
             badge.classList.add('status-good');
-            badge.textContent = 'Optimal';
-            if (recBox) recBox.textContent = '✅ Soil moisture is at an ideal level for most crops. No action needed.';
+            badge.textContent = dict.iotOpt || 'Optimal';
+            if (recBox) recBox.textContent = dict.iotOptRec || '✅ Soil moisture is at an ideal level for most crops. No action needed.';
         } else {
             badge.classList.add('status-wet');
-            badge.textContent = 'Too Wet';
-            if (recBox) recBox.textContent = '⚠️ Soil is saturated. Stop irrigation and ensure proper drainage to avoid root rot.';
+            badge.textContent = dict.iotWet || 'Too Wet';
+            if (recBox) recBox.textContent = dict.iotWetRec || '⚠️ Soil is saturated. Stop irrigation and ensure proper drainage to avoid root rot.';
         }
     }
     

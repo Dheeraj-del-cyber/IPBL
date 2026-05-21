@@ -49,6 +49,8 @@ def detect():
         return jsonify({"error": "No image uploaded"}), 400
     
     file = request.files['image']
+    language = request.form.get('language', 'English')
+    
     if file.filename == '':
         return jsonify({"error": "No file selected"}), 400
 
@@ -85,9 +87,9 @@ def detect():
     elif "Grape" in disease_name or "Esca" in disease_name: crop_type = "Grape"
     elif "Tomato" in disease_name or "Curl" in disease_name: crop_type = "Tomato"
     
-    # Call LLM with Moisture Context
+    # Call LLM with Moisture Context and Language
     current_moisture = iot_data.get("moisture", 0)
-    guidance = llm_handler.get_agricultural_guidance(disease_name, crop_type, moisture=current_moisture)
+    guidance = llm_handler.get_agricultural_guidance(disease_name, crop_type, moisture=current_moisture, language=language)
     
     # FINAL OUTPUT
     return jsonify({
