@@ -7,8 +7,7 @@ const AppState = {
     currentScreen: 'screenHome',
     previousScreen: null,
     resultSource: null,
-    cameraStream: null,
-    facingMode: 'environment',
+    selectedFile: null,
     currentLang: localStorage.getItem('agri-lang') || 'en',
     iotInterval: null,
     lastMoisture: 0
@@ -272,130 +271,23 @@ function loadImageFile(file) {
     AppState.selectedFile = file;
 }
 
-/* --- Camera Logic (kept for mobile compatibility) --- */
-async function initCamera() {
-    const vid = document.getElementById('cameraPreview');
-    const ph = document.getElementById('cameraPlaceholder');
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: AppState.facingMode, width: { ideal: 1280 }, height: { ideal: 960 } },
-            audio: false
-        });
-        AppState.cameraStream = stream;
-        vid.srcObject = stream;
-        vid.style.display = 'block';
-        if (ph) ph.style.display = 'none';
-        return true;
-    } catch (err) {
-        console.error('Camera error:', err);
-        return false;
-    }
-}
-
-function stopCamera() {
-    if (AppState.cameraStream) {
-        AppState.cameraStream.getTracks().forEach(track => track.stop());
-        AppState.cameraStream = null;
-    }
-    const vid = document.getElementById('cameraPreview');
-    if (vid) {
-        vid.srcObject = null;
-        vid.style.display = 'none';
-    }
-}
-
-function capturePhoto() {
-    const vid = document.getElementById('cameraPreview');
-    if (!vid || vid.style.display === 'none') {
-        triggerUpload();
-        return;
-    }
-
-    const canvas = document.getElementById('cameraCanvas');
-    const img = document.getElementById('imagePreview');
-    
-    canvas.width = vid.videoWidth;
-    canvas.height = vid.videoHeight;
-    canvas.getContext('2d').drawImage(vid, 0, 0);
-    
-    img.src = canvas.toDataURL('image/jpeg', 0.85);
-    img.style.display = 'block';
-    
-    stopCamera();
-    showAnalyzeControls();
-}
-
-function switchCamera() {
-    AppState.facingMode = AppState.facingMode === 'user' ? 'environment' : 'user';
-    stopCamera();
-    initCamera();
-}
-
-function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-        || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+/* --- Upload Logic --- */
+function showAnalyzeControls() {
+    document.getElementById('uploadControls').classList.add('hidden');
+    document.getElementById('analyzeControls').classList.remove('hidden');
 }
 
 function setupPhotoButtons() {
-    const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-    const takeBtn = document.getElementById('takePhotoBtn');
-    const galleryBtn = document.getElementById('galleryPhotoBtn');
     const chooseBtn = document.getElementById('choosePhotoBtn');
-    const captureBtn = document.getElementById('capturePhotoBtn');
-    const switchBtn = document.getElementById('switchCameraBtn');
     const hint = document.getElementById('uploadHintText');
 
-    if (hasCamera) {
-        if (takeBtn) takeBtn.style.display = 'block';
-        if (galleryBtn) galleryBtn.style.display = 'block';
-        if (chooseBtn) chooseBtn.style.display = 'block';
-        if (captureBtn) captureBtn.style.display = 'none';
-        if (switchBtn) switchBtn.style.display = 'none';
-        if (hint) hint.textContent = 'Use camera or gallery to upload a leaf image.';
-    } else {
-        if (takeBtn) takeBtn.style.display = 'none';
-        if (galleryBtn) galleryBtn.style.display = 'block';
-        if (chooseBtn) chooseBtn.style.display = 'block';
-        if (captureBtn) captureBtn.style.display = 'none';
-        if (switchBtn) switchBtn.style.display = 'none';
-        if (hint) hint.textContent = 'Click to browse files from your computer.';
-    }
+    if (chooseBtn) chooseBtn.style.display = 'block';
+    if (hint) hint.textContent = 'Click to browse files from your computer.';
 }
 
-async function startDeviceCamera() {
-    const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-    if (!hasCamera) {
-        return triggerUpload(false);
-    }
-
-    stopCamera();
-    const started = await initCamera();
-    if (!started) {
-        return triggerUpload(false);
-    }
-
-    const takeBtn = document.getElementById('takePhotoBtn');
-    const galleryBtn = document.getElementById('galleryPhotoBtn');
-    const chooseBtn = document.getElementById('choosePhotoBtn');
-    const captureBtn = document.getElementById('capturePhotoBtn');
-    const switchBtn = document.getElementById('switchCameraBtn');
-    const hint = document.getElementById('uploadHintText');
-
-    if (takeBtn) takeBtn.style.display = 'none';
-    if (galleryBtn) galleryBtn.style.display = 'none';
-    if (chooseBtn) chooseBtn.style.display = 'none';
-    if (captureBtn) captureBtn.style.display = 'block';
-    if (switchBtn) switchBtn.style.display = 'block';
-    if (hint) hint.textContent = 'Position the leaf and tap Capture.';
-}
-
-function triggerUpload(useCamera = false) {
-    if (useCamera) {
-        return startDeviceCamera();
-    }
+function triggerUpload() {
     const input = document.getElementById('fileInput');
     if (!input) return;
-    input.removeAttribute('capture');
     input.click();
 }
 
@@ -403,11 +295,10 @@ function handleFileSelect(e) {
     const file = e.target.files[0];
     if (!file) return;
     loadImageFile(file);
-    e.target.removeAttribute('capture');
 }
 
 function showAnalyzeControls() {
-    document.getElementById('cameraControls').classList.add('hidden');
+    document.getElementById('uploadControls').classList.add('hidden');
     document.getElementById('analyzeControls').classList.remove('hidden');
 }
 
@@ -421,18 +312,10 @@ function resetDetection() {
     img.src = '';
     AppState.selectedFile = null;
     document.getElementById('cameraPlaceholder').style.display = 'flex';
-    document.getElementById('cameraControls').classList.remove('hidden');
+    document.getElementById('uploadControls').classList.remove('hidden');
     document.getElementById('analyzeControls').classList.add('hidden');
-    const captureBtn = document.getElementById('capturePhotoBtn');
-    const switchBtn = document.getElementById('switchCameraBtn');
-    const takeBtn = document.getElementById('takePhotoBtn');
-    const galleryBtn = document.getElementById('galleryPhotoBtn');
-    const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-    if (captureBtn) captureBtn.style.display = 'none';
-    if (switchBtn) switchBtn.style.display = 'none';
-    if (takeBtn) takeBtn.style.display = hasCamera ? 'block' : 'none';
-    if (galleryBtn) galleryBtn.style.display = 'block';
-    // Reset file input so same file can be re-selected
+    const chooseBtn = document.getElementById('choosePhotoBtn');
+    if (chooseBtn) chooseBtn.style.display = 'block';
     document.getElementById('fileInput').value = '';
 }
 
@@ -450,23 +333,12 @@ const API_BASE = (typeof window.__API_BASE__ !== 'undefined' && window.__API_BAS
 /* Get image file — always use original file to preserve quality */
 function getCurrentImageFile() {
     return new Promise((resolve, reject) => {
-        // PRIORITY 1: Use the original uploaded file (full quality, no re-encoding)
         if (AppState.selectedFile) {
             return resolve(AppState.selectedFile);
         }
-        // PRIORITY 2: File input fallback
         const fi = document.getElementById('fileInput');
         if (fi && fi.files && fi.files[0]) {
             return resolve(fi.files[0]);
-        }
-        // PRIORITY 3: Camera canvas capture (for mobile camera)
-        const canvas = document.getElementById('cameraCanvas');
-        if (canvas && canvas.width > 0) {
-            canvas.toBlob(blob => {
-                if (blob) resolve(new File([blob], 'capture.jpg', { type: 'image/jpeg' }));
-                else reject(new Error('Canvas is empty'));
-            }, 'image/jpeg', 0.95);
-            return;
         }
         reject(new Error('No image source available'));
     });
