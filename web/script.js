@@ -336,7 +336,7 @@ function isMobileDevice() {
 }
 
 function setupPhotoButtons() {
-    const isMobile = isMobileDevice();
+    const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     const takeBtn = document.getElementById('takePhotoBtn');
     const galleryBtn = document.getElementById('galleryPhotoBtn');
     const chooseBtn = document.getElementById('choosePhotoBtn');
@@ -344,16 +344,16 @@ function setupPhotoButtons() {
     const switchBtn = document.getElementById('switchCameraBtn');
     const hint = document.getElementById('uploadHintText');
 
-    if (isMobile) {
+    if (hasCamera) {
         if (takeBtn) takeBtn.style.display = 'block';
         if (galleryBtn) galleryBtn.style.display = 'block';
-        if (chooseBtn) chooseBtn.style.display = 'none';
+        if (chooseBtn) chooseBtn.style.display = 'block';
         if (captureBtn) captureBtn.style.display = 'none';
         if (switchBtn) switchBtn.style.display = 'none';
-        if (hint) hint.textContent = 'Use your phone camera or gallery to upload a leaf image.';
+        if (hint) hint.textContent = 'Use camera or gallery to upload a leaf image.';
     } else {
         if (takeBtn) takeBtn.style.display = 'none';
-        if (galleryBtn) galleryBtn.style.display = 'none';
+        if (galleryBtn) galleryBtn.style.display = 'block';
         if (chooseBtn) chooseBtn.style.display = 'block';
         if (captureBtn) captureBtn.style.display = 'none';
         if (switchBtn) switchBtn.style.display = 'none';
@@ -361,8 +361,9 @@ function setupPhotoButtons() {
     }
 }
 
-function startMobileCamera() {
-    if (!isMobileDevice()) {
+function startDeviceCamera() {
+    const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+    if (!hasCamera) {
         return triggerUpload(false);
     }
 
@@ -385,8 +386,8 @@ function startMobileCamera() {
 }
 
 function triggerUpload(useCamera = false) {
-    if (useCamera && isMobileDevice()) {
-        return startMobileCamera();
+    if (useCamera) {
+        return startDeviceCamera();
     }
     const input = document.getElementById('fileInput');
     if (!input) return;
