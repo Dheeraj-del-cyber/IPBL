@@ -274,7 +274,6 @@ function loadImageFile(file) {
 
 /* --- Camera Logic (kept for mobile compatibility) --- */
 async function initCamera() {
-    // Not auto-called on desktop — only on mobile if needed
     const vid = document.getElementById('cameraPreview');
     const ph = document.getElementById('cameraPlaceholder');
     try {
@@ -286,8 +285,10 @@ async function initCamera() {
         vid.srcObject = stream;
         vid.style.display = 'block';
         if (ph) ph.style.display = 'none';
+        return true;
     } catch (err) {
         console.error('Camera error:', err);
+        return false;
     }
 }
 
@@ -361,14 +362,17 @@ function setupPhotoButtons() {
     }
 }
 
-function startDeviceCamera() {
+async function startDeviceCamera() {
     const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     if (!hasCamera) {
         return triggerUpload(false);
     }
 
     stopCamera();
-    initCamera();
+    const started = await initCamera();
+    if (!started) {
+        return triggerUpload(false);
+    }
 
     const takeBtn = document.getElementById('takePhotoBtn');
     const galleryBtn = document.getElementById('galleryPhotoBtn');
@@ -423,10 +427,11 @@ function resetDetection() {
     const switchBtn = document.getElementById('switchCameraBtn');
     const takeBtn = document.getElementById('takePhotoBtn');
     const galleryBtn = document.getElementById('galleryPhotoBtn');
+    const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     if (captureBtn) captureBtn.style.display = 'none';
     if (switchBtn) switchBtn.style.display = 'none';
-    if (takeBtn) takeBtn.style.display = isMobileDevice() ? 'block' : 'none';
-    if (galleryBtn) galleryBtn.style.display = isMobileDevice() ? 'block' : 'none';
+    if (takeBtn) takeBtn.style.display = hasCamera ? 'block' : 'none';
+    if (galleryBtn) galleryBtn.style.display = 'block';
     // Reset file input so same file can be re-selected
     document.getElementById('fileInput').value = '';
 }
