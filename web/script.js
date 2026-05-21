@@ -118,6 +118,7 @@ const LANG_META = {
 window.addEventListener('load', () => {
     applyLanguage(AppState.currentLang);
     initApp();
+    setupPhotoButtons();
 });
 
 function initApp() {
@@ -329,14 +330,47 @@ function switchCamera() {
     initCamera();
 }
 
-function triggerUpload() {
-    document.getElementById('fileInput').click();
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+}
+
+function setupPhotoButtons() {
+    const isMobile = isMobileDevice();
+    const takeBtn = document.getElementById('takePhotoBtn');
+    const galleryBtn = document.getElementById('galleryPhotoBtn');
+    const chooseBtn = document.getElementById('choosePhotoBtn');
+    const hint = document.getElementById('uploadHintText');
+
+    if (isMobile) {
+        if (takeBtn) takeBtn.style.display = 'block';
+        if (galleryBtn) galleryBtn.style.display = 'block';
+        if (chooseBtn) chooseBtn.style.display = 'none';
+        if (hint) hint.textContent = 'Use your phone camera or gallery to upload a leaf image.';
+    } else {
+        if (takeBtn) takeBtn.style.display = 'none';
+        if (galleryBtn) galleryBtn.style.display = 'none';
+        if (chooseBtn) chooseBtn.style.display = 'block';
+        if (hint) hint.textContent = 'Click to browse files from your computer.';
+    }
+}
+
+function triggerUpload(useCamera = false) {
+    const input = document.getElementById('fileInput');
+    if (!input) return;
+    if (useCamera && isMobileDevice()) {
+        input.setAttribute('capture', 'environment');
+    } else {
+        input.removeAttribute('capture');
+    }
+    input.click();
 }
 
 function handleFileSelect(e) {
     const file = e.target.files[0];
     if (!file) return;
     loadImageFile(file);
+    e.target.removeAttribute('capture');
 }
 
 function showAnalyzeControls() {

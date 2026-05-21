@@ -232,9 +232,13 @@
 
                     <!-- Upload Button -->
                     <div class="cam-controls" id="cameraControls">
-                        <button class="btn-glow hero-primary" onclick="triggerUpload()"
-                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;">📸 Open
-                            Camera / Choose Photo</button>
+                        <button class="btn-glow hero-primary" id="takePhotoBtn" onclick="triggerUpload(true)"
+                            style="display:none; padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; margin-bottom:0.75rem;">📷 Take Photo</button>
+                        <button class="btn-glow hero-primary" id="galleryPhotoBtn" onclick="triggerUpload(false)"
+                            style="display:none; padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; margin-bottom:0.75rem;">🖼️ Upload from Gallery</button>
+                        <button class="btn-glow hero-primary" id="choosePhotoBtn" onclick="triggerUpload(false)"
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;">📂 Choose Photo</button>
+                        <p id="uploadHintText" style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;">Tap to browse files from your device.</p>
                     </div>
 
                     <!-- Analyze / Retake -->
