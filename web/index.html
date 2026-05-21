@@ -232,8 +232,12 @@
 
                     <!-- Upload Button -->
                     <div class="cam-controls" id="cameraControls">
-                        <button class="btn-glow hero-primary" id="takePhotoBtn" onclick="triggerUpload(true)"
+                        <button class="btn-glow hero-primary" id="takePhotoBtn" onclick="startMobileCamera()"
                             style="display:none; padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; margin-bottom:0.75rem;">📷 Take Photo</button>
+                        <button class="btn-glow hero-primary" id="capturePhotoBtn" onclick="capturePhoto()"
+                            style="display:none; padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; margin-bottom:0.75rem;">📸 Capture</button>
+                        <button class="btn-glow hero-primary" id="switchCameraBtn" onclick="switchCamera()"
+                            style="display:none; padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; margin-bottom:0.75rem;">🔄 Switch Camera</button>
                         <button class="btn-glow hero-primary" id="galleryPhotoBtn" onclick="triggerUpload(false)"
                             style="display:none; padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; margin-bottom:0.75rem;">🖼️ Upload from Gallery</button>
                         <button class="btn-glow hero-primary" id="choosePhotoBtn" onclick="triggerUpload(false)"

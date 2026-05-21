@@ -355,14 +355,36 @@ function setupPhotoButtons() {
     }
 }
 
+function startMobileCamera() {
+    if (!isMobileDevice()) {
+        return triggerUpload(false);
+    }
+
+    stopCamera();
+    initCamera();
+
+    const takeBtn = document.getElementById('takePhotoBtn');
+    const galleryBtn = document.getElementById('galleryPhotoBtn');
+    const chooseBtn = document.getElementById('choosePhotoBtn');
+    const captureBtn = document.getElementById('capturePhotoBtn');
+    const switchBtn = document.getElementById('switchCameraBtn');
+    const hint = document.getElementById('uploadHintText');
+
+    if (takeBtn) takeBtn.style.display = 'none';
+    if (galleryBtn) galleryBtn.style.display = 'none';
+    if (chooseBtn) chooseBtn.style.display = 'none';
+    if (captureBtn) captureBtn.style.display = 'block';
+    if (switchBtn) switchBtn.style.display = 'block';
+    if (hint) hint.textContent = 'Position the leaf and tap Capture.';
+}
+
 function triggerUpload(useCamera = false) {
+    if (useCamera && isMobileDevice()) {
+        return startMobileCamera();
+    }
     const input = document.getElementById('fileInput');
     if (!input) return;
-    if (useCamera && isMobileDevice()) {
-        input.setAttribute('capture', 'environment');
-    } else {
-        input.removeAttribute('capture');
-    }
+    input.removeAttribute('capture');
     input.click();
 }
 
