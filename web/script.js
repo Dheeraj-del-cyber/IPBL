@@ -348,10 +348,10 @@ function setupPhotoButtons() {
     if (hasCamera) {
         if (takeBtn) takeBtn.style.display = 'block';
         if (galleryBtn) galleryBtn.style.display = 'block';
-        if (chooseBtn) chooseBtn.style.display = 'block';
+        if (chooseBtn) chooseBtn.style.display = 'none';
         if (captureBtn) captureBtn.style.display = 'none';
         if (switchBtn) switchBtn.style.display = 'none';
-        if (hint) hint.textContent = 'Use camera or gallery to upload a leaf image.';
+        if (hint) hint.textContent = 'Use camera or gallery to capture a leaf image.';
     } else {
         if (takeBtn) takeBtn.style.display = 'none';
         if (galleryBtn) galleryBtn.style.display = 'block';
@@ -423,15 +423,7 @@ function resetDetection() {
     document.getElementById('cameraPlaceholder').style.display = 'flex';
     document.getElementById('cameraControls').classList.remove('hidden');
     document.getElementById('analyzeControls').classList.add('hidden');
-    const captureBtn = document.getElementById('capturePhotoBtn');
-    const switchBtn = document.getElementById('switchCameraBtn');
-    const takeBtn = document.getElementById('takePhotoBtn');
-    const galleryBtn = document.getElementById('galleryPhotoBtn');
-    const hasCamera = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-    if (captureBtn) captureBtn.style.display = 'none';
-    if (switchBtn) switchBtn.style.display = 'none';
-    if (takeBtn) takeBtn.style.display = hasCamera ? 'block' : 'none';
-    if (galleryBtn) galleryBtn.style.display = 'block';
+    setupPhotoButtons();
     // Reset file input so same file can be re-selected
     document.getElementById('fileInput').value = '';
 }
