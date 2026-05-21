@@ -22,7 +22,7 @@ const TRANSLATIONS = {
         navHome: 'Home', navDetect: 'Detect', navCrops: 'Crops', navScan: 'Start Scan',
         heroBadge: '🚜 Farmer Support App',
         heroTitle1: 'Healthy Crops', heroTitle2: 'Better Income',
-        heroDesc: 'Identify crop disease, get exact treatment steps, and select suitable crops by season and soil - fast and simple.',
+        heroDesc: 'Identify plant disease and get exact treatment steps quickly.',
         heroBtn1: 'Detect Disease', heroBtn2: 'Get Crop Advice',
         statCrops: 'Crops', statDiseases: 'Diseases', statLangs: 'Languages',
         secFeatures: 'Features', secFeaturesTitle: 'Smart Farming Tools',
@@ -41,7 +41,7 @@ const TRANSLATIONS = {
         navHome: 'होम', navDetect: 'पहचानें', navCrops: 'फसलें', navScan: 'स्कैन करें',
         heroBadge: '🌱 AI-संचालित कृषि',
         heroTitle1: 'स्मार्ट खेती', heroTitle2: 'हुई आसान',
-        heroDesc: 'पौधों की बीमारियों को तुरंत पहचानें, AI फसल सुझाव प्राप्त करें, और खेती का ज्ञान प्राप्त करें - सब कुछ सरल।',
+        heroDesc: 'पौधों की बीमारियों को तुरंत पहचानें और सटीक उपचार कदम जल्दी प्राप्त करें।',
         heroBtn1: 'बीमारी पहचानें', heroBtn2: 'फसल सलाह लें',
         statCrops: 'फसलें', statDiseases: 'बीमारियाँ', statLangs: 'भाषाएं',
         secFeatures: 'विशेषताएं', secFeaturesTitle: 'स्मार्ट खेती उपकरण',
@@ -60,7 +60,7 @@ const TRANSLATIONS = {
         navHome: 'ಹೋಮ್', navDetect: 'ಗುರುತಿಸಿ', navCrops: 'ಬೆಳೆಗಳು', navScan: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
         heroBadge: '🌱 AI-ಚಾಲಿತ ಕೃಷಿ',
         heroTitle1: 'ಸ್ಮಾರ್ಟ್ ಕೃಷಿ', heroTitle2: 'ಸುಲಭವಾಗಿದೆ',
-        heroDesc: 'ಸಸ್ಯ ರೋಗಗಳನ್ನು ತಕ್ಷಣ ಪತ್ತೆಹಚ್ಚಿ, AI ಬೆಳೆ ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ ಮತ್ತು ಕೃಷಿ ಜ್ಞಾನವನ್ನು ಪಡೆದುಕೊಳ್ಳಿ - ಎಲ್ಲವೂ ಸರಳ.',
+        heroDesc: 'ಸಸ್ಯ ರೋಗಗಳನ್ನು ತಕ್ಷಣ ಪತ್ತೆಹಚ್ಚಿ ಮತ್ತು ಸರಿಯಾದ ಚಿಕಿತ್ಸೆಗಳನ್ನು ಬೇಗ ಪಡೆಯಿರಿ.',
         heroBtn1: 'ರೋಗ ಪತ್ತೆಹಚ್ಚಿ', heroBtn2: 'ಬೆಳೆ ಸಲಹೆ ಪಡೆಯಿರಿ',
         statCrops: 'ಬೆಳೆಗಳು', statDiseases: 'ರೋಗಗಳು', statLangs: 'ಭಾಷೆಗಳು',
         secFeatures: 'ವೈಶಿಷ್ಟ್ಯಗಳು', secFeaturesTitle: 'ಸ್ಮಾರ್ಟ್ ಕೃಷಿ ಪರಿಕರಗಳು', secFeaturesDesc: 'ಉತ್ತಮ ಕೃಷಿ ನಿರ್ಧಾರಗಳಿಗೆ ಎಲ್ಲವೂ.',
@@ -76,7 +76,7 @@ const TRANSLATIONS = {
         navHome: 'హోమ్', navDetect: 'గుర్తించండి', navCrops: 'పంటలు', navScan: 'స్కాన్ చేయండి',
         heroBadge: '🌱 AI-ఆధారిత వ్యవసాయం',
         heroTitle1: 'స్మార్ట్ వ్యవసాయం', heroTitle2: 'సులభంగా',
-        heroDesc: 'మొక్కల వ్యాధులను తక్షణమే గుర్తించండి, AI పంట సిఫార్సులను పొందండి మరియు వ్యవసాయ జ్ఞానాన్ని యాక్సెస్ చేయండి - అంతా సరళంగా.',
+        heroDesc: 'మొక్కల వ్యాధులను తక్షణమే గుర్తించండి మరియు సరైన చికిత్సను త్వరగా పొందండి.',
         heroBtn1: 'వ్యాధిని గుర్తించండి', heroBtn2: 'పంట సలహా పొందండి',
         statCrops: 'పంటలు', statDiseases: 'వ్యాధులు', statLangs: 'భాషలు',
         secFeatures: 'ఫీచర్లు', secFeaturesTitle: 'స్మార్ట్ వ్యవసాయ సాధనాలు', secFeaturesDesc: 'మెరుగైన వ్యవసాయ నిర్ణయాలకు అన్నీ.',
@@ -92,7 +92,7 @@ const TRANSLATIONS = {
         navHome: 'முகப்பு', navDetect: 'கண்டறி', navCrops: 'பயிர்கள்', navScan: 'ஸ்கேன் செய்',
         heroBadge: '🌱 AI-ஆல் இயக்கப்படும் விவசாயம்',
         heroTitle1: 'ஸ்மார்ட் விவசாயம்', heroTitle2: 'எளிதாக',
-        heroDesc: 'தாவர நோய்களை உடனடியாகக் கண்டறியவும், AI பயிர் பரிந்துரைகளைப் பெறவும் மற்றும் விவசாய அறிவை அணுகவும் - அனைத்தும் எளிமையாக.',
+        heroDesc: 'தாவர நோய்களை உடனடியாகக் கண்டறியவும் மற்றும் சரியான சிகிச்சையை விரைவாகப் பெறவும்.',
         heroBtn1: 'நோயைக் கண்டறி', heroBtn2: 'பயிர் ஆலோசனை பெறு',
         statCrops: 'பயிர்கள்', statDiseases: 'நோய்கள்', statLangs: 'மொழிகள்',
         secFeatures: 'அம்சங்கள்', secFeaturesTitle: 'ஸ்கார்ட் விவசாய கருவிகள்', secFeaturesDesc: 'சிறந்த விவசாய முடிவுகளுக்கு அனைத்தும்.',
@@ -172,14 +172,12 @@ function navigateTo(screenId) {
 
     // Sub-initializers
     if (screenId === 'screenDiseaseDetect') initUploadZone();
-    if (screenId === 'screenCropForm') initCropForm();
     if (screenId === 'screenIoT') startIoTMonioting();
     else stopIoTMonioting();
 }
 
 function goBackFromResult() {
     if (AppState.resultSource === 'disease') navigateTo('screenDiseaseDetect');
-    else if (AppState.resultSource === 'crop') navigateTo('screenCropForm');
     else navigateTo('screenHome');
 }
 
@@ -557,19 +555,7 @@ function renderErrorResult(msg) {
 
 
 
-/* --- Crop Recommendation Logic --- */
-const CROP_DB = [
-    { name:'Rice', emoji:'🌾', soil:['alluvial','clay','loamy'], tempMin:20, tempMax:37, rainMin:1000, rainMax:3000, season:['kharif'], desc:'Staple grain, needs standing water. Ideal for humid regions.' },
-    { name:'Wheat', emoji:'🌾', soil:['alluvial','loamy','black'], tempMin:10, tempMax:25, rainMin:400, rainMax:1200, season:['rabi'], desc:'Winter crop, needs cool weather and moderate water.' },
-    { name:'Sugarcane', emoji:'🎋', soil:['alluvial','loamy','black'], tempMin:20, tempMax:40, rainMin:750, rainMax:2500, season:['kharif','zaid'], desc:'Tropical cash crop. Needs long sunny days.' },
-    { name:'Cotton', emoji:'☁️', soil:['black','alluvial','red'], tempMin:21, tempMax:40, rainMin:500, rainMax:1500, season:['kharif'], desc:'Important fiber crop. Thrives in black "regur" soil.' },
-    { name:'Maize', emoji:'🌽', soil:['loamy','alluvial','red','sandy'], tempMin:18, tempMax:35, rainMin:500, rainMax:1500, season:['kharif','zaid'], desc:'Versatile cereal. Tolerates various soil conditions.' },
-    { name:'Groundnut', emoji:'🥜', soil:['sandy','loamy','red'], tempMin:20, tempMax:35, rainMin:400, rainMax:1000, season:['kharif','zaid'], desc:'Oilseed crop that enriches soil with nitrogen.' },
-    { name:'Mustard', emoji:'🌼', soil:['alluvial','loamy','sandy'], tempMin:10, tempMax:25, rainMin:250, rainMax:750, season:['rabi'], desc:'Cool weather oilseed. Grows in dry conditions.' },
-    { name:'Tomato', emoji:'🍅', soil:['loamy','red','alluvial'], tempMin:18, tempMax:32, rainMin:400, rainMax:1200, season:['kharif','rabi','zaid'], desc:'High-value vegetable. Can grow year-round if managed.' },
-    { name:'Potato', emoji:'🥔', soil:['loamy','sandy','alluvial'], tempMin:10, tempMax:25, rainMin:300, rainMax:800, season:['rabi'], desc:'Cool weather root crop. High nutritional value.' },
-    { name:'Millet', emoji:'🌾', soil:['sandy','red','laterite'], tempMin:25, tempMax:45, rainMin:200, rainMax:700, season:['kharif'], desc:'Drought-resistant superfood grain.' }
-];
+/* --- Crop recommendation feature removed --- */
 
 function updateTempDisplay(v) {
     const el = document.getElementById('tempValue');
@@ -592,320 +578,10 @@ function toggleMobileMenu() {
     }
 }
 
-function getCropSuggestion() {
-    const soil = document.getElementById('soilType').value;
-    const temp = +document.getElementById('temperature').value;
-    const rain = +document.getElementById('rainfall').value;
-    const season = document.getElementById('season').value;
-
-    if (!soil || !rain || !season) {
-        const field = !soil ? 'soilType' : (!rain ? 'rainfall' : 'season');
-        const el = document.getElementById(field);
-        el.style.borderColor = '#f43f5e';
-        el.focus();
-        setTimeout(() => el.style.borderColor = '', 1000);
-        return;
-    }
-
-    showLoading("Calculating best matches...");
-    setTimeout(() => {
-        hideLoading();
-        AppState.resultSource = 'crop';
-        renderCropResult(soil, temp, rain, season);
-        navigateTo('screenResult');
-    }, 1800);
-}
-
-function renderCropResult(soil, temp, rain, season) {
-    const scored = CROP_DB.map(c => {
-        let score = 0;
-        if (c.soil.includes(soil)) score += 40;
-        if (c.season.includes(season)) score += 30;
-        if (temp >= c.tempMin && temp <= c.tempMax) score += 15;
-        if (rain >= c.rainMin && rain <= c.rainMax) score += 15;
-        return { ...c, score };
-    }).filter(c => c.score > 30).sort((a,b) => b.score - a.score).slice(0, 5);
-
-    const title = document.getElementById('resultTitle');
-    const body = document.getElementById('resultBody');
-    
-    title.textContent = "Crop Recommendations";
-    
-    if (scored.length === 0) {
-        body.innerHTML = `
-            <div class="result-hero result-danger">
-                <div class="result-emoji">🤔</div>
-                <div class="result-name">No Direct Match</div>
-                <div class="result-confidence">Try adjusting your inputs</div>
-            </div>
-            <button class="btn-ghost btn-full" onclick="navigateTo('screenCropForm')">Try Again</button>
-        `;
-        return;
-    }
-
-    body.innerHTML = `
-        <div class="result-hero result-success">
-            <div class="result-emoji">🎯</div>
-            <div class="result-name">Top Picks for You</div>
-            <div class="result-confidence" style="display:flex; justify-content:center; gap:0.75rem; margin-top:0.5rem">
-                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">🌾 ${soil}</span>
-                <span class="glass-sm" style="padding:4px 12px; font-size:0.75rem; text-transform:capitalize;">📅 ${season}</span>
-            </div>
-        </div>
-        <div class="crop-results-list" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
-            ${scored.map((c, i) => `
-                <div class="feat-card glass float-card" style="padding:1.5rem; border-left: 4px solid ${i===0?'#3eaf60':'rgba(255,255,255,0.1)'}">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div>
-                            <h3 style="font-size:1.25rem; margin-bottom:0.5rem">${c.emoji} ${c.name}</h3>
-                            <p style="font-size:0.9rem; color:var(--n-300)">${c.desc}</p>
-                        </div>
-                        <div class="glass-sm" style="padding:4px 10px; border-radius:10px; font-weight:800; color:var(--g-300); font-size:0.8rem;">
-                            ${c.score}% Match
-                        </div>
-                    </div>
-                </div>
-            `).join('')}
-        </div>
-        <div class="result-card" style="margin-top:2rem">
-            <div class="result-card-header">💡 Pro Tip</div>
-            <div class="result-card-body">The top choice is based on historical yields in similar conditions. Consider crop rotation after this cycle for soil health.</div>
-        </div>
-        <button class="btn-glow btn-full" style="margin-top:1rem" onclick="navigateTo('screenHome')">Back to Home</button>
-    `;
-}
-
-/* --- Crop Recommendation Modes --- */
-let AppLocationData = {};
-
-
-
-function detectUserLocation(isAutomatic = false) {
-    const btn = document.querySelector('button[onclick*="detectUserLocation"]');
-    if (btn) {
-        btn.textContent = isAutomatic ? '📡 Auto-detecting...' : '📡 Detecting...';
-        btn.disabled = true;
-    }
-
-    if (!navigator.geolocation) {
-        alert('Geolocation not supported in your browser');
-        if (btn) {
-            btn.textContent = '📡 Detect';
-            btn.disabled = false;
-        }
-        // Fallback to offline if geolocation unavailable
-        if (isAutomatic) switchCropMode('offline');
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-        async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            AppLocationData = { lat, lon };
-            
-            // Fetch weather data
-            await fetchWeatherData(lat, lon);
-            
-            // Display location
-            document.getElementById('locationDisplay').value = `${lat.toFixed(4)}°, ${lon.toFixed(4)}°`;
-            if (btn) {
-                btn.textContent = '✅ Located';
-                setTimeout(() => {
-                    btn.textContent = '📡 Detect';
-                    btn.disabled = false;
-                }, 2000);
-            }
-        },
-        (error) => {
-            console.error('Geolocation error:', error);
-            if (!isAutomatic) {
-                alert('Could not access location. Please enable location permissions.');
-            }
-            if (btn) {
-                btn.textContent = '📡 Detect';
-                btn.disabled = false;
-            }
-            // Alert user if location unavailable
-            if (!isAutomatic) {
-                alert('Could not access location. Please enable location permissions.');
-            }
-            if (btn) {
-                btn.textContent = '📡 Detect';
-                btn.disabled = false;
-            }
-        }
-    );
-}
-
-async function fetchWeatherData(lat, lon) {
-    try {
-        // Using Open-Meteo free API (no API key required)
-        const response = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto`
-        );
-        const data = await response.json();
-        
-        if (data.current) {
-            const current = data.current;
-            const temp = Math.round(current.temperature_2m);
-            const humidity = current.relative_humidity_2m;
-            
-            AppLocationData.temperature = temp;
-            AppLocationData.humidity = humidity;
-            
-            // Update form fields
-            document.getElementById('onlineTemperature').value = temp;
-            document.getElementById('onlineTempValue').textContent = temp;
-            document.getElementById('onlineHumidityValue').textContent = humidity;
-            
-            // Estimate rainfall based on weather code
-            const rainfall = estimateRainfallFromWeather(current.weather_code);
-            AppLocationData.rainfall = rainfall;
-            
-            // Get weather description
-            const weatherDesc = getWeatherDescription(current.weather_code);
-            document.getElementById('weatherDesc').textContent = `${weatherDesc} • Humidity: ${humidity}%`;
-            
-            // Estimate soil type based on location
-            const soilType = await estimateSoilType(lat, lon);
-            AppLocationData.soil = soilType;
-            document.getElementById('estimatedSoil').value = soilType;
-            
-            // Detect season
-            const season = getSeasonFromDate();
-            AppLocationData.season = season;
-            document.getElementById('detectedSeason').value = season;
-            
-            // Enable button
-            document.getElementById('onlineGetBtn').textContent = 'Get Recommendation';
-            document.getElementById('onlineGetBtn').disabled = false;
-        }
-    } catch (error) {
-        console.error('Weather fetch error:', error);
-        document.getElementById('weatherDesc').textContent = '⚠️ Could not fetch weather data. Please try again.';
-    }
-}
-
-function estimateRainfallFromWeather(weatherCode) {
-    // Simple estimation based on WMO weather codes
-    // Light rain: 200-400mm/yr typical
-    // Moderate rain: 600-1200mm/yr
-    // Heavy rain: 1500-3000mm/yr
-    if (weatherCode === 0 || weatherCode === 1) return 400; // Clear/Mainly clear
-    if (weatherCode === 2) return 600; // Partly cloudy
-    if (weatherCode === 3) return 750; // Overcast
-    if (weatherCode >= 45 && weatherCode <= 48) return 1000; // Foggy
-    if (weatherCode >= 51 && weatherCode <= 67) return 1200; // Drizzle/Rain
-    if (weatherCode >= 71 && weatherCode <= 77) return 1500; // Snow
-    if (weatherCode >= 80 && weatherCode <= 82) return 1800; // Rain showers
-    if (weatherCode >= 85 && weatherCode <= 86) return 2000; // Snow showers
-    if (weatherCode >= 80 && weatherCode <= 99) return 2500; // Thunderstorm
-    return 1000; // Default moderate
-}
-
-function getWeatherDescription(weatherCode) {
-    const descriptions = {
-        0: '☀️ Clear sky',
-        1: '🌤️ Mainly clear',
-        2: '⛅ Partly cloudy',
-        3: '☁️ Overcast',
-        45: '🌫️ Foggy',
-        48: '🌫️ Depositing rime fog',
-        51: '🌧️ Light drizzle',
-        53: '🌧️ Moderate drizzle',
-        55: '🌧️ Dense drizzle',
-        61: '🌧️ Slight rain',
-        63: '🌧️ Moderate rain',
-        65: '⛈️ Heavy rain',
-        71: '❄️ Slight snow',
-        73: '❄️ Moderate snow',
-        75: '❄️ Heavy snow',
-        77: '❄️ Snow grains',
-        80: '🌧️ Slight rain showers',
-        81: '🌧️ Moderate rain showers',
-        82: '⛈️ Violent rain showers',
-        85: '❄️ Slight snow showers',
-        86: '❄️ Heavy snow showers',
-        95: '⛈️ Thunderstorm',
-        96: '⛈️ Thunderstorm with hail',
-        99: '⛈️ Thunderstorm with hail'
-    };
-    return descriptions[weatherCode] || '🌍 Variable weather';
-}
-
-async function estimateSoilType(lat, lon) {
-    // Simple heuristic based on latitude and common agricultural regions
-    // This is a simplified model - in production, you'd use soil maps API
-    
-    // For India (main target), estimate based on latitude
-    if (lat >= 25 && lat <= 35) {
-        if (lon >= 72 && lon <= 84) {
-            return 'Black Soil'; // North/Central India typically black soil
-        }
-    }
-    if (lat >= 20 && lat <= 28) {
-        if (lon >= 75 && lon <= 88) {
-            return 'Alluvial'; // Indo-Gangetic plains
-        }
-    }
-    if (lat >= 11 && lat <= 20) {
-        if (lon >= 76 && lon <= 85) {
-            return 'Red Soil'; // South India
-        }
-    }
-    
-    // Default estimation based on general patterns
-    return 'Alluvial'; // Most common in agricultural areas
-}
-
-function getSeasonFromDate() {
-    const month = new Date().getMonth();
-    
-    // For Indian agricultural seasons
-    if (month >= 5 && month <= 9) {
-        return 'kharif'; // June-October: Monsoon season
-    } else if (month >= 10 || month <= 2) {
-        return 'rabi'; // October-February: Winter season
-    } else {
-        return 'zaid'; // March-May: Summer season
-    }
-}
-
-function getCropSuggestionOnline() {
-    if (!AppLocationData.latitude && !AppLocationData.lat) {
-        alert('Please detect your location first');
-        return;
-    }
-
-    const soil = AppLocationData.soil || 'alluvial';
-    const temp = AppLocationData.temperature || 25;
-    const rain = AppLocationData.rainfall || 1000;
-    const season = AppLocationData.season || 'kharif';
-
-    showLoading("Analyzing your location data...");
-    setTimeout(() => {
-        hideLoading();
-        AppState.resultSource = 'crop';
-        renderCropResult(soil, temp, rain, season);
-        navigateTo('screenResult');
-    }, 1500);
-}
-
-function initCropForm() {
-    // Reset online form fields
-    AppLocationData = {};
-    document.getElementById('locationDisplay').value = '';
-    document.getElementById('onlineTempValue').textContent = '--';
-    document.getElementById('onlineHumidityValue').textContent = '--';
-    document.getElementById('estimatedSoil').value = '';
-    document.getElementById('detectedSeason').value = '';
-    document.getElementById('weatherDesc').textContent = 'Weather data will appear after location detection';
-    document.getElementById('onlineGetBtn').textContent = 'Get Recommendation (Detecting Location...)';
-    document.getElementById('onlineGetBtn').disabled = true;
-
-    // Detect location automatically
-    detectUserLocation(true);
+function renderDailyTip() {
+    const tips = ["Water crops early morning", "Rotate crops each season", "Use organic compost", "Check soil pH regularly"];
+    const el = document.getElementById('dailyTip');
+    if (el) el.textContent = tips[new Date().getDate() % tips.length];
 }
 
 function initVoiceAssistant() {
@@ -1178,14 +854,6 @@ function processVoiceQuery(query) {
         }
     }
     
-    // Crop recommendation queries
-    else if (lowerQuery.includes('crop') || lowerQuery.includes('फसल') || lowerQuery.includes('ಬೆಳೆ') || lowerQuery.includes('పంట') || lowerQuery.includes('பயிர்')) {
-        if (lowerQuery.includes('soil') || lowerQuery.includes('मिट्टी') || lowerQuery.includes('ಮಣ್ಣು') || lowerQuery.includes('మట్టి') || lowerQuery.includes('மண்')) {
-            response = 'For alluvial soil, I recommend rice, sugarcane, and cotton. For black soil, try cotton and soybean. For sandy soil, consider groundnut and millet.';
-        } else {
-            response = 'I can recommend crops based on soil type, climate, and season. Please provide more details about your farming conditions.';
-        }
-    }
     
     // Treatment queries
     else if (lowerQuery.includes('treat') || lowerQuery.includes('treatment') || lowerQuery.includes('इलाज') || lowerQuery.includes('ಚಿಕಿತ್ಸೆ') || lowerQuery.includes('చికిత్స') || lowerQuery.includes('சிகிச்சை')) {
@@ -1205,7 +873,7 @@ function processVoiceQuery(query) {
     
     // Default response
     else {
-        response = 'I\'m here to help with farming questions! You can ask me about plant diseases, crop recommendations, treatments, or weather-related farming advice.';
+        response = 'I\'m here to help with farming questions! You can ask me about plant diseases, treatments, weather, or general farming advice.';
     }
     
     // Speak the response
@@ -1300,19 +968,35 @@ let chatIsLoading = false;
 function toggleChatbot() {
     chatOpen = !chatOpen;
     const panel = document.getElementById('chatPanel');
-    const btn   = document.getElementById('chatToggleBtn');
+    const btn = document.getElementById('chatToggleBtn');
+
+    if (!panel) return; // nothing to do
 
     if (chatOpen) {
+        // show with animation
         panel.classList.remove('chat-hidden');
+        panel.classList.add('chat-open');
         panel.style.display = 'flex';
-        btn.textContent = '✕';
-        btn.style.fontSize = '1.2rem';
-        document.getElementById('chatInput').focus();
+        if (btn) {
+            btn.textContent = '✕';
+            btn.setAttribute('aria-expanded', 'true');
+            btn.style.fontSize = '1.2rem';
+        }
+        const input = document.getElementById('chatInput');
+        if (input) input.focus({ preventScroll: true });
+        // ensure latest messages visible
+        const container = document.getElementById('chatMessages');
+        if (container) container.scrollTop = container.scrollHeight;
     } else {
+        panel.classList.remove('chat-open');
         panel.classList.add('chat-hidden');
-        panel.style.display = 'none';
-        btn.textContent = '💬';
-        btn.style.fontSize = '1.6rem';
+        // keep a short timeout before hiding to allow animation
+        setTimeout(() => { panel.style.display = 'none'; }, 260);
+        if (btn) {
+            btn.textContent = '💬';
+            btn.setAttribute('aria-expanded', 'false');
+            btn.style.fontSize = '1.6rem';
+        }
     }
 }
 
@@ -1526,14 +1210,6 @@ function getLocalFallback(q, isApiError = false) {
             return `🌿 ${disease}:\n• Recovery: ${info.recovery}\n• Organic: ${info.organic}\n• Chemical: ${info.chemical}\n• Prevention: ${info.prevention}`;
         }
     }
-    for (const crop of CROP_DB) {
-        if (lower.includes(crop.name.toLowerCase())) {
-            return `${crop.emoji} ${crop.name}:\n${crop.desc}\n• Best Season: ${crop.season.join(', ')}\n• Soil: ${crop.soil.join(', ')}\n• Temp: ${crop.tempMin}–${crop.tempMax}°C\n• Rainfall: ${crop.rainMin}–${crop.rainMax} mm/yr`;
-        }
-    }
-    if (lower.includes('kharif')) return '🌧️ Kharif crops (June–Nov): Rice, Cotton, Maize, Groundnut, Millet.';
-    if (lower.includes('rabi'))   return '❄️ Rabi crops (Nov–Apr): Wheat, Mustard, Potato, Chickpea.';
-    if (lower.includes('zaid'))   return '☀️ Zaid crops (Mar–Jun): Maize, Tomato, Groundnut, Watermelon.';
     if (lower.includes('organic') || lower.includes('pest')) return '🌿 Organic pest control: Neem oil, garlic spray, yellow sticky traps, Bacillus subtilis, companion planting.';
     if (lower.includes('fertilizer') || lower.includes('npk')) return '🧪 NPK Guide:\n• N (Urea): leaf growth\n• P (DAP): root development\n• K (MOP): fruit quality & disease resistance';
     if (lower.includes('irrigat') || lower.includes('water')) return '💧 Best irrigation: Drip (most efficient), Sprinkler (vegetables), Furrow (row crops). Water early morning.';
@@ -1541,12 +1217,12 @@ function getLocalFallback(q, isApiError = false) {
 
     // Default — different message depending on context
     if (!navigator.onLine) {
-        return '📴 You\'re offline. Try asking about specific crops or diseases — I have some local knowledge available!';
+        return '📴 You\'re offline. Try asking about diseases or treatments — I have some local knowledge available!';
     }
     if (isApiError) {
-        return '⚠️ AI service is temporarily unavailable. Try asking about a specific crop or disease name — I can answer from local knowledge!';
+        return '⚠️ AI service is temporarily unavailable. Try asking about a specific disease name — I can answer from local knowledge!';
     }
-    return '🌱 I didn\'t catch that. Try asking something like:\n• "Best crops for black soil?"\n• "How to treat late blight?"\n• "Kharif season crops?"';
+    return '🌱 I didn\'t catch that. Try asking something like:\n• "How to treat late blight?"\n• "Organic pest control tips?"\n• "How to improve soil health?"';
 }
 
 /* =====================================================

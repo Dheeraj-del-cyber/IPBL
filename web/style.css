@@ -398,6 +398,17 @@ body {
 }
 
 /* --- Hero Section --- */
+
+/* Hide footer on small screens (mobile) */
+@media (max-width: 768px) {
+    .farm-footer {
+        display: none !important;
+        height: 0; /* collapse space if any */
+        overflow: hidden;
+        visibility: hidden;
+    }
+}
+
 .hero {
     padding: 6rem 0 4rem;
     text-align: center;
@@ -1612,8 +1623,19 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 @media (max-width: 768px) {
+    /* Keep chatbot widget available on mobile but position it above bottom nav.
+       Hide the floating bubble because the bottom nav provides the Chat trigger. */
     #chatbotWidget {
-        display: none !important; /* Hidden on mobile, use bottom nav instead */
+        display: flex !important;
+        bottom: 90px; /* sit above bottom nav */
+        right: 16px;
+        align-items: flex-end;
+        z-index: 9999;
+    }
+
+    /* Hide the floating bubble toggle on mobile (bottom nav handles opening) */
+    #chatToggleBtn {
+        display: none !important;
     }
 }
 
@@ -1814,6 +1836,71 @@ input[type=range]::-webkit-slider-thumb {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Enhanced chat UI */
+#chatPanel {
+    border-radius: 14px;
+    overflow: hidden;
+    transform-origin: bottom right;
+    transition: transform 0.32s var(--easing), opacity 0.32s var(--easing), visibility 0.32s;
+}
+
+#chatPanel.chat-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.chat-messages-area {
+    background: linear-gradient(180deg, #fbfff8 0%, #ffffff 100%);
+    padding: 1rem 1.25rem;
+}
+
+.chat-msg { max-width: 78%; }
+
+.ai-msg { border-radius: 16px 16px 16px 6px; }
+.user-msg { border-radius: 16px 16px 6px 16px; }
+
+.chat-input-area input {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    outline: none;
+    font-size: 0.95rem;
+    background: #fff;
+}
+
+.chat-input-area input:focus {
+    box-shadow: 0 6px 20px rgba(76,175,80,0.08);
+    border-color: var(--g-400);
+}
+
+.chat-send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.chat-sugg {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.chat-sugg:hover { transform: translateY(-3px); box-shadow: var(--sh-sm); }
+
+/* Make header slightly elevated and sticky inside panel */
+.chat-header { position: sticky; top: 0; z-index: 10; }
+
+@media (max-width: 768px) {
+    #chatPanel { width: calc(100vw - 32px); height: 56vh; max-height: 76vh; }
+    .chat-messages-area { padding-bottom: 0.25rem; }
+    .chat-input-area { padding: 0.75rem; }
 }
 
 /* --- Footer --- */

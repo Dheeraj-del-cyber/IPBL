@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agri AI — Smart Farming Assistant</title>
     <meta name="description"
-        content="AI-powered smart farming assistant. Detect plant diseases, get crop recommendations, and access farming knowledge.">
+        content="AI-powered smart farming assistant. Detect plant diseases and access farming knowledge.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,10 +45,6 @@
                     onclick="navigateTo('screenHome'); return false;" data-i18n="navHome">Home</a>
                 <a href="#" class="nav-link" data-screen="screenDiseaseDetect"
                     onclick="navigateTo('screenDiseaseDetect'); return false;" data-i18n="navDetect">Detect</a>
-                <a href="#" class="nav-link" data-screen="screenCropForm"
-                    onclick="navigateTo('screenCropForm'); return false;" data-i18n="navCrops">Crops</a>
-
-
                 <a href="#" class="nav-link" data-screen="screenIoT"
                     onclick="navigateTo('screenIoT'); return false;">IoT Monitor</a>
 
@@ -89,12 +85,6 @@
             <span class="bottom-nav-icon">📸</span>
             <span class="bottom-nav-text">Detect</span>
         </a>
-        <a href="#" class="bottom-nav-link" data-screen="screenCropForm"
-            onclick="navigateTo('screenCropForm'); return false;">
-            <span class="bottom-nav-icon">🌾</span>
-            <span class="bottom-nav-text">Crops</span>
-        </a>
-
         <a href="#" class="bottom-nav-link" data-screen="screenIoT" onclick="navigateTo('screenIoT'); return false;">
             <span class="bottom-nav-icon">📊</span>
             <span class="bottom-nav-text">IoT</span>
@@ -115,13 +105,10 @@
                 <span data-i18n="heroTitle1">Healthy Crops</span><br>
                 <span class="hero-glow" data-i18n="heroTitle2">Better Income</span>
             </h1>
-            <p class="hero-desc" data-i18n="heroDesc">Identify crop disease, get exact treatment steps, and select
-                suitable crops by season and soil - fast and simple.</p>
+            <p class="hero-desc" data-i18n="heroDesc">Identify plant disease, get exact treatment steps, and take action quickly.</p>
             <div class="hero-btns">
                 <button class="btn-glow hero-primary" onclick="navigateTo('screenDiseaseDetect')"
                     data-i18n="heroBtn1">📸 Scan Your Crop</button>
-                <button class="btn-ghost" onclick="navigateTo('screenCropForm')" data-i18n="heroBtn2">🌾 Get Crop
-                    Advice</button>
             </div>
 
             <!-- Language Quick Pick -->
@@ -145,14 +132,6 @@
                             <span class="action-subtext">Detect diseases instantly</span>
                         </div>
                     </button>
-                    <button class="quick-action-btn" onclick="navigateTo('screenCropForm')">
-                        <span class="action-icon">🌱</span>
-                        <div class="action-info">
-                            <span class="action-text">Crop Advice</span>
-                            <span class="action-subtext">Best seeds for you</span>
-                        </div>
-                    </button>
-
                 </div>
             </div>
 
@@ -204,13 +183,6 @@
                     <h3 data-i18n="featDetect">Detect Disease</h3>
                     <p data-i18n="featDetectDesc">Scan leaves for instant AI diagnosis.</p>
                 </div>
-                <div class="feat-card glass float-card" onclick="navigateTo('screenCropForm')">
-                    <div class="feat-icon-wrap feat-green">🌾</div>
-                    <h3 data-i18n="featCrop">Suggest Crop</h3>
-                    <p data-i18n="featCropDesc">Find best crops for your farm.</p>
-                </div>
-
-
                 <div class="feat-card glass float-card" onclick="navigateTo('screenIoT')">
                     <div class="feat-icon-wrap feat-blue">📊</div>
                     <h3>Smart Monitor</h3>
@@ -299,60 +271,6 @@
         <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
     </main>
 
-    <!-- Crop Recommendation Screen -->
-    <main class="screen" id="screenCropForm">
-        <div class="container">
-            <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
-                <button class="btn-back" onclick="navigateTo('screenHome')" data-i18n="back">← Back</button>
-                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="pageCrop">Crop
-                    Recommendation</h2>
-            </div>
-
-            <!-- Mode Selector -->
-            <div class="crop-mode-bar" style="margin-bottom:1.5rem;">
-                <div style="display:flex; gap:1rem; justify-content:center; align-items:center; flex-wrap:wrap">
-                    <button class="crop-mode-btn active" id="modeOnlineBtn">📍 Recommendation by Location</button>
-                </div>
-            </div>
-
-            <!-- Online Mode Form -->
-            <div class="crop-form-card" id="onlineCropForm">
-                <div class="form-group">
-                    <label class="form-label">📍 Your Location</label>
-                    <div style="display:flex; gap:0.75rem; align-items:center;">
-                        <input type="text" class="glass-input" id="locationDisplay"
-                            placeholder="Click button to detect location" readonly style="flex:1">
-                        <button class="detect-location-btn" onclick="detectUserLocation()">📡 Detect</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label"><span data-i18n="labelTemp">Temperature</span>: <span id="onlineTempValue"
-                            style="color:var(--g-600); font-weight:900;">--</span>°C</label>
-                    <input type="range" min="10" max="45" value="25" class="glass-input crop-range"
-                        id="onlineTemperature" disabled>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">☔ Current Humidity: <span id="onlineHumidityValue"
-                            style="color:var(--accent-sky); font-weight:900;">--</span>%</label>
-                    <div class="weather-info-box">
-                        <span id="weatherDesc">Weather data will appear after location detection</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">🌱 Estimated Soil Type</label>
-                    <input type="text" class="glass-input" id="estimatedSoil" readonly>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" data-i18n="labelSeason">Season</label>
-                    <input type="text" class="glass-input" id="detectedSeason" readonly>
-                </div>
-                <button class="btn-glow" style="width:100%; padding:1.25rem; font-size:1.05rem; font-weight:800;"
-                    onclick="getCropSuggestionOnline()" id="onlineGetBtn">🌾 Get Recommendation (Detecting
-                    Location...)</button>
-            </div>
-        </div>
-    </main>
-
     <!-- Result Screen -->
     <main class="screen" id="screenResult">
         <div class="container">
@@ -425,21 +343,24 @@
                     <span class="iot-stat-icon">📉</span>
                     <div>
                         <span class="iot-stat-label">Min Today</span>
-                        <span class="iot-stat-val" id="moistureMin">--</span><span style="font-size:0.8rem;color:var(--n-400);">%</span>
+                        <span class="iot-stat-val" id="moistureMin">--</span><span
+                            style="font-size:0.8rem;color:var(--n-400);">%</span>
                     </div>
                 </div>
                 <div class="iot-stat-pill glass">
                     <span class="iot-stat-icon">📈</span>
                     <div>
                         <span class="iot-stat-label">Max Today</span>
-                        <span class="iot-stat-val" id="moistureMax">--</span><span style="font-size:0.8rem;color:var(--n-400);">%</span>
+                        <span class="iot-stat-val" id="moistureMax">--</span><span
+                            style="font-size:0.8rem;color:var(--n-400);">%</span>
                     </div>
                 </div>
                 <div class="iot-stat-pill glass">
                     <span class="iot-stat-icon">≈</span>
                     <div>
                         <span class="iot-stat-label">Average</span>
-                        <span class="iot-stat-val" id="moistureAvg">--</span><span style="font-size:0.8rem;color:var(--n-400);">%</span>
+                        <span class="iot-stat-val" id="moistureAvg">--</span><span
+                            style="font-size:0.8rem;color:var(--n-400);">%</span>
                     </div>
                 </div>
                 <div class="iot-stat-pill glass">
@@ -456,7 +377,8 @@
                 <div class="iot-card-header" style="width:100%;">
                     <span class="iot-icon">📊</span>
                     <h3>Live Moisture History</h3>
-                    <span style="margin-left:auto;font-size:0.75rem;color:var(--n-400);font-weight:600;">Last 20 Readings</span>
+                    <span style="margin-left:auto;font-size:0.75rem;color:var(--n-400);font-weight:600;">Last 20
+                        Readings</span>
                 </div>
                 <div class="iot-chart-wrap">
                     <canvas id="moistureChart"></canvas>
@@ -477,9 +399,11 @@
                         <h3>Field Weather</h3>
                     </div>
                     <div id="iotWeatherContent" class="iot-weather-content">
-                        <p style="color:var(--n-400);font-size:0.9rem;text-align:center;width:100%;padding:1rem 0;">Detecting location...</p>
+                        <p style="color:var(--n-400);font-size:0.9rem;text-align:center;width:100%;padding:1rem 0;">
+                            Detecting location...</p>
                     </div>
-                    <button class="btn-ghost" onclick="fetchIoTWeather()" style="margin-top:auto;width:100%;padding:0.75rem;font-size:0.9rem;">🔄 Refresh Weather</button>
+                    <button class="btn-ghost" onclick="fetchIoTWeather()"
+                        style="margin-top:auto;width:100%;padding:0.75rem;font-size:0.9rem;">🔄 Refresh Weather</button>
                 </div>
 
                 <!-- Soil Health Score -->
@@ -491,9 +415,9 @@
                     <div class="iot-health-display">
                         <div class="health-ring-wrap">
                             <svg viewBox="0 0 80 80" class="health-ring-svg">
-                                <circle class="health-ring-bg" cx="40" cy="40" r="34"/>
+                                <circle class="health-ring-bg" cx="40" cy="40" r="34" />
                                 <circle id="healthRingFill" class="health-ring-fill" cx="40" cy="40" r="34"
-                                    style="stroke-dasharray:214;stroke-dashoffset:214;"/>
+                                    style="stroke-dasharray:214;stroke-dashoffset:214;" />
                             </svg>
                             <div class="health-ring-text">
                                 <span id="healthScore">--</span>
@@ -502,7 +426,9 @@
                         </div>
                         <div class="health-details">
                             <div id="healthGrade" class="health-grade">Waiting...</div>
-                            <p id="healthTip" style="font-size:0.85rem;color:var(--n-600);margin-top:0.5rem;line-height:1.5;">Connect sensor to get your soil health score.</p>
+                            <p id="healthTip"
+                                style="font-size:0.85rem;color:var(--n-600);margin-top:0.5rem;line-height:1.5;">Connect
+                                sensor to get your soil health score.</p>
                         </div>
                     </div>
                 </div>
@@ -515,7 +441,8 @@
                     <strong id="iotAlertTitle" style="display:block;font-size:1rem;">Alert</strong>
                     <p id="iotAlertMsg" style="font-size:0.875rem;color:var(--n-100);margin-top:0.25rem;">--</p>
                 </div>
-                <button onclick="document.getElementById('iotAlertBanner').classList.add('hidden')" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:rgba(255,255,255,0.7);">✕</button>
+                <button onclick="document.getElementById('iotAlertBanner').classList.add('hidden')"
+                    style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:rgba(255,255,255,0.7);">✕</button>
             </div>
 
         </div>
@@ -545,24 +472,23 @@
             <!-- Messages -->
             <div id="chatMessages" class="chat-messages-area">
                 <div class="chat-msg ai-msg">
-                    👋 Hi! I'm your Agri AI assistant. Ask me anything about crops, diseases, or farming!
+                    👋 Hi! I'm your Agri AI assistant. Ask me anything about diseases, treatment, or farming!
                 </div>
             </div>
 
             <!-- Quick Suggestions -->
             <div id="chatSuggestions" class="chat-suggestions-list">
-                <button class="chat-sugg" onclick="sendChatSuggestion('Best crops for black soil?')">🌾 Black soil
-                    crops</button>
                 <button class="chat-sugg" onclick="sendChatSuggestion('How to treat late blight?')">🍅 Late blight
                     cure</button>
-                <button class="chat-sugg" onclick="sendChatSuggestion('Kharif season crops?')">☔ Kharif crops</button>
                 <button class="chat-sugg" onclick="sendChatSuggestion('Organic pest control tips?')">🌿 Organic pest
                     control</button>
+                <button class="chat-sugg" onclick="sendChatSuggestion('How to improve soil health?')">🌱 Improve soil
+                    health</button>
             </div>
 
             <!-- Input -->
             <div class="chat-input-area">
-                <input id="chatInput" type="text" placeholder="Ask about crops, diseases..."
+                <input id="chatInput" type="text" placeholder="Ask about diseases or farming..."
                     onkeypress="if(event.key==='Enter')sendChatMessage()">
                 <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
             </div>
