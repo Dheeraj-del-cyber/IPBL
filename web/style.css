@@ -1230,16 +1230,17 @@ input[type=range]::-webkit-slider-thumb {
     .hero-btns   {
         flex-direction: column;
         gap: 0.85rem;
-        align-items: stretch;
+        align-items: center;
     }
     .hero-stats  { gap: 1.2rem; padding: 1.5rem; }
 
-    /* ── Hero Buttons (full-width on mobile) ── */
+    /* ── Hero Buttons ── */
     .btn-glow,
     .btn-glow.hero-primary {
-        width: 100%;
-        padding: 1rem 1.5rem;
-        font-size: 1rem;
+        width: auto;
+        min-width: 240px;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.95rem;
         text-align: center;
         justify-content: center;
         display: flex;
@@ -1283,17 +1284,17 @@ input[type=range]::-webkit-slider-thumb {
     .lang-pill      { padding: 0.5rem 0.9rem; font-size: 0.8rem; }
 
     /* ── Feature Cards ── */
-    .feat-grid  { grid-template-columns: 1fr; gap: 1rem; }
+    .feat-grid  { grid-template-columns: 1fr; gap: 0.85rem; }
     .feat-card  {
-        padding: 1.5rem;
+        padding: 1rem 1.25rem;
         text-align: left;
         display: flex;
         align-items: center;
-        gap: 1.25rem;
+        gap: 1rem;
     }
-    .feat-icon-wrap { margin: 0; width: 60px; height: 60px; flex-shrink: 0; font-size: 1.75rem; }
-    .feat-card h3   { font-size: 1.15rem; margin-bottom: 0.25rem; }
-    .feat-card p    { font-size: 0.9rem; }
+    .feat-icon-wrap { margin: 0; width: 48px; height: 48px; flex-shrink: 0; font-size: 1.35rem; }
+    .feat-card h3   { font-size: 1.05rem; margin-bottom: 0.15rem; }
+    .feat-card p    { font-size: 0.85rem; }
 
     /* ── Disease Detection ── */
     .detect-grid    { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -1625,17 +1626,15 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 @media (max-width: 768px) {
-    /* Keep chatbot widget available on mobile but position it above bottom nav.
-       Hide the floating bubble because the bottom nav provides the Chat trigger. */
     #chatbotWidget {
         display: flex !important;
-        bottom: 90px; /* sit above bottom nav */
-        right: 16px;
-        align-items: flex-end;
-        z-index: 9999;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        align-items: center;
+        z-index: 10000; /* Above bottom nav */
     }
 
-    /* Hide the floating bubble toggle on mobile (bottom nav handles opening) */
     #chatToggleBtn {
         display: none !important;
     }
@@ -1677,9 +1676,16 @@ input[type=range]::-webkit-slider-thumb {
 
 @media (max-width: 768px) {
     #chatPanel {
-        width: calc(100vw - 32px);
-        height: 60vh;
-        max-height: 500px;
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0 !important;
+        border: none !important;
+        transform-origin: bottom center;
+    }
+    #chatPanel.chat-hidden {
+        transform: translateY(100%) !important;
+        opacity: 0;
     }
 }
 
