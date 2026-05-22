@@ -1623,6 +1623,10 @@ input[type=range]::-webkit-slider-thumb {
     align-items: flex-end;
     gap: 12px;
     transition: all 0.3s var(--easing);
+    pointer-events: none;
+}
+#chatToggleBtn, #chatPanel {
+    pointer-events: auto;
 }
 
 @media (max-width: 768px) {
