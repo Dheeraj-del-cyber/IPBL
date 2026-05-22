@@ -1121,16 +1121,19 @@ function appendChatMsg(text, role, isTyping = false) {
     if (role === 'user') {
         div.className = 'chat-msg user-msg';
         div.style.cssText = 'background:var(--g-600); color:white; border-radius:18px 18px 4px 18px; padding:12px 16px; font-size:0.95rem; max-width:85%; align-self:flex-end; box-shadow:var(--sh-md);';
+        div.textContent = text;
     } else {
-        div.className = 'chat-msg ai-msg';
+        div.className = 'chat-msg ai-msg markdown-body';
         div.style.cssText = 'background:var(--white); color:var(--n-800); border:1px solid var(--border); border-radius:18px 18px 18px 4px; padding:12px 16px; font-size:0.95rem; max-width:90%; align-self:flex-start; box-shadow:var(--sh-sm); line-height:1.6;';
+        if (typeof marked !== 'undefined') {
+            div.innerHTML = marked.parse(text);
+        } else {
+            div.style.whiteSpace = 'pre-wrap';
+            div.textContent = text;
+        }
     }
 
     if (isTyping) div.style.opacity = '0.6';
-    
-    // Convert newlines to breaks or handle as pre-wrap
-    div.style.whiteSpace = 'pre-wrap';
-    div.textContent = text;
 
     container.appendChild(div);
     container.scrollTop = container.scrollHeight;
