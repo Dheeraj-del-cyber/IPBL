@@ -125,7 +125,7 @@ function navigateTo(screenId) {
 
     // Cleanup current
     if (AppState.currentScreen === 'screenDiseaseDetect' && screenId !== 'screenResult') {
-        stopCamera();
+        if(typeof stopCamera === 'function') stopCamera();
     }
 
     screens.forEach(s => {
