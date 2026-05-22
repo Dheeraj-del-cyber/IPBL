@@ -2663,3 +2663,4 @@ input[type=range].crop-range::-webkit-slider-thumb {
     .iot-bottom-grid { grid-template-columns: 1fr; }
     .iot-weather-stats { grid-template-columns: repeat(3, 1fr); }
 }
+

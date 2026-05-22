@@ -1493,3 +1493,4 @@ async function fetchIoTWeather() {
         content.innerHTML = '<p style="color:var(--accent-warning);">⚠️ Location access denied.</p>';
     });
 }
+
