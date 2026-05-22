@@ -650,6 +650,7 @@ function changeVoiceLanguage() {
 
 function updateVoiceSuggestions() {
     const suggestions = document.getElementById('voiceSuggestions');
+    if (!suggestions) return;
     const lang = VOICE_LANGUAGES[currentVoiceLang];
     
     let suggestionTexts = [];
