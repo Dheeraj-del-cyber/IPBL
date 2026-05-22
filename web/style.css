@@ -1686,10 +1686,17 @@ input[type=range]::-webkit-slider-thumb {
         border-radius: 0 !important;
         border: none !important;
         transform-origin: bottom center;
+        margin: 0;
     }
     #chatPanel.chat-hidden {
         transform: translateY(100%) !important;
         opacity: 0;
+    }
+    .chat-input-area {
+        padding: 0.85rem 1rem !important;
+    }
+    .chat-messages-area {
+        padding: 1rem !important;
     }
 }
 
