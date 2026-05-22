@@ -62,8 +62,8 @@
                         <button class="lang-opt" onclick="setLanguage('kn')">ಕನ್ನಡ (Kannada)</button>
                     </div>
                 </div>
-                <button class="nav-cta" onclick="navigateTo('screenDiseaseDetect')" data-i18n="navScan">Start
-                    Scan</button>
+                <button class="nav-profile-btn" onclick="openProfile()" title="Profile">👤</button>
+                <button class="nav-cta" onclick="navigateTo('screenDiseaseDetect')" data-i18n="navScan">Start Scan</button>
                 <button class="nav-burger" onclick="toggleMobileMenu()">
                     <span></span><span></span><span></span>
                 </button>
@@ -90,6 +90,10 @@
         <a href="#" class="bottom-nav-link" onclick="toggleChatbot(); return false;">
             <span class="bottom-nav-icon">💬</span>
             <span class="bottom-nav-text">Chat</span>
+        </a>
+        <a href="#" class="bottom-nav-link" onclick="openProfile(); return false;">
+            <span class="bottom-nav-icon">👤</span>
+            <span class="bottom-nav-text">Profile</span>
         </a>
     </nav>
 
@@ -521,6 +525,54 @@
             <p style="font-weight: 300; opacity: 0.9;">IPBL PROJECT 2026</p>
         </div>
     </footer>
+
+    <!-- Authentication Overlay -->
+    <div id="authOverlay" class="auth-overlay hidden">
+        <div class="auth-card glass">
+            <div class="auth-header">
+                <span class="auth-icon">🌱</span>
+                <h2 id="authTitle">Create Account</h2>
+                <p id="authSubtitle">Join Agri AI to continue.</p>
+            </div>
+            
+            <div class="auth-toggle">
+                <button type="button" class="auth-toggle-btn active" id="btnSignup" onclick="toggleAuthMode('signup')">Sign Up</button>
+                <button type="button" class="auth-toggle-btn" id="btnLogin" onclick="toggleAuthMode('login')">Login</button>
+            </div>
+
+            <form id="authForm" class="auth-form" onsubmit="handleAuth(event)">
+                <div class="input-group" id="nameGroup">
+                    <label for="authName">Full Name</label>
+                    <input type="text" id="authName" placeholder="Enter your full name" required>
+                </div>
+                <div class="input-group">
+                    <label for="authPhone">Phone Number</label>
+                    <input type="tel" id="authPhone" placeholder="Enter your 10-digit number" pattern="[0-9]{10}" required>
+                </div>
+                <div class="input-group">
+                    <label for="authPassword">Password</label>
+                    <input type="password" id="authPassword" placeholder="Enter your password" required>
+                </div>
+                <p id="authError" class="auth-error"></p>
+                <button type="submit" id="authSubmitBtn" class="btn-glow auth-btn" style="width:100%">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="auth-overlay hidden">
+        <div class="auth-card glass" style="text-align:center;">
+            <div class="auth-header" style="margin-bottom:1rem;">
+                <span class="auth-icon" style="background:var(--g-100); color:var(--g-700);">👤</span>
+                <h2 id="profileName">User Name</h2>
+                <p id="profilePhone">Phone</p>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                <button class="btn-ghost" style="width:100%;" onclick="closeProfile()">Close</button>
+                <button class="btn-glow" style="width:100%; background:var(--accent-warning); box-shadow:none;" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="config.js"></script>

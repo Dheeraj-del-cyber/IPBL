@@ -103,6 +103,8 @@ window.addEventListener('load', () => {
 });
 
 function initApp() {
+    checkAuth();
+
     // Navigation listener
     window.addEventListener('scroll', () => {
         document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 20);
@@ -1494,3 +1496,128 @@ async function fetchIoTWeather() {
     });
 }
 
+/* --- Authentication Logic --- */
+let currentAuthMode = 'signup';
+
+function toggleAuthMode(mode) {
+    currentAuthMode = mode;
+    const nameGroup = document.getElementById('nameGroup');
+    const authName = document.getElementById('authName');
+    const authTitle = document.getElementById('authTitle');
+    const authSubtitle = document.getElementById('authSubtitle');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    
+    document.getElementById('btnSignup').classList.toggle('active', mode === 'signup');
+    document.getElementById('btnLogin').classList.toggle('active', mode === 'login');
+    document.getElementById('authError').textContent = '';
+
+    if (mode === 'login') {
+        nameGroup.style.display = 'none';
+        authName.removeAttribute('required');
+        authTitle.textContent = 'Welcome Back';
+        authSubtitle.textContent = 'Login to Agri AI to continue.';
+        authSubmitBtn.textContent = 'Login';
+    } else {
+        nameGroup.style.display = 'block';
+        authName.setAttribute('required', 'true');
+        authTitle.textContent = 'Create Account';
+        authSubtitle.textContent = 'Join Agri AI to continue.';
+        authSubmitBtn.textContent = 'Sign Up';
+    }
+}
+
+function checkAuth() {
+    const userStr = localStorage.getItem('agri_active_user') || localStorage.getItem('agri_user');
+    const overlay = document.getElementById('authOverlay');
+    if (!overlay) return;
+    
+    if (!userStr) {
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        toggleAuthMode('signup');
+    } else {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+function handleAuth(e) {
+    e.preventDefault();
+    const phone = document.getElementById('authPhone').value.trim();
+    const password = document.getElementById('authPassword').value.trim();
+    const errorEl = document.getElementById('authError');
+    
+    if (phone.length !== 10 || isNaN(phone)) {
+        errorEl.textContent = 'Please enter a valid 10-digit phone number.';
+        return;
+    }
+    
+    if (password.length < 4) {
+        errorEl.textContent = 'Password must be at least 4 characters.';
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem('agri_users_db') || '{}');
+
+    if (currentAuthMode === 'signup') {
+        const name = document.getElementById('authName').value.trim();
+        if (!name) {
+            errorEl.textContent = 'Please enter your full name.';
+            return;
+        }
+        if (users[phone]) {
+            errorEl.textContent = 'An account with this phone number already exists. Please login.';
+            return;
+        }
+        
+        users[phone] = { name, phone, password };
+        localStorage.setItem('agri_users_db', JSON.stringify(users));
+        localStorage.setItem('agri_active_user', JSON.stringify({name, phone}));
+    } else {
+        // Login
+        if (!users[phone]) {
+            errorEl.textContent = 'Account not found. Please sign up first.';
+            return;
+        }
+        if (users[phone].password !== password) {
+            errorEl.textContent = 'Incorrect password.';
+            return;
+        }
+        localStorage.setItem('agri_active_user', JSON.stringify({name: users[phone].name, phone}));
+    }
+    
+    errorEl.textContent = '';
+    
+    // Close overlay
+    const overlay = document.getElementById('authOverlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+/* --- Profile & Logout --- */
+function openProfile() {
+    const userStr = localStorage.getItem('agri_active_user');
+    if (!userStr) {
+        checkAuth(); 
+        return;
+    }
+    const user = JSON.parse(userStr);
+    document.getElementById('profileName').textContent = user.name || 'User';
+    document.getElementById('profilePhone').textContent = user.phone || 'Phone';
+    
+    document.getElementById('profileModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeProfile() {
+    document.getElementById('profileModal').classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function logout() {
+    localStorage.removeItem('agri_active_user');
+    closeProfile();
+    checkAuth();
+}
