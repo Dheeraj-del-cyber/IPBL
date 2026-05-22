@@ -85,57 +85,13 @@ const TRANSLATIONS = {
         iotDry: 'ತುಂಬಾ ಒಣಗಿದೆ', iotDryRec: '🚨 ಮಣ್ಣಿನ ತೇವಾಂಶ ಕಡಿಮೆಯಾಗಿದೆ! ಬೆಳೆ ಒಣಗುವುದನ್ನು ತಡೆಯಲು ತಕ್ಷಣ ನೀರಾವರಿ ಪ್ರಾರಂಭಿಸಿ.',
         iotOpt: 'ಸೂಕ್ತ', iotOptRec: '✅ ಹೆಚ್ಚಿನ ಬೆಳೆಗಳಿಗೆ ಮಣ್ಣಿನ ತೇವಾಂಶವು ಆದರ್ಶ ಮಟ್ಟದಲ್ಲಿದೆ. ಯಾವುದೇ ಕ್ರಮದ ಅಗತ್ಯವಿಲ್ಲ.',
         iotWet: 'ತುಂಬಾ ಒದ್ದೆ', iotWetRec: '⚠️ ಮಣ್ಣು ಸ್ಯಾಚುರೇಟೆಡ್ ಆಗಿದೆ. ಬೇರು ಕೊಳೆಯುವುದನ್ನು ತಡೆಯಲು ನೀರಾವರಿ ನಿಲ್ಲಿಸಿ ಮತ್ತು ಸರಿಯಾದ ಒಳಚರಂಡಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.'
-    },
-    te: {
-        navHome: 'హోమ్', navDetect: 'గుర్తించండి', navCrops: 'పంటలు', navScan: 'స్కాన్ చేయండి',
-        heroBadge: '🌱 AI-ఆధారిత వ్యవసాయం',
-        heroTitle1: 'స్మార్ట్ వ్యవసాయం', heroTitle2: 'సులభంగా',
-        heroDesc: 'మొక్కల వ్యాధులను తక్షణమే గుర్తించండి మరియు సరైన చికిత్సను త్వరగా పొందండి.',
-        heroBtn1: 'వ్యాధిని గుర్తించండి', heroBtn2: 'పంట సలహా పొందండి',
-        statCrops: 'పంటలు', statDiseases: 'వ్యాధులు', statLangs: 'భాషలు',
-        secFeatures: 'ఫీచర్లు', secFeaturesTitle: 'స్మార్ట్ వ్యవసాయ సాధనాలు', secFeaturesDesc: 'మెరుగైన వ్యవసాయ నిర్ణయాలకు అన్నీ.',
-        featDetect: 'వ్యాధి గుర్తింపు', featDetectDesc: 'తక్షణ AI రోగ నిర్ధారణ కోసం ఆకులను స్కాన్ చేయండి.',
-        featCrop: 'పంట సూచన', featCropDesc: 'మీ పొలానికి అత్యుత్తమ పంటలు కనుగొనండి.',
-        secDashboard: 'డ్యాష్‌బోర్డ్', metricTemp: 'ఉష్ణోగ్రత', metricHumid: 'తేమ', metricMoist: 'మట్టి తేమ', metricHealth: 'మట్టి ఆరోగ్యం',
-        back: 'వెనుకకు', pageDetect: 'వ్యాధి గుర్తింపు', pageCrop: 'పంట సిఫార్సు',
-        cameraPrompt: 'ప్రభావిత ఆకు ఫోటో తీయండి', flip: 'తిప్పండి', retake: 'మళ్ళీ తీయండి', analyze: 'విశ్లేషించండి',
-        labelSoil: 'మట్టి రకం', labelTemp: 'ఉష్ణోగ్రత', labelRain: 'వర్షపాతం', labelSeason: 'సీజన్',
-        getSuggestion: 'సూచన పొందండి', searchPH: 'పంటలు లేదా వ్యాధుల కోసం వెతకండి...',
-        chatGreeting: '👋 నమస్కారం! నేను మీ వ్యవసాయ AI సహాయకుడిని. పంటలు, వ్యాధులు లేదా వ్యవసాయం గురించి ఏదైనా అడగండి!',
-        chatPlaceholder: 'వ్యాధులు లేదా వ్యవసాయం గురించి అడగండి...',
-        iotDry: 'చాలా పొడి', iotDryRec: '🚨 నేల తేమ తక్కువగా ఉంది! పంట ఎండిపోకుండా వెంటనే నీటిపారుదల ప్రారంభించండి.',
-        iotOpt: 'ఆప్టిమల్', iotOptRec: '✅ చాలా పంటలకు నేల తేమ ఆదర్శవంతమైన స్థాయిలో ఉంది. ఎటువంటి చర్య అవసరం లేదు.',
-        iotWet: 'చాలా తడి', iotWetRec: '⚠️ నేల సంతృప్తమైంది. రూట్ తెగులును నివారించడానికి నీటిపారుదలని ఆపివేసి సరైన డ్రైనేజీని నిర్ధారించండి.'
-    },
-    ta: {
-        navHome: 'முகப்பு', navDetect: 'கண்டறி', navCrops: 'பயிர்கள்', navScan: 'ஸ்கேன் செய்',
-        heroBadge: '🌱 AI-ஆல் இயக்கப்படும் விவசாயம்',
-        heroTitle1: 'ஸ்மார்ட் விவசாயம்', heroTitle2: 'எளிதாக',
-        heroDesc: 'தாவர நோய்களை உடனடியாகக் கண்டறியவும் மற்றும் சரியான சிகிச்சையை விரைவாகப் பெறவும்.',
-        heroBtn1: 'நோயைக் கண்டறி', heroBtn2: 'பயிர் ஆலோசனை பெறு',
-        statCrops: 'பயிர்கள்', statDiseases: 'நோய்கள்', statLangs: 'மொழிகள்',
-        secFeatures: 'அம்சங்கள்', secFeaturesTitle: 'ஸ்கார்ட் விவசாய கருவிகள்', secFeaturesDesc: 'சிறந்த விவசாய முடிவுகளுக்கு அனைத்தும்.',
-        featDetect: 'நோய் கண்டறிதல்', featDetectDesc: 'உடனடி AI நோய் கண்டறிவதற்கு இலைகளை ஸ்கேன் செய்யுங்கள்.',
-        featCrop: 'பயிர் பரிந்துரை', featCropDesc: 'உங்கள் பண்ணைக்கு சிறந்த பயிர்களை கண்டறியுங்கள்.',
-        secDashboard: 'டாஷ்போர்டு', metricTemp: 'வெப்பநிலை', metricHumid: 'ஈரப்பதம்', metricMoist: 'மண் ஈரப்பதம்', metricHealth: 'மண் ஆரோக்கியம்',
-        back: 'பின்னால்', pageDetect: 'நோய் கண்டறிதல்', pageCrop: 'பயிர் பரிந்துரை',
-        cameraPrompt: 'பாதிக்கப்பட்ட இலையை புகைப்படம் எடுக்கவும்', flip: 'திருப்பு', retake: 'மீண்டும் எடு', analyze: 'பகுப்பாய்வு செய்',
-        labelSoil: 'மண் வகை', labelTemp: 'வெப்பநிலை', labelRain: 'மழைப்பொழிவு', labelSeason: 'பருவம்',
-        getSuggestion: 'பரிந்துரை பெறு', searchPH: 'பயிர்கள் அல்லது நோய்களைத் தேடுங்கள்...',
-        chatGreeting: '👋 வணக்கம்! நான் உங்கள் விவசாய AI உதவியாளர். பயிர்கள், நோய்கள் அல்லது விவசாயம் பற்றி எதையும் கேளுங்கள்!',
-        chatPlaceholder: 'நோய்கள் அல்லது விவசாயம் பற்றி கேளுங்கள்...',
-        iotDry: 'மிகவும் வறண்டது', iotDryRec: '🚨 மண் ஈரப்பதம் குறைவாக உள்ளது! பயிர் வாடுவதை தடுக்க உடனடியாக பாசனத்தை தொடங்கவும்.',
-        iotOpt: 'உகந்தது', iotOptRec: '✅ பெரும்பாலான பயிர்களுக்கு மண் ஈரப்பதம் சிறந்த அளவில் உள்ளது. எந்த நடவடிக்கையும் தேவையில்லை.',
-        iotWet: 'மிகவும் ஈரமானது', iotWetRec: '⚠️ மண் நிறைவுற்றது. வேர் அழுகலைத் தவிர்க்க நீர்ப்பாசனத்தை நிறுத்தி, சரியான வடிகால் வசதியை உறுதி செய்யவும்.'
     }
 };
 
 const LANG_META = {
     en: { flag: '🌐', name: 'English' },
     hi: { flag: '🇮🇳', name: 'हिन्दी (Hindi)' },
-    kn: { flag: '🇮🇳', name: 'ಕನ್ನಡ (Kannada)' },
-    te: { flag: '🇮🇳', name: 'తెలుగు (Telugu)' },
-    ta: { flag: '🇮🇳', name: 'தமிழ் (Tamil)' }
+    kn: { flag: '🇮🇳', name: 'ಕನ್ನಡ (Kannada)' }
 };
 
 /* --- Core Initialization --- */
@@ -253,9 +209,7 @@ function applyLanguage(lang) {
     const voiceLangMap = {
         'en': 'en-US',
         'hi': 'hi-IN',
-        'kn': 'kn-IN',
-        'te': 'te-IN',
-        'ta': 'ta-IN'
+        'kn': 'kn-IN'
     };
     if (typeof currentVoiceLang !== 'undefined') {
         currentVoiceLang = voiceLangMap[lang] || 'en-US';
@@ -422,8 +376,8 @@ async function analyzeImage() {
         fd.append('image', file);
         
         // ADD LANGUAGE
-        const langMeta = LANG_META[AppState.currentLang] || LANG_META['en'];
-        fd.append('language', langMeta.name);
+        const plainLangName = AppState.currentLang === 'hi' ? 'Hindi' : AppState.currentLang === 'kn' ? 'Kannada' : 'English';
+        fd.append('language', plainLangName);
 
         const res = await fetch(`${API_BASE}/detect`, { method:'POST', body:fd });
         const data = await res.json();
@@ -660,9 +614,7 @@ let currentVoiceLang = 'en-US';
 const VOICE_LANGUAGES = {
     'en-US': { name: 'English', recognition: 'en-US', synthesis: 'en-US' },
     'hi-IN': { name: 'Hindi', recognition: 'hi-IN', synthesis: 'hi-IN' },
-    'kn-IN': { name: 'Kannada', recognition: 'kn-IN', synthesis: 'kn-IN' },
-    'te-IN': { name: 'Telugu', recognition: 'te-IN', synthesis: 'te-IN' },
-    'ta-IN': { name: 'Tamil', recognition: 'ta-IN', synthesis: 'ta-IN' }
+    'kn-IN': { name: 'Kannada', recognition: 'kn-IN', synthesis: 'kn-IN' }
 };
 
 // Initialize voice assistant when navigating to voice screen
@@ -722,20 +674,6 @@ function updateVoiceSuggestions() {
             'ಪೌಡರಿ ಮಿಲ್ಡ್ಯೂವನ್ನು ಹೇಗೆ ಚಿಕಿತ್ಸಿಸುವುದು?',
             'ಕೃಷಿಗಾಗಿ ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ?',
             'ಮಣ್ಣಿನ ಆರೋಗ್ಯವನ್ನು ಹೇಗೆ ಸುಧಾರಿಸಬಹುದು?'
-        ];
-    } else if (currentVoiceLang === 'te-IN') {
-        suggestionTexts = [
-            'టొమాటో మొక్కలకు ఏ వ్యాధులు వస్తాయి?',
-            'పౌడరీ మిల్డ్యూను ఎలా చికిత్సించాలి?',
-            'వ్యవసాయం కోసం వాతావరణ సూచన?',
-            'మట్టిపారున్న ఆరోగ్యాన్ని ఎలా మెరుగుపరుచుకోవచ్చు?'
-        ];
-    } else if (currentVoiceLang === 'ta-IN') {
-        suggestionTexts = [
-            'தக்காளி தாவரங்களுக்கு எந்த நோய்கள் வரும்?',
-            'பவுடரி மில்டூவை எவ்வாறு சிகிச்சையளிப்பது?',
-            'விவசாயத்திற்கான வானிலை முன்னறிவிப்பு?',
-            'மண் ஆரோக்கியத்தை எவ்வாறு மேம்படுத்தலாம்?'
         ];
     }
     
@@ -854,10 +792,10 @@ function processVoiceQuery(query) {
     let response = '';
     
     // Disease-related queries
-    if (lowerQuery.includes('disease') || lowerQuery.includes('बीमारी') || lowerQuery.includes('ರೋಗ') || lowerQuery.includes('వ్యాధి') || lowerQuery.includes('நோய்')) {
-        if (lowerQuery.includes('tomato') || lowerQuery.includes('टमाटर') || lowerQuery.includes('ಟೊಮೆಟೊ') || lowerQuery.includes('టొమాటో') || lowerQuery.includes('தக்காளி')) {
+    if (lowerQuery.includes('disease') || lowerQuery.includes('बीमारी') || lowerQuery.includes('ರೋಗ')) {
+        if (lowerQuery.includes('tomato') || lowerQuery.includes('टमाटर') || lowerQuery.includes('ಟೊಮೆಟೊ')) {
             response = getDiseaseInfo('tomato');
-        } else if (lowerQuery.includes('potato') || lowerQuery.includes('आलू') || lowerQuery.includes('ಆಲೂಗಡ್ಡೆ') || lowerQuery.includes('బంగాళాదుంప') || lowerQuery.includes('உருளைக்கிழங்கு')) {
+        } else if (lowerQuery.includes('potato') || lowerQuery.includes('आलू') || lowerQuery.includes('ಆಲೂಗಡ್ಡೆ')) {
             response = getDiseaseInfo('potato');
         } else {
             response = 'I can help you identify diseases in tomato, potato, and other crops. Please specify which crop you\'re asking about.';
@@ -866,10 +804,10 @@ function processVoiceQuery(query) {
     
     
     // Treatment queries
-    else if (lowerQuery.includes('treat') || lowerQuery.includes('treatment') || lowerQuery.includes('इलाज') || lowerQuery.includes('ಚಿಕಿತ್ಸೆ') || lowerQuery.includes('చికిత్స') || lowerQuery.includes('சிகிச்சை')) {
-        if (lowerQuery.includes('mildew') || lowerQuery.includes('powdery') || lowerQuery.includes('मिल्ड्यू') || lowerQuery.includes('ಮಿಲ್ಡ್ಯೂ') || lowerQuery.includes('మిల్డ్యూ') || lowerQuery.includes('மில்டூ')) {
+    else if (lowerQuery.includes('treat') || lowerQuery.includes('treatment') || lowerQuery.includes('इलाज') || lowerQuery.includes('ಚಿಕಿತ್ಸೆ')) {
+        if (lowerQuery.includes('mildew') || lowerQuery.includes('powdery') || lowerQuery.includes('मिल्ड्यू') || lowerQuery.includes('ಮಿಲ್ಡ್ಯೂ')) {
             response = 'For powdery mildew, use copper fungicide or neem oil spray. Ensure good air circulation and avoid overhead watering.';
-        } else if (lowerQuery.includes('blight') || lowerQuery.includes('ब्लाइट') || lowerQuery.includes('ಬ್ಲೈಟ್') || lowerQuery.includes('బ్లైట్') || lowerQuery.includes('பிளைட்')) {
+        } else if (lowerQuery.includes('blight') || lowerQuery.includes('ब्लाइट') || lowerQuery.includes('ಬ್ಲೈಟ್')) {
             response = 'For blight, apply copper fungicide and remove affected plant parts. Improve drainage and avoid working with wet plants.';
         } else {
             response = 'I can provide treatment advice for common plant diseases. Please specify the disease you\'re dealing with.';
@@ -877,7 +815,7 @@ function processVoiceQuery(query) {
     }
     
     // Weather queries
-    else if (lowerQuery.includes('weather') || lowerQuery.includes('मौसम') || lowerQuery.includes('ಹವಾಮಾನ') || lowerQuery.includes('వాతావరణం') || lowerQuery.includes('வானிலை')) {
+    else if (lowerQuery.includes('weather') || lowerQuery.includes('मौसम') || lowerQuery.includes('ಹವಾಮಾನ')) {
         response = 'I can help you understand weather impacts on farming. For current weather data, please check your local weather service or use our weather integration feature.';
     }
     
@@ -974,7 +912,7 @@ Rules:
 
 function updateChatSystemPrompt(lang) {
     if (typeof chatHistory !== 'undefined' && chatHistory[0]) {
-        const langName = LANG_META[lang]?.name || 'English';
+        const langName = lang === 'hi' ? 'Hindi' : lang === 'kn' ? 'Kannada' : 'English';
         chatHistory[0].content = `You are AgriBot, an elite agricultural scientist and field expert embedded in the "Agri AI" platform. 
         
 Your mission is to provide definitive, high-accuracy answers to ANY agricultural question. Your knowledge base is vast and covers:

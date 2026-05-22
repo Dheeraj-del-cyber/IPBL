@@ -11,7 +11,7 @@ An AI-powered, full-stack platform designed to empower farmers with modern techn
 - 🦠 **Smart Disease Detection**: Scan crop leaves using the device camera. The system uses an **EfficientNetB0 CNN** with Test-Time Augmentation (TTA) to diagnose diseases instantly.
 - 🛡️ **Intelligent Image Validation**: Automatically detects blurry images or non-leaf photos (via Green Pixel Ratio calculation) before sending them to the model, saving bandwidth and processing power.
 - 🤖 **AI-Driven Advisory**: Integrates with the **Groq API (Llama 3)** to generate tailored, context-aware treatment plans (organic and chemical interventions).
-- 🌍 **Deep Multilingual Support**: Fully localized in English, Hindi, Kannada, Tamil, and Telugu. The AI dynamically generates responses natively in the selected language.
+- 🌍 **Deep Multilingual Support**: Fully localized in English, Hindi, and Kannada. The AI dynamically generates responses natively in the selected language.
 - 🎙️ **Voice Assistant**: Speak your queries naturally in your native language, and the AI will guide you through speech recognition.
 - 💧 **IoT Dashboard**: Real-time soil moisture monitoring and smart irrigation recommendations based on live sensor data.
 - 📱 **Offline-Ready PWA**: Fully functional offline fallback using Service Workers for critical local advisories when the internet is disconnected.
