@@ -104,6 +104,7 @@ window.addEventListener('load', () => {
 
 function initApp() {
     checkAuth();
+    attachProfileButtons();
 
     // Navigation listener
     window.addEventListener('scroll', () => {
@@ -113,6 +114,13 @@ function initApp() {
     // Initial Data
     renderDailyTip();
     updateMetrics();
+}
+
+function attachProfileButtons() {
+    document.querySelectorAll('.nav-profile-btn, .mobile-profile-btn').forEach(btn => {
+        btn.addEventListener('click', openProfile);
+        if (!btn.hasAttribute('type')) btn.setAttribute('type', 'button');
+    });
 }
 
 /* --- Navigation System --- */

@@ -2847,8 +2847,13 @@ button.bottom-nav-link {
     -webkit-appearance: none;
     appearance: none;
     touch-action: manipulation; /* Prevents 300ms tap delay on iOS */
+    pointer-events: auto;
     padding: 0;
     line-height: 1;
+}
+
+.nav-profile-btn {
+    pointer-events: auto;
 }
 
 /* Profile modal must always be on top of everything including bottom-nav */
