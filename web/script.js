@@ -1598,21 +1598,32 @@ function handleAuth(e) {
 
 /* --- Profile & Logout --- */
 function openProfile() {
+    const modal = document.getElementById('profileModal');
+    if (!modal) return;
+
     const userStr = localStorage.getItem('agri_active_user');
     if (!userStr) {
-        checkAuth(); 
+        checkAuth();
         return;
     }
-    const user = JSON.parse(userStr);
-    document.getElementById('profileName').textContent = user.name || 'User';
-    document.getElementById('profilePhone').textContent = user.phone || 'Phone';
-    
-    document.getElementById('profileModal').classList.remove('hidden');
+
+    try {
+        const user = JSON.parse(userStr);
+        document.getElementById('profileName').textContent = user.name || 'User';
+        document.getElementById('profilePhone').textContent = '📱 ' + (user.phone || '');
+    } catch(e) {}
+
+    // Use style.display directly — most reliable on mobile
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
 function closeProfile() {
-    document.getElementById('profileModal').classList.add('hidden');
+    const modal = document.getElementById('profileModal');
+    if (!modal) return;
+    modal.style.display = 'none';
+    modal.classList.add('hidden');
     document.body.style.overflow = '';
 }
 

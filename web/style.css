@@ -1632,11 +1632,16 @@ input[type=range]::-webkit-slider-thumb {
 @media (max-width: 768px) {
     #chatbotWidget {
         display: flex !important;
-        bottom: 0;
+        bottom: 70px; /* Sit above bottom nav, not over it */
         left: 0;
         right: 0;
         align-items: center;
-        z-index: 10000; /* Above bottom nav */
+        z-index: 1999; /* Below bottom-nav (2000) so nav stays on top */
+        pointer-events: none; /* Let touches pass through the wrapper */
+    }
+
+    #chatbotWidget #chatPanel {
+        pointer-events: auto; /* But chat panel itself is interactive */
     }
 
     #chatToggleBtn {
@@ -2831,11 +2836,40 @@ input[type=range].crop-range::-webkit-slider-thumb {
     }
 }
 
+/* Fix <button> elements used as bottom-nav-links (inherit font/color) */
+button.bottom-nav-link {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation; /* Prevents 300ms tap delay on iOS */
+    padding: 0;
+    line-height: 1;
+}
+
 /* Profile modal must always be on top of everything including bottom-nav */
 #profileModal {
-    z-index: 10000;
+    z-index: 11000; /* Higher than chat panel (10000) and bottom-nav (2000) */
+    overflow-y: auto; /* Allow scroll on very small screens */
+    align-items: flex-start; /* Don't cut off on short screens */
+    padding: 2rem 1rem;  /* Safe padding */
+}
+
+@media (max-width: 768px) {
+    #profileModal {
+        align-items: center;
+        padding: 1.5rem 1rem;
+    }
+
+    #profileModal .auth-card {
+        margin: auto 0; /* Center vertically when content fits */
+    }
 }
 
 #profileModal.hidden {
-    display: none;
+    display: none !important;
 }
