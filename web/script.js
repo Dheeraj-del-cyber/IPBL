@@ -597,9 +597,12 @@ function renderDailyTip() {
 
 function updateMetrics() {
     const m = { temp: '28°C', humid: '65%', moist: '42%' };
-    document.getElementById('mTemp').textContent = m.temp;
-    document.getElementById('mHumid').textContent = m.humid;
-    document.getElementById('mMoist').textContent = m.moist;
+    const elTemp = document.getElementById('mTemp');
+    if (elTemp) elTemp.textContent = m.temp;
+    const elHumid = document.getElementById('mHumid');
+    if (elHumid) elHumid.textContent = m.humid;
+    const elMoist = document.getElementById('mMoist');
+    if (elMoist) elMoist.textContent = m.moist;
 }
 
 // Global escape listener
