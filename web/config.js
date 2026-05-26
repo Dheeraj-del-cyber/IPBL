@@ -1,2 +1,2 @@
-// This file will be overwritten at build time by web/prepare_config.js
-window.API_BASE = "";
+// This file is the default config
+window.API_BASE = "https://ipbl-backend-c9ug.onrender.com";
