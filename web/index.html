@@ -1,3 +1,4 @@
+`~
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,7 +64,8 @@
                     </div>
                 </div>
                 <button class="nav-profile-btn" type="button" title="Profile">👤</button>
-                <button class="nav-cta" onclick="navigateTo('screenDiseaseDetect')" data-i18n="navScan">Start Scan</button>
+                <button class="nav-cta" onclick="navigateTo('screenDiseaseDetect')" data-i18n="navScan">Start
+                    Scan</button>
                 <button class="nav-burger" onclick="toggleMobileMenu()">
                     <span></span><span></span><span></span>
                 </button>
@@ -103,7 +105,8 @@
                 <span data-i18n="heroTitle1">Healthy Crops</span><br>
                 <span class="hero-glow" data-i18n="heroTitle2">Better Income</span>
             </h1>
-            <p class="hero-desc" data-i18n="heroDesc">Identify plant disease, get exact treatment steps, and take action quickly.</p>
+            <p class="hero-desc" data-i18n="heroDesc">Identify plant disease, get exact treatment steps, and take action
+                quickly.</p>
             <div class="hero-btns">
                 <button class="btn-glow hero-primary" onclick="navigateTo('screenDiseaseDetect')"
                     data-i18n="heroBtn1">📸 Scan Your Crop</button>
@@ -241,8 +244,11 @@
                     <!-- Upload Button -->
                     <div class="cam-controls" id="uploadControls">
                         <button class="btn-glow hero-primary" id="choosePhotoBtn" onclick="triggerUpload(false)"
-                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;">📂 Choose Photo</button>
-                        <p id="uploadHintText" style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;">Click to upload a leaf image from your device.</p>
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;">📂 Choose
+                            Photo</button>
+                        <p id="uploadHintText"
+                            style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;">Click
+                            to upload a leaf image from your device.</p>
                     </div>
 
                     <!-- Analyze / Retake -->
@@ -530,10 +536,12 @@
                 <h2 id="authTitle">Create Account</h2>
                 <p id="authSubtitle">Join Agri AI to continue.</p>
             </div>
-            
+
             <div class="auth-toggle">
-                <button type="button" class="auth-toggle-btn active" id="btnSignup" onclick="toggleAuthMode('signup')">Sign Up</button>
-                <button type="button" class="auth-toggle-btn" id="btnLogin" onclick="toggleAuthMode('login')">Login</button>
+                <button type="button" class="auth-toggle-btn active" id="btnSignup"
+                    onclick="toggleAuthMode('signup')">Sign Up</button>
+                <button type="button" class="auth-toggle-btn" id="btnLogin"
+                    onclick="toggleAuthMode('login')">Login</button>
             </div>
 
             <form id="authForm" class="auth-form" onsubmit="handleAuth(event)">
@@ -543,7 +551,8 @@
                 </div>
                 <div class="input-group">
                     <label for="authPhone">Phone Number</label>
-                    <input type="tel" id="authPhone" placeholder="Enter your 10-digit number" pattern="[0-9]{10}" required>
+                    <input type="tel" id="authPhone" placeholder="Enter your 10-digit number" pattern="[0-9]{10}"
+                        required>
                 </div>
                 <div class="input-group">
                     <label for="authPassword">Password</label>
@@ -565,7 +574,8 @@
             </div>
             <div style="display:flex; flex-direction:column; gap:0.75rem;">
                 <button class="btn-ghost" style="width:100%;" onclick="closeProfile()">Close</button>
-                <button class="btn-glow" style="width:100%; background:var(--accent-warning); box-shadow:none;" onclick="logout()">Logout</button>
+                <button class="btn-glow" style="width:100%; background:var(--accent-warning); box-shadow:none;"
+                    onclick="logout()">Logout</button>
             </div>
         </div>
     </div>
