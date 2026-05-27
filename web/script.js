@@ -339,6 +339,8 @@ function resetDetection() {
     const chooseBtn = document.getElementById('choosePhotoBtn');
     if (chooseBtn) chooseBtn.style.display = 'block';
     document.getElementById('fileInput').value = '';
+    const cameraInput = document.getElementById('cameraInput');
+    if (cameraInput) cameraInput.value = '';
 }
 
 

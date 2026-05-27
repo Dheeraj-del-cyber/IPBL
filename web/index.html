@@ -242,13 +242,13 @@
                     </div>
 
                     <!-- Upload Button -->
-                    <div class="cam-controls" id="uploadControls">
-                        <button class="btn-glow hero-primary" id="choosePhotoBtn" onclick="triggerUpload(false)"
-                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;">📂 Choose
-                            Photo</button>
+                    <div class="cam-controls" id="uploadControls" style="display:flex; flex-direction:column; gap:1rem; align-items:center;">
+                        <button class="btn-glow hero-primary" id="takePhotoBtn" onclick="document.getElementById('cameraInput').click()"
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;">📸 Take Photo</button>
+                        <button class="btn-glow" id="choosePhotoBtn" onclick="triggerUpload(false)"
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; background: var(--g-600);">📂 Choose Photo</button>
                         <p id="uploadHintText"
-                            style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;">Click
-                            to upload a leaf image from your device.</p>
+                            style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;">Use your camera or upload a leaf image from your device.</p>
                     </div>
 
                     <!-- Analyze / Retake -->
@@ -283,6 +283,7 @@
             </div>
         </div>
         <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handleFileSelect(event)">
     </main>
 
     <!-- Result Screen -->
