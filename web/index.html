@@ -114,7 +114,7 @@
 
             <!-- Language Quick Pick -->
             <div class="lang-quick-pick">
-                <p>Select Your Language</p>
+                <p data-i18n="selectLang">Select Your Language</p>
                 <div class="lang-grid-mini">
                     <button class="lang-pill" onclick="setLanguage('en')"><span>🇬🇧</span> English</button>
                     <button class="lang-pill" onclick="setLanguage('hi')"><span>🇮🇳</span> हिन्दी</button>
@@ -122,27 +122,27 @@
                 </div>
             </div>
             <div class="quick-actions glass">
-                <h3>Do This First</h3>
+                <h3 data-i18n="doThisFirst">Do This First</h3>
                 <div class="quick-actions-grid">
                     <button class="quick-action-btn action-primary" onclick="navigateTo('screenDiseaseDetect')">
                         <span class="action-icon">📸</span>
                         <div class="action-info">
-                            <span class="action-text">Scan Leaf</span>
-                            <span class="action-subtext">Detect diseases instantly</span>
+                            <span class="action-text" data-i18n="qaScanLeaf">Scan Leaf</span>
+                            <span class="action-subtext" data-i18n="qaScanSub">Detect diseases instantly</span>
                         </div>
                     </button>
                     <button class="quick-action-btn" onclick="navigateTo('screenIoT')">
                         <span class="action-icon">📊</span>
                         <div class="action-info">
-                            <span class="action-text">IoT Monitor</span>
-                            <span class="action-subtext">Live soil metrics</span>
+                            <span class="action-text" data-i18n="qaIoT">IoT Monitor</span>
+                            <span class="action-subtext" data-i18n="qaIoTSub">Live soil metrics</span>
                         </div>
                     </button>
                     <button class="quick-action-btn" onclick="toggleChatbot()">
                         <span class="action-icon">💬</span>
                         <div class="action-info">
-                            <span class="action-text">AI Chat</span>
-                            <span class="action-subtext">Ask an expert</span>
+                            <span class="action-text" data-i18n="qaChat">AI Chat</span>
+                            <span class="action-subtext" data-i18n="qaChatSub">Ask an expert</span>
                         </div>
                     </button>
                 </div>
@@ -150,35 +150,35 @@
 
             <div class="hero-stats">
                 <div class="hero-stat"><strong>3</strong><span data-i18n="statLangs">Languages</span></div>
-                <div class="hero-stat"><strong>24/7</strong><span>Advice</span></div>
-                <div class="hero-stat"><strong>Local</strong><span>Focus</span></div>
+                <div class="hero-stat"><strong>24/7</strong><span data-i18n="statAdvice">Advice</span></div>
+                <div class="hero-stat"><strong>Local</strong><span data-i18n="statFocus">Focus</span></div>
             </div>
         </section>
 
         <section class="container workflow-section">
             <div class="section-card">
                 <div class="workflow-header">
-                    <h3>Simple 3-Step Workflow</h3>
-                    <p>Start your journey to better farming in minutes</p>
+                    <h3 data-i18n="workflowTitle">Simple 3-Step Workflow</h3>
+                    <p data-i18n="workflowSubtitle">Start your journey to better farming in minutes</p>
                 </div>
                 <div class="workflow-grid">
                     <div class="workflow-item">
                         <div class="workflow-number">1</div>
                         <div class="workflow-icon">📤</div>
-                        <h4>Upload Crop Photo</h4>
-                        <p>Take a clear leaf photo from your phone camera.</p>
+                        <h4 data-i18n="step1Title">Upload Crop Photo</h4>
+                        <p data-i18n="step1Desc">Take a clear leaf photo from your phone camera.</p>
                     </div>
                     <div class="workflow-item">
                         <div class="workflow-number">2</div>
                         <div class="workflow-icon">📋</div>
-                        <h4>Check Disease Report</h4>
-                        <p>Get confidence score and treatment plan instantly.</p>
+                        <h4 data-i18n="step2Title">Check Disease Report</h4>
+                        <p data-i18n="step2Desc">Get confidence score and treatment plan instantly.</p>
                     </div>
                     <div class="workflow-item">
                         <div class="workflow-number">3</div>
                         <div class="workflow-icon">⚡</div>
-                        <h4>Take Action</h4>
-                        <p>Use organic/chemical guidance and required products.</p>
+                        <h4 data-i18n="step3Title">Take Action</h4>
+                        <p data-i18n="step3Desc">Use organic/chemical guidance and required products.</p>
                     </div>
                 </div>
             </div>
@@ -198,8 +198,8 @@
                 </div>
                 <div class="feat-card glass float-card" onclick="navigateTo('screenIoT')">
                     <div class="feat-icon-wrap feat-blue">📊</div>
-                    <h3>Smart Monitor</h3>
-                    <p>Live soil moisture tracking.</p>
+                    <h3 data-i18n="featMonitor">Smart Monitor</h3>
+                    <p data-i18n="featMonitorDesc">Live soil moisture tracking.</p>
                 </div>
             </div>
         </section>
@@ -211,7 +211,7 @@
             <div class="glass-sm tip-card">
                 <div style="font-size:2rem">💡</div>
                 <div>
-                    <h4 style="font-weight:700">Today's Tip</h4>
+                    <h4 style="font-weight:700" data-i18n="todayTip">Today's Tip</h4>
                     <p id="dailyTip">Rotate crops to maintain soil health.</p>
                 </div>
             </div>
@@ -233,10 +233,10 @@
                     <div class="upload-drop-zone" id="uploadZone" onclick="triggerUpload(false)">
                         <div class="camera-ph" id="cameraPlaceholder">
                             <div class="camera-ph-icon">📂</div>
-                            <p style="font-size:1.1rem; font-weight:700; color:var(--n-700); margin-bottom:0.5rem">
+                            <p style="font-size:1.1rem; font-weight:700; color:var(--n-700); margin-bottom:0.5rem" data-i18n="uploadTitle">
                                 Upload Leaf Image</p>
-                            <p style="color:var(--n-400); font-size:0.9rem">Drag & drop or click to browse</p>
-                            <p style="color:var(--n-500); font-size:0.8rem; margin-top:0.5rem">JPG / PNG supported</p>
+                            <p style="color:var(--n-400); font-size:0.9rem" data-i18n="uploadDrag">Drag & drop or click to browse</p>
+                            <p style="color:var(--n-500); font-size:0.8rem; margin-top:0.5rem" data-i18n="uploadFormats">JPG / PNG supported</p>
                         </div>
                         <img id="imagePreview" class="cam-img" alt="Preview">
                     </div>
@@ -244,11 +244,11 @@
                     <!-- Upload Button -->
                     <div class="cam-controls" id="uploadControls" style="display:flex; flex-direction:column; gap:1rem; align-items:center;">
                         <button class="btn-glow hero-primary" id="takePhotoBtn" onclick="document.getElementById('cameraInput').click()"
-                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;">📸 Take Photo</button>
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;" data-i18n="btnTakePhoto">📸 Take Photo</button>
                         <button class="btn-glow" id="choosePhotoBtn" onclick="triggerUpload(false)"
-                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; background: var(--g-600);">📂 Choose Photo</button>
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; background: var(--g-600);" data-i18n="btnChoosePhoto">📂 Choose Photo</button>
                         <p id="uploadHintText"
-                            style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;">Use your camera or upload a leaf image from your device.</p>
+                            style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;" data-i18n="uploadHint">Use your camera or upload a leaf image from your device.</p>
                     </div>
 
                     <!-- Analyze / Retake -->
@@ -261,22 +261,20 @@
 
                 <aside class="detect-side">
                     <div class="detect-info-card" style="margin-bottom:1rem;">
-                        <h3 style="margin-bottom:1rem; font-size:1.2rem; font-weight:800; color:var(--soil-900);">🔍
-                            Disease Scan Steps</h3>
+                        <h3 style="margin-bottom:1rem; font-size:1.2rem; font-weight:800; color:var(--soil-900);" data-i18n="scanStepsTitle">🔍 Disease Scan Steps</h3>
                         <ol style="padding-left:1.25rem; color:var(--n-700); line-height:2.2; font-size:0.97rem;">
-                            <li>Click <b style="color:var(--g-700);">Choose File</b> and upload crop leaf</li>
-                            <li>Tap <b style="color:var(--g-700);">Analyze Now</b> for disease report</li>
-                            <li>Follow treatment and prevention tips</li>
+                            <li data-i18n="scanStep1">Click <b style="color:var(--g-700);">Choose File</b> and upload crop leaf</li>
+                            <li data-i18n="scanStep2">Tap <b style="color:var(--g-700);">Analyze Now</b> for disease report</li>
+                            <li data-i18n="scanStep3">Follow treatment and prevention tips</li>
                         </ol>
                     </div>
                     <div class="detect-info-card">
-                        <h4 style="margin-bottom:0.75rem; color:var(--g-700); font-size:1rem; font-weight:800;">📸 Good
-                            Photo Tips</h4>
+                        <h4 style="margin-bottom:0.75rem; color:var(--g-700); font-size:1rem; font-weight:800;" data-i18n="photoTipsTitle">📸 Good Photo Tips</h4>
                         <ul style="padding-left:1.25rem; color:var(--n-600); font-size:0.9rem; line-height:2;">
-                            <li>Good natural lighting</li>
-                            <li>Fill frame with the leaf</li>
-                            <li>Avoid motion blur</li>
-                            <li>Show the affected area clearly</li>
+                            <li data-i18n="tip1">Good natural lighting</li>
+                            <li data-i18n="tip2">Fill frame with the leaf</li>
+                            <li data-i18n="tip3">Avoid motion blur</li>
+                            <li data-i18n="tip4">Show the affected area clearly</li>
                         </ul>
                     </div>
                 </aside>
@@ -301,8 +299,8 @@
     <main class="screen" id="screenIoT">
         <div class="container">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
-                <button class="btn-back" onclick="navigateTo('screenHome')">← Back</button>
-                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;">IoT Smart Monitor</h2>
+                <button class="btn-back" onclick="navigateTo('screenHome')" data-i18n="back">← Back</button>
+                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="iotTitle">IoT Smart Monitor</h2>
             </div>
 
             <div class="iot-dashboard">
@@ -310,7 +308,7 @@
                 <div class="iot-card glass">
                     <div class="iot-card-header">
                         <span class="iot-icon">💧</span>
-                        <h3>Soil Moisture</h3>
+                        <h3 data-i18n="iotSoilMoisture">Soil Moisture</h3>
                     </div>
                     <div class="moisture-display">
                         <div class="moisture-gauge">
@@ -325,8 +323,8 @@
                         </div>
                     </div>
                     <div class="iot-status">
-                        <span id="moistureStatusBadge" class="status-badge status-unknown">Fetching...</span>
-                        <p class="last-update">Last Updated: <span id="lastUpdated">--:--:--</span></p>
+                        <span id="moistureStatusBadge" class="status-badge status-unknown" data-i18n="fetching">Fetching...</span>
+                        <p class="last-update"><span data-i18n="lastUpdated">Last Updated:</span> <span id="lastUpdated">--:--:--</span></p>
                     </div>
                 </div>
 
@@ -334,19 +332,19 @@
                 <div class="iot-card glass">
                     <div class="iot-card-header">
                         <span class="iot-icon">💡</span>
-                        <h3>AI Recommendation</h3>
+                        <h3 data-i18n="iotAIRec">AI Recommendation</h3>
                     </div>
                     <div class="iot-recommendation-box">
                         <p id="iotRecommendation">Please wait for sensor data...</p>
                     </div>
                     <div class="iot-info-grid">
                         <div class="iot-info-item">
-                            <span class="info-label">Optimal Range</span>
+                            <span class="info-label" data-i18n="iotOptRange">Optimal Range</span>
                             <span class="info-value">40% - 70%</span>
                         </div>
                         <div class="iot-info-item">
-                            <span class="info-label">Connection</span>
-                            <span class="info-value" id="connectionStatus" style="color:var(--g-600)">Live</span>
+                            <span class="info-label" data-i18n="iotConn">Connection</span>
+                            <span class="info-value" id="connectionStatus" style="color:var(--g-600)" data-i18n="iotLive">Live</span>
                         </div>
                     </div>
                 </div>
@@ -357,7 +355,7 @@
                 <div class="iot-stat-pill glass">
                     <span class="iot-stat-icon">📉</span>
                     <div>
-                        <span class="iot-stat-label">Min Today</span>
+                        <span class="iot-stat-label" data-i18n="iotMinToday">Min Today</span>
                         <span class="iot-stat-val" id="moistureMin">--</span><span
                             style="font-size:0.8rem;color:var(--n-400);">%</span>
                     </div>
@@ -365,7 +363,7 @@
                 <div class="iot-stat-pill glass">
                     <span class="iot-stat-icon">📈</span>
                     <div>
-                        <span class="iot-stat-label">Max Today</span>
+                        <span class="iot-stat-label" data-i18n="iotMaxToday">Max Today</span>
                         <span class="iot-stat-val" id="moistureMax">--</span><span
                             style="font-size:0.8rem;color:var(--n-400);">%</span>
                     </div>
@@ -373,7 +371,7 @@
                 <div class="iot-stat-pill glass">
                     <span class="iot-stat-icon">≈</span>
                     <div>
-                        <span class="iot-stat-label">Average</span>
+                        <span class="iot-stat-label" data-i18n="iotAverage">Average</span>
                         <span class="iot-stat-val" id="moistureAvg">--</span><span
                             style="font-size:0.8rem;color:var(--n-400);">%</span>
                     </div>
@@ -381,7 +379,7 @@
                 <div class="iot-stat-pill glass">
                     <span class="iot-stat-icon">📡</span>
                     <div>
-                        <span class="iot-stat-label">Readings</span>
+                        <span class="iot-stat-label" data-i18n="iotReadings">Readings</span>
                         <span class="iot-stat-val" id="moistureCount">0</span>
                     </div>
                 </div>
@@ -391,9 +389,8 @@
             <div class="iot-chart-card glass">
                 <div class="iot-card-header" style="width:100%;">
                     <span class="iot-icon">📊</span>
-                    <h3>Live Moisture History</h3>
-                    <span style="margin-left:auto;font-size:0.75rem;color:var(--n-400);font-weight:600;">Last 20
-                        Readings</span>
+                    <h3 data-i18n="iotChartTitle">Live Moisture History</h3>
+                    <span style="margin-left:auto;font-size:0.75rem;color:var(--n-400);font-weight:600;" data-i18n="iotLast20">Last 20 Readings</span>
                 </div>
                 <div class="iot-chart-wrap">
                     <canvas id="moistureChart"></canvas>
@@ -411,21 +408,21 @@
                 <div class="iot-card glass field-weather-card" style="align-items:flex-start;">
                     <div class="iot-card-header">
                         <span class="iot-icon">🌤️</span>
-                        <h3>Field Weather</h3>
+                        <h3 data-i18n="iotWeather">Field Weather</h3>
                     </div>
                     <div id="iotWeatherContent" class="iot-weather-content">
-                        <p style="color:var(--n-400);font-size:0.9rem;text-align:center;width:100%;padding:1rem 0;">
+                        <p style="color:var(--n-400);font-size:0.9rem;text-align:center;width:100%;padding:1rem 0;" data-i18n="iotDetectLoc">
                             Detecting location...</p>
                     </div>
                     <button class="btn-ghost" onclick="fetchIoTWeather()"
-                        style="margin-top:auto;width:100%;padding:0.75rem;font-size:0.9rem;">🔄 Refresh Weather</button>
+                        style="margin-top:auto;width:100%;padding:0.75rem;font-size:0.9rem;" data-i18n="iotRefreshWeather">🔄 Refresh Weather</button>
                 </div>
 
                 <!-- Soil Health Score -->
                 <div class="iot-card glass" style="align-items:flex-start;">
                     <div class="iot-card-header">
                         <span class="iot-icon">🌱</span>
-                        <h3>Soil Health Score</h3>
+                        <h3 data-i18n="iotSoilHealth">Soil Health Score</h3>
                     </div>
                     <div class="iot-health-display">
                         <div class="health-ring-wrap">
@@ -440,10 +437,9 @@
                             </div>
                         </div>
                         <div class="health-details">
-                            <div id="healthGrade" class="health-grade">Waiting...</div>
+                            <div id="healthGrade" class="health-grade" data-i18n="iotWaiting">Waiting...</div>
                             <p id="healthTip"
-                                style="font-size:0.85rem;color:var(--n-600);margin-top:0.5rem;line-height:1.5;">Connect
-                                sensor to get your soil health score.</p>
+                                style="font-size:0.85rem;color:var(--n-600);margin-top:0.5rem;line-height:1.5;" data-i18n="iotConnectSensor">Connect sensor to get your soil health score.</p>
                         </div>
                     </div>
                 </div>
