@@ -1975,6 +1975,9 @@ async function fetchCropRecommendation() {
             document.getElementById('recCropsList').innerHTML = cropsHtml;
             document.getElementById('recReasoning').textContent = rec.reasoning;
             document.getElementById('recPrep').textContent = rec.preparation;
+            
+            // Scroll to the result (important for mobile phones)
+            document.getElementById('recommendResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } else {
             alert(data.error || "Failed to get recommendations.");
         }
