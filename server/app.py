@@ -203,7 +203,7 @@ def too_large(e):
 @app.errorhandler(404)
 def not_found(e):
     # If the request expects JSON (API), return JSON
-    if request.path.startswith('/api') or request.path.startswith('/detect') or request.path.startswith('/chat'):
+    if request.path.startswith('/api') or request.path.startswith('/detect') or request.path.startswith('/chat') or request.path.startswith('/recommend'):
         return jsonify({"error": "Not found"}), 404
     return app.send_static_file('index.html')
 

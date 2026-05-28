@@ -66,7 +66,14 @@ const TRANSLATIONS = {
         chatPlaceholder: 'Ask about diseases or farming...',
         iotDry: 'Too Dry', iotDryRec: '🚨 Soil moisture is low! Start irrigation immediately to prevent crop wilting.',
         iotOpt: 'Optimal', iotOptRec: '✅ Soil moisture is at an ideal level for most crops. No action needed.',
-        iotWet: 'Too Wet', iotWetRec: '⚠️ Soil is saturated. Stop irrigation and ensure proper drainage to avoid root rot.'
+        iotWet: 'Too Wet', iotWetRec: '⚠️ Soil is saturated. Stop irrigation and ensure proper drainage to avoid root rot.',
+        navRecommend: 'Recommend', featRecommend: 'Crop Recommend', featRecommendDesc: 'AI suggests the best crops for your location.',
+        recTitle: 'Crop Recommendation', recAutoFill: '📍 Auto-detect Location & Weather',
+        recLocation: 'Location', recTemp: 'Temperature (°C)', recHumid: 'Humidity (%)',
+        recSoil: 'Soil Type', recSeason: 'Season', recBtn: '🔍 Get Recommendations',
+        recResultTitle: '🌾 Recommended Crops', recReasoning: '💡 Reasoning', recPrep: '🚜 Preparation',
+        recEmpty: 'Enter your field details and let AI suggest the best crops for maximum yield and profit.',
+        qaRecommend: 'Recommend', qaRecommendSub: 'Find best crops'
     },
     hi: {
         navHome: 'होम', navDetect: 'पहचानें', navCrops: 'फसलें', navScan: 'स्कैन करें',
@@ -117,7 +124,14 @@ const TRANSLATIONS = {
         chatPlaceholder: 'बीमारियों या खेती के बारे में पूछें...',
         iotDry: 'बहुत सूखा', iotDryRec: '🚨 मिट्टी की नमी कम है! फसल को सूखने से बचाने के लिए तुरंत सिंचाई शुरू करें।',
         iotOpt: 'अनुकूल', iotOptRec: '✅ अधिकांश फसलों के लिए मिट्टी की नमी आदर्श स्तर पर है। किसी कार्रवाई की आवश्यकता नहीं।',
-        iotWet: 'बहुत गीला', iotWetRec: '⚠️ मिट्टी संतृप्त है। जड़ सड़न से बचने के लिए सिंचाई रोकें और उचित जल निकासी सुनिश्चित करें।'
+        iotWet: 'बहुत गीला', iotWetRec: '⚠️ मिट्टी संतृप्त है। जड़ सड़न से बचने के लिए सिंचाई रोकें और उचित जल निकासी सुनिश्चित करें।',
+        navRecommend: 'सिफारिश', featRecommend: 'फसल की सिफारिश', featRecommendDesc: 'AI आपके स्थान के लिए सबसे अच्छी फसलों का सुझाव देता है।',
+        recTitle: 'फसल की सिफारिश', recAutoFill: '📍 स्थान और मौसम स्वतः-पहचानें',
+        recLocation: 'स्थान', recTemp: 'तापमान (°C)', recHumid: 'नमी (%)',
+        recSoil: 'मिट्टी का प्रकार', recSeason: 'मौसम', recBtn: '🔍 सिफारिशें प्राप्त करें',
+        recResultTitle: '🌾 अनुशंसित फसलें', recReasoning: '💡 तर्क', recPrep: '🚜 तैयारी',
+        recEmpty: 'अपने खेत का विवरण दर्ज करें और AI को अधिकतम उपज और लाभ के लिए सर्वोत्तम फसलों का सुझाव देने दें।',
+        qaRecommend: 'सिफारिश', qaRecommendSub: 'सबसे अच्छी फसलें खोजें'
     },
     kn: {
         navHome: 'ಹೋಮ್', navDetect: 'ಗುರುತಿಸಿ', navCrops: 'ಬೆಳೆಗಳು', navScan: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
@@ -168,7 +182,14 @@ const TRANSLATIONS = {
         chatPlaceholder: 'ರೋಗ ಅಥವಾ ಕೃಷಿಯ ಬಗ್ಗೆ ಕೇಳಿ...',
         iotDry: 'ತುಂಬಾ ಒಣಗಿದೆ', iotDryRec: '🚨 ಮಣ್ಣಿನ ತೇವಾಂಶ ಕಡಿಮೆಯಾಗಿದೆ! ಬೆಳೆ ಒಣಗುವುದನ್ನು ತಡೆಯಲು ತಕ್ಷಣ ನೀರಾವರಿ ಪ್ರಾರಂಭಿಸಿ.',
         iotOpt: 'ಸೂಕ್ತ', iotOptRec: '✅ ಹೆಚ್ಚಿನ ಬೆಳೆಗಳಿಗೆ ಮಣ್ಣಿನ ತೇವಾಂಶವು ಆದರ್ಶ ಮಟ್ಟದಲ್ಲಿದೆ. ಯಾವುದೇ ಕ್ರಮದ ಅಗತ್ಯವಿಲ್ಲ.',
-        iotWet: 'ತುಂಬಾ ಒದ್ದೆ', iotWetRec: '⚠️ ಮಣ್ಣು ಸ್ಯಾಚುರೇಟೆಡ್ ಆಗಿದೆ. ಬೇರು ಕೊಳೆಯುವುದನ್ನು ತಡೆಯಲು ನೀರಾವರಿ ನಿಲ್ಲಿಸಿ ಮತ್ತು ಸರಿಯಾದ ಒಳಚರಂಡಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.'
+        iotWet: 'ತುಂಬಾ ಒದ್ದೆ', iotWetRec: '⚠️ ಮಣ್ಣು ಸ್ಯಾಚುರೇಟೆಡ್ ಆಗಿದೆ. ಬೇರು ಕೊಳೆಯುವುದನ್ನು ತಡೆಯಲು ನೀರಾವರಿ ನಿಲ್ಲಿಸಿ ಮತ್ತು ಸರಿಯಾದ ಒಳಚರಂಡಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
+        navRecommend: 'ಶಿಫಾರಸು', featRecommend: 'ಬೆಳೆ ಶಿಫಾರಸು', featRecommendDesc: 'AI ನಿಮ್ಮ ಸ್ಥಳಕ್ಕಾಗಿ ಅತ್ಯುತ್ತಮ ಬೆಳೆಗಳನ್ನು ಸೂಚಿಸುತ್ತದೆ.',
+        recTitle: 'ಬೆಳೆ ಶಿಫಾರಸು', recAutoFill: '📍 ಸ್ಥಳ ಮತ್ತು ಹವಾಮಾನ ಸ್ವಯಂ-ಪತ್ತೆಹಚ್ಚಿ',
+        recLocation: 'ಸ್ಥಳ', recTemp: 'ತಾಪಮಾನ (°C)', recHumid: 'ತೇವಾಂಶ (%)',
+        recSoil: 'ಮಣ್ಣಿನ ಪ್ರಕಾರ', recSeason: 'ಋತು', recBtn: '🔍 ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ',
+        recResultTitle: '🌾 ಶಿಫಾರಸು ಮಾಡಿದ ಬೆಳೆಗಳು', recReasoning: '💡 ಕಾರಣ', recPrep: '🚜 ತಯಾರಿ',
+        recEmpty: 'ನಿಮ್ಮ ಹೊಲದ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ ಮತ್ತು ಗರಿಷ್ಠ ಇಳುವರಿ ಮತ್ತು ಲಾಭಕ್ಕಾಗಿ ಅತ್ಯುತ್ತಮ ಬೆಳೆಗಳನ್ನು ಸೂಚಿಸಲು AI ಗೆ ಅವಕಾಶ ಮಾಡಿಕೊಡಿ.',
+        qaRecommend: 'ಶಿಫಾರಸು', qaRecommendSub: 'ಅತ್ಯುತ್ತಮ ಬೆಳೆಗಳನ್ನು ಹುಡುಕಿ'
     }
 };
 
