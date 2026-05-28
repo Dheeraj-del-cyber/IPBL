@@ -1097,7 +1097,7 @@ function clearChat() {
     
     if (container) {
         container.innerHTML = `
-            <div class="chat-msg ai-msg" style="background:rgba(62,175,96,0.12); border:1px solid rgba(62,175,96,0.2); border-radius:14px 14px 14px 4px; padding:10px 14px; font-size:0.88rem; color:#d1fae5; max-width:85%; align-self:flex-start;">
+            <div class="chat-msg ai-msg">
                 ${greetingMsg}
             </div>`;
     }
