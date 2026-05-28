@@ -1668,9 +1668,10 @@ function handleAuth(e) {
             return;
         }
         
-        users[phone] = { name, phone, password };
+        const joinDate = new Date().toLocaleDateString();
+        users[phone] = { name, phone, password, joinDate, location: 'Local Farm' };
         localStorage.setItem('agri_users_db', JSON.stringify(users));
-        localStorage.setItem('agri_active_user', JSON.stringify({name, phone}));
+        localStorage.setItem('agri_active_user', JSON.stringify(users[phone]));
     } else {
         // Login
         if (!users[phone]) {
@@ -1681,7 +1682,7 @@ function handleAuth(e) {
             errorEl.textContent = 'Incorrect password.';
             return;
         }
-        localStorage.setItem('agri_active_user', JSON.stringify({name: users[phone].name, phone}));
+        localStorage.setItem('agri_active_user', JSON.stringify(users[phone]));
     }
     
     errorEl.textContent = '';
@@ -1709,6 +1710,20 @@ function openProfile() {
         const user = JSON.parse(userStr);
         document.getElementById('profileName').textContent = user.name || 'User';
         document.getElementById('profilePhone').textContent = '📱 ' + (user.phone || '');
+        
+        // Extra info
+        const elLoc = document.getElementById('profileLocation');
+        if (elLoc) elLoc.textContent = user.location || 'Local Farm';
+        
+        const elLang = document.getElementById('profileLanguage');
+        if (elLang) {
+            const langNames = { 'en': 'English', 'hi': 'Hindi', 'kn': 'Kannada' };
+            elLang.textContent = langNames[AppState.currentLang] || 'English';
+        }
+        
+        const elDate = document.getElementById('profileDate');
+        if (elDate) elDate.textContent = user.joinDate || new Date().toLocaleDateString();
+        
     } catch(e) {}
 
     // Use style.display directly — most reliable on mobile
