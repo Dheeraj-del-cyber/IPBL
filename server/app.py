@@ -101,6 +101,32 @@ def detect():
     })
 
 # ---------------------------------------------------------------
+# CROP RECOMMENDATION ENDPOINT
+# ---------------------------------------------------------------
+@app.route('/recommend_crop', methods=['POST'])
+def recommend_crop():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    
+    location = data.get("location", "Unknown")
+    temperature = data.get("temperature", 25)
+    humidity = data.get("humidity", 50)
+    soil_type = data.get("soil_type", "Loamy")
+    season = data.get("season", "Kharif")
+    language = data.get("language", "English")
+    
+    result = llm_handler.get_crop_recommendation(
+        location, temperature, humidity, soil_type, season, language
+    )
+    
+    if result.get("success"):
+        return jsonify(result)
+    else:
+        return jsonify({"error": result.get("recommendation", "Unknown error")}), 500
+
+
+# ---------------------------------------------------------------
 # CHATBOT ENDPOINT — Full conversational AI for agriculture
 # ---------------------------------------------------------------
 @app.route('/chat', methods=['POST'])

@@ -1843,3 +1843,125 @@ function handleProfilePhotoUpload(e) {
     };
     reader.readAsDataURL(file);
 }
+
+/* =====================================================
+   CROP RECOMMENDATION LOGIC
+   ===================================================== */
+function autoFillLocationData() {
+    if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser");
+        return;
+    }
+    
+    // Show some loading indication on the button
+    const btn = document.querySelector('#screenRecommend .tip-card button');
+    const oldText = btn.textContent;
+    btn.textContent = "⏳ Fetching Location & Weather...";
+    
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        try {
+            // Fetch Location Name (Reverse Geocoding)
+            const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+            if (geoRes.ok) {
+                const geoData = await geoRes.json();
+                let locName = "";
+                if (geoData.address) {
+                    locName = geoData.address.city || geoData.address.town || geoData.address.village || geoData.address.county || "";
+                    if (geoData.address.state) locName += (locName ? ", " : "") + geoData.address.state;
+                }
+                if (locName) document.getElementById('recLocation').value = locName;
+            }
+            
+            // Fetch Weather
+            const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m&timezone=auto`);
+            if (weatherRes.ok) {
+                const weatherData = await weatherRes.json();
+                if (weatherData.current) {
+                    document.getElementById('recTemp').value = weatherData.current.temperature_2m;
+                    document.getElementById('recHumid').value = weatherData.current.relative_humidity_2m;
+                }
+            }
+            
+            // Guess season based on month (India focused roughly)
+            const month = new Date().getMonth(); // 0-11
+            const seasonSelect = document.getElementById('recSeason');
+            if (month >= 5 && month <= 9) seasonSelect.value = "Kharif"; // Jun-Oct
+            else if (month >= 10 || month <= 2) seasonSelect.value = "Rabi"; // Nov-Mar
+            else seasonSelect.value = "Zaid"; // Apr-May
+
+            btn.textContent = "✅ Auto-filled Successfully";
+            setTimeout(() => { btn.textContent = oldText; }, 3000);
+            
+        } catch (error) {
+            console.error("Auto-fill error:", error);
+            alert("Failed to auto-fetch data. Please fill manually.");
+            btn.textContent = oldText;
+        }
+    }, () => {
+        alert("Location permission denied. Please fill manually.");
+        btn.textContent = oldText;
+    });
+}
+
+async function fetchCropRecommendation() {
+    const location = document.getElementById('recLocation').value;
+    const temp = document.getElementById('recTemp').value;
+    const humid = document.getElementById('recHumid').value;
+    const soil = document.getElementById('recSoil').value;
+    const season = document.getElementById('recSeason').value;
+    const language = AppState.currentLang === 'hi' ? 'Hindi' : AppState.currentLang === 'kn' ? 'Kannada' : 'English';
+
+    if (!location || !temp || !humid) {
+        alert("Please fill all required fields");
+        return;
+    }
+    
+    const submitBtn = document.querySelector('#recommendForm button[type="submit"]');
+    const oldBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = "⏳ Analyzing...";
+    submitBtn.disabled = true;
+
+    try {
+        const res = await fetch(`${API_BASE}/recommend_crop`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                location: location,
+                temperature: parseFloat(temp),
+                humidity: parseFloat(humid),
+                soil_type: soil,
+                season: season,
+                language: language
+            })
+        });
+        
+        const data = await res.json();
+        
+        submitBtn.innerHTML = oldBtnText;
+        submitBtn.disabled = false;
+        
+        if (res.ok && data.success) {
+            const rec = data.recommendation;
+            document.getElementById('recommendEmpty').style.display = 'none';
+            document.getElementById('recommendResult').style.display = 'block';
+            
+            // Format recommended crops
+            const cropsHtml = rec.recommended_crops.map(c => 
+                `<div style="display:inline-block; background:rgba(245,158,11,0.1); color:var(--g-700); padding:0.4rem 0.8rem; border-radius:20px; font-weight:700; font-size:0.9rem; margin:0 0.5rem 0.5rem 0;">🌱 ${c}</div>`
+            ).join('');
+            
+            document.getElementById('recCropsList').innerHTML = cropsHtml;
+            document.getElementById('recReasoning').textContent = rec.reasoning;
+            document.getElementById('recPrep').textContent = rec.preparation;
+        } else {
+            alert(data.error || "Failed to get recommendations.");
+        }
+    } catch (error) {
+        console.error("Recommendation error:", error);
+        alert("Server unreachable or error occurred.");
+        submitBtn.innerHTML = oldBtnText;
+        submitBtn.disabled = false;
+    }
+}
+

@@ -65,3 +65,51 @@ CRITICAL: You MUST respond in {language}. All values in the JSON output MUST be 
             "full_guidance": f"⚠️ AI Service Unavailable: {str(e)}. Please check your internet connection and API status.",
             "success": False
         }
+
+def get_crop_recommendation(location, temperature, humidity, soil_type, season, language="English"):
+    if not GROQ_API_KEY:
+        return {
+            "recommendation": "⚠️ Your GROQ API Key is missing or invalid. Please update the GROQ_API_KEY in the 'server/.env' file to enable AI guidance.",
+            "success": False
+        }
+
+    prompt = f"""Based on the following agricultural parameters:
+- Location: {location}
+- Temperature: {temperature}°C
+- Humidity: {humidity}%
+- Soil Type: {soil_type}
+- Season: {season}
+
+Provide the best crop recommendations suitable for these conditions.
+Return the response in JSON format with these exact keys:
+- 'recommended_crops': list of strings (top 3-5 crops)
+- 'reasoning': string (brief explanation of why these crops suit the conditions)
+- 'preparation': string (brief soil or field preparation tips)
+
+CRITICAL: You MUST respond in {language}. All values in the JSON output MUST be in {language} (except keys which remain English)."""
+
+    payload = {
+        "model": "llama-3.1-8b-instant",
+        "messages": [
+            {"role": "system", "content": "You are a professional agronomist. Output ONLY valid JSON."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.4,
+        "response_format": { "type": "json_object" }
+    }
+
+    try:
+        response = requests.post(GROQ_API_URL, 
+                                 headers={"Authorization": f"Bearer {GROQ_API_KEY}"}, 
+                                 json=payload, 
+                                 timeout=15)
+        response.raise_for_status()
+        data = json.loads(response.json()['choices'][0]['message']['content'])
+        return {"recommendation": data, "success": True}
+        
+    except Exception as e:
+        return {
+            "recommendation": f"⚠️ AI Service Unavailable: {str(e)}.",
+            "success": False
+        }
+
