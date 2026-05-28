@@ -568,8 +568,15 @@
     <!-- Profile Modal -->
     <div id="profileModal" class="auth-overlay hidden">
         <div class="auth-card glass" style="text-align:center;">
-            <div class="auth-header" style="margin-bottom:1rem;">
-                <span class="auth-icon" style="background:var(--g-100); color:var(--g-700);">👤</span>
+            <div class="auth-header" style="margin-bottom:1rem; position:relative;">
+                <label for="profilePhotoInput" style="cursor:pointer; display:inline-block; margin-bottom:0.5rem; position:relative;" title="Upload Photo">
+                    <div id="profilePhotoContainer" class="auth-icon" style="background:var(--g-100); color:var(--g-700); width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:0 auto; padding:0;">
+                        <span id="profilePhotoEmoji" style="font-size:2.5rem;">👤</span>
+                        <img id="profilePhotoImg" src="" style="display:none; width:100%; height:100%; object-fit:cover;" alt="Profile Photo">
+                    </div>
+                    <div style="position:absolute; bottom:0; right:0; background:var(--g-600); color:white; border-radius:50%; width:24px; height:24px; font-size:0.8rem; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(0,0,0,0.2);">📷</div>
+                </label>
+                <input type="file" id="profilePhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhotoUpload(event)">
                 <h2 id="profileName">User Name</h2>
                 <p id="profilePhone">Phone</p>
             </div>

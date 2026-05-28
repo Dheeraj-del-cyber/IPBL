@@ -1708,8 +1708,25 @@ function openProfile() {
 
     try {
         const user = JSON.parse(userStr);
-        document.getElementById('profileName').textContent = user.name || 'User';
+        document.getElementById('profileName').textContent = (user.name || 'User').toUpperCase();
         document.getElementById('profilePhone').textContent = '📱 ' + (user.phone || '');
+        
+        // Profile photo logic
+        const photoEmoji = document.getElementById('profilePhotoEmoji');
+        const photoImg = document.getElementById('profilePhotoImg');
+        if (user.photo) {
+            if (photoEmoji) photoEmoji.style.display = 'none';
+            if (photoImg) {
+                photoImg.src = user.photo;
+                photoImg.style.display = 'block';
+            }
+        } else {
+            if (photoEmoji) photoEmoji.style.display = 'inline';
+            if (photoImg) {
+                photoImg.src = '';
+                photoImg.style.display = 'none';
+            }
+        }
         
         // Extra info
         const elLoc = document.getElementById('profileLocation');
@@ -1744,4 +1761,43 @@ function logout() {
     localStorage.removeItem('agri_active_user');
     closeProfile();
     checkAuth();
+}
+
+function handleProfilePhotoUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const base64Data = event.target.result;
+        
+        // Update DOM
+        const photoEmoji = document.getElementById('profilePhotoEmoji');
+        const photoImg = document.getElementById('profilePhotoImg');
+        if (photoEmoji) photoEmoji.style.display = 'none';
+        if (photoImg) {
+            photoImg.src = base64Data;
+            photoImg.style.display = 'block';
+        }
+        
+        // Update local storage
+        const userStr = localStorage.getItem('agri_active_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                user.photo = base64Data;
+                localStorage.setItem('agri_active_user', JSON.stringify(user));
+                
+                // Update users DB as well
+                let users = JSON.parse(localStorage.getItem('agri_users_db') || '{}');
+                if (users[user.phone]) {
+                    users[user.phone].photo = base64Data;
+                    localStorage.setItem('agri_users_db', JSON.stringify(users));
+                }
+            } catch (err) {
+                console.error('Error saving profile photo', err);
+            }
+        }
+    };
+    reader.readAsDataURL(file);
 }
