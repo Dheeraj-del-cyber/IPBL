@@ -482,6 +482,22 @@ async function analyzeImage() {
 
         AppState.resultSource = 'disease';
         if (res.ok && data.status === 'clear' && data.prediction_results) {
+            
+            // Update scan count
+            const userStr = localStorage.getItem('agri_active_user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    user.scanCount = (user.scanCount || 0) + 1;
+                    localStorage.setItem('agri_active_user', JSON.stringify(user));
+                    let users = JSON.parse(localStorage.getItem('agri_users_db') || '{}');
+                    if (users[user.phone]) {
+                        users[user.phone].scanCount = user.scanCount;
+                        localStorage.setItem('agri_users_db', JSON.stringify(users));
+                    }
+                } catch(e) {}
+            }
+
             renderRealDiseaseResult(data);
         } else if (data.status === 'blurry') {
             renderBlurryResult(data.message || 'Image is too blurry. Please retake.');
@@ -1737,6 +1753,12 @@ function openProfile() {
         
         const elDate = document.getElementById('profileDate');
         if (elDate) elDate.textContent = user.joinDate || new Date().toLocaleDateString();
+        
+        const elScans = document.getElementById('profileScans');
+        if (elScans) elScans.textContent = user.scanCount || 0;
+        
+        const elMoisture = document.getElementById('profileMoisture');
+        if (elMoisture) elMoisture.textContent = AppState.lastMoisture ? AppState.lastMoisture + '%' : '--';
         
     } catch(e) {}
 
