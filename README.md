@@ -1,8 +1,7 @@
 # 🌿 AgriAI - Smart Agriculture Assistant
 
-![AgriAI Banner](https://via.placeholder.com/1200x300.png?text=AgriAI+-+Empowering+Farmers+with+AI)
 
-An AI-powered, full-stack platform designed to empower farmers with modern technology. **AgriAI** provides intelligent crop disease detection, personalized agricultural advisory, and real-time IoT monitoring, all wrapped in a robust, multilingual, and mobile-first Progressive Web App (PWA).
+An AI-powered, full-stack platform designed to empower farmers with modern technology. **AgriAI** provides intelligent crop disease detection, personalized agricultural advisory, and real-time IoT monitoring, all wrapped in a robust, multilingual.
 
 ---
 
