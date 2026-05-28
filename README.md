@@ -21,9 +21,8 @@ An AI-powered, full-stack platform designed to empower farmers with modern techn
 ## ⚙️ Tech Stack
 
 **Frontend:**
-- HTML5, Vanilla JavaScript, CSS3 (Glassmorphism & Responsive Design)
-- Progressive Web App (PWA) Architecture
-- Web Speech API (Voice Input & Synthesis)
+- HTML5, Vanilla JavaScript, CSS3
+- Web Speech API
 
 **Backend:**
 - Python 3 / Flask REST API
