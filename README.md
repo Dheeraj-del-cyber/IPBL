@@ -1,7 +1,7 @@
 # 🌿 AgriAI - Smart Agriculture Assistant
 
 
-**Live Demo:** [https://ipbl.vercel.app](https://ipbl.vercel.app)
+**Project link:** [https://ipbl.vercel.app](https://ipbl.vercel.app)
 
 An AI-powered, full-stack platform designed to empower farmers with modern technology. **AgriAI** provides intelligent crop disease detection, personalized agricultural advisory, and real-time IoT monitoring, all wrapped in a robust, multilingual, and mobile-first Progressive Web App (PWA).
 
@@ -60,9 +60,9 @@ IPBL2/
 
 ---
 
-## 🚀 Local Development (Backend)
 
-The frontend is deployed and available at [ipbl.vercel.app](https://ipbl.vercel.app). If you wish to run the backend server locally:
+
+
 
 ### Prerequisites
 - Python 3.8+
