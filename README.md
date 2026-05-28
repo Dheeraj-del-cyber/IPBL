@@ -1,7 +1,9 @@
 # 🌿 AgriAI - Smart Agriculture Assistant
 
 
-An AI-powered, full-stack platform designed to empower farmers with modern technology. **AgriAI** provides intelligent crop disease detection, personalized agricultural advisory, and real-time IoT monitoring, all wrapped in a robust, multilingual.
+**Live Demo:** [https://ipbl.vercel.app](https://ipbl.vercel.app)
+
+An AI-powered, full-stack platform designed to empower farmers with modern technology. **AgriAI** provides intelligent crop disease detection, personalized agricultural advisory, and real-time IoT monitoring, all wrapped in a robust, multilingual, and mobile-first Progressive Web App (PWA).
 
 ---
 
@@ -58,19 +60,20 @@ IPBL2/
 
 ---
 
-## 🚀 Setup & Installation
+## 🚀 Local Development (Backend)
+
+The frontend is deployed and available at [ipbl.vercel.app](https://ipbl.vercel.app). If you wish to run the backend server locally:
 
 ### Prerequisites
 - Python 3.8+
-- Node.js (Optional, for serving frontend via local server)
 - A Groq API Key
 
-### 1. Clone & Setup Backend
+### 1. Setup Backend
 ```bash
 # Navigate to the server directory
 cd server
 
-# Create and activate a virtual environment (recommended)
+# Create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows use: venv\Scripts\activate
 
@@ -87,19 +90,6 @@ echo "GROQ_API_KEY=your_actual_api_key_here" > .env
 python app.py
 ```
 *The Flask API will run on `http://localhost:5000`.*
-
-### 3. Run the Frontend
-You can serve the `web/` directory using any local web server.
-Using Python:
-```bash
-cd ../web
-python -m http.server 3000
-```
-Or using Node.js:
-```bash
-npx serve ./web
-```
-*Access the application at `http://localhost:3000` in your web browser.*
 
 ---
 
