@@ -11,6 +11,7 @@ An AI-powered, full-stack platform designed to empower farmers with modern techn
 - 🦠 **Smart Disease Detection**: Scan crop leaves using the device camera. The system uses an **EfficientNetB0 CNN** with Test-Time Augmentation (TTA) to diagnose diseases instantly.
 - 🛡️ **Intelligent Image Validation**: Automatically detects blurry images or non-leaf photos (via Green Pixel Ratio calculation) before sending them to the model, saving bandwidth and processing power.
 - 🤖 **AI-Driven Advisory**: Integrates with the **Groq API (Llama 3)** to generate tailored, context-aware treatment plans (organic and chemical interventions).
+- 🌾 **AI Crop Recommendation**: Suggests the best crops based on location, soil type, season, temperature, and humidity using geolocation and weather APIs.
 - 🌍 **Deep Multilingual Support**: Fully localized in English, Hindi, and Kannada. The AI dynamically generates responses natively in the selected language.
 - 🎙️ **Voice Assistant**: Speak your queries naturally in your native language, and the AI will guide you through speech recognition.
 - 💧 **IoT Dashboard**: Real-time soil moisture monitoring and smart irrigation recommendations based on live sensor data.
@@ -110,8 +111,9 @@ npx serve ./web
 1. **Dashboard**: View real-time IoT metrics (Moisture, Temp, Humidity) and daily farming tips.
 2. **Language Selection**: Use the top-right globe icon to instantly switch the interface and AI responses to your preferred language.
 3. **Disease Detection**: Navigate to the "Detect" tab. Upload an image or use your camera to snap a picture of a diseased leaf. The AI will validate the image and provide a diagnosis.
-4. **Chatbot**: Use the floating chat button on the bottom right to ask any agriculture-related questions.
-5. **Voice Input**: Click the microphone icon to speak your questions instead of typing.
+4. **Crop Recommendation**: Navigate to the "Recommend" tab. Tap the Auto-detect button or manually enter your field details to get personalized AI crop suggestions.
+5. **Chatbot**: Use the floating chat button on the bottom right to ask any agriculture-related questions.
+6. **Voice Input**: Click the microphone icon to speak your questions instead of typing.
 
 ---
 
