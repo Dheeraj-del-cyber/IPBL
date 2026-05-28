@@ -15,7 +15,7 @@ An AI-powered, full-stack platform designed to empower farmers with modern techn
 - 🌍 **Deep Multilingual Support**: Fully localized in English, Hindi, and Kannada. The AI dynamically generates responses natively in the selected language.
 - 🎙️ **Voice Assistant**: Speak your queries naturally in your native language, and the AI will guide you through speech recognition.
 - 💧 **IoT Dashboard**: Real-time soil moisture monitoring and smart irrigation recommendations based on live sensor data.
-- 📱 **Offline-Ready PWA**: Fully functional offline fallback using Service Workers for critical local advisories when the internet is disconnected.
+
 
 ---
 
