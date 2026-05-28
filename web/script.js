@@ -1669,7 +1669,7 @@ function handleAuth(e) {
         }
         
         const joinDate = new Date().toLocaleDateString();
-        users[phone] = { name, phone, password, joinDate, location: 'Local Farm' };
+        users[phone] = { name, phone, password, joinDate };
         localStorage.setItem('agri_users_db', JSON.stringify(users));
         localStorage.setItem('agri_active_user', JSON.stringify(users[phone]));
     } else {
@@ -1729,9 +1729,6 @@ function openProfile() {
         }
         
         // Extra info
-        const elLoc = document.getElementById('profileLocation');
-        if (elLoc) elLoc.textContent = user.location || 'Local Farm';
-        
         const elLang = document.getElementById('profileLanguage');
         if (elLang) {
             const langNames = { 'en': 'English', 'hi': 'Hindi', 'kn': 'Kannada' };
