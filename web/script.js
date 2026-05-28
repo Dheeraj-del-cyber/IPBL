@@ -1620,6 +1620,8 @@ function toggleAuthMode(mode) {
     const authTitle = document.getElementById('authTitle');
     const authSubtitle = document.getElementById('authSubtitle');
     const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const forgotLink = document.getElementById('forgotPasswordLink');
+    const authPassword = document.getElementById('authPassword');
     
     document.getElementById('btnSignup').classList.toggle('active', mode === 'signup');
     document.getElementById('btnLogin').classList.toggle('active', mode === 'login');
@@ -1631,12 +1633,24 @@ function toggleAuthMode(mode) {
         authTitle.textContent = 'Welcome Back';
         authSubtitle.textContent = 'Login to Agri AI to continue.';
         authSubmitBtn.textContent = 'Login';
+        if (forgotLink) forgotLink.style.display = 'block';
+        if (authPassword) authPassword.placeholder = "Enter your password";
+    } else if (mode === 'reset') {
+        nameGroup.style.display = 'none';
+        authName.removeAttribute('required');
+        authTitle.textContent = 'Reset Password';
+        authSubtitle.textContent = 'Enter phone number and new password.';
+        authSubmitBtn.textContent = 'Reset Password';
+        if (forgotLink) forgotLink.style.display = 'none';
+        if (authPassword) authPassword.placeholder = "Enter new password";
     } else {
         nameGroup.style.display = 'block';
         authName.setAttribute('required', 'true');
         authTitle.textContent = 'Create Account';
         authSubtitle.textContent = 'Join Agri AI to continue.';
         authSubmitBtn.textContent = 'Sign Up';
+        if (forgotLink) forgotLink.style.display = 'none';
+        if (authPassword) authPassword.placeholder = "Create a password";
     }
 }
 
@@ -1688,6 +1702,15 @@ function handleAuth(e) {
         users[phone] = { name, phone, password, joinDate };
         localStorage.setItem('agri_users_db', JSON.stringify(users));
         localStorage.setItem('agri_active_user', JSON.stringify(users[phone]));
+    } else if (currentAuthMode === 'reset') {
+        if (!users[phone]) {
+            errorEl.textContent = 'Account not found. Please sign up first.';
+            return;
+        }
+        users[phone].password = password;
+        localStorage.setItem('agri_users_db', JSON.stringify(users));
+        localStorage.setItem('agri_active_user', JSON.stringify(users[phone]));
+        alert('Password reset successfully!');
     } else {
         // Login
         if (!users[phone]) {
