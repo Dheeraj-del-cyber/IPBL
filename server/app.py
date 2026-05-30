@@ -14,14 +14,9 @@ import llm_handler
 # Set static folder to the web directory (located one level up)
 app = Flask(__name__, static_folder='../web', static_url_path='')
 
-# Production-safe CORS: read allowed origins from env (comma-separated)
-allowed = os.getenv('ALLOWED_ORIGINS', '')
-if allowed:
-    origins = [o.strip() for o in allowed.split(',') if o.strip()]
-    CORS(app, resources={r"/*": {"origins": origins}})
-else:
-    # Default: allow all origins only in non-production modes
-    CORS(app)
+# Production-safe CORS: allow all for now to prevent CORS issues
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 # Security / upload limits
 app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH', 8 * 1024 * 1024))  # 8 MB default

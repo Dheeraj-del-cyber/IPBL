@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agri AI — Smart Farming Assistant</title>
+    <title>Agri AI — IOT based Farming Assistant</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta name="description"
         content="AI-powered smart farming assistant. Detect plant diseases and access farming knowledge.">
@@ -256,22 +256,30 @@
                     <div class="upload-drop-zone" id="uploadZone" onclick="triggerUpload(false)">
                         <div class="camera-ph" id="cameraPlaceholder">
                             <div class="camera-ph-icon">📂</div>
-                            <p style="font-size:1.1rem; font-weight:700; color:var(--n-700); margin-bottom:0.5rem" data-i18n="uploadTitle">
+                            <p style="font-size:1.1rem; font-weight:700; color:var(--n-700); margin-bottom:0.5rem"
+                                data-i18n="uploadTitle">
                                 Upload Leaf Image</p>
-                            <p style="color:var(--n-400); font-size:0.9rem" data-i18n="uploadDrag">Drag & drop or click to browse</p>
-                            <p style="color:var(--n-500); font-size:0.8rem; margin-top:0.5rem" data-i18n="uploadFormats">JPG / PNG supported</p>
+                            <p style="color:var(--n-400); font-size:0.9rem" data-i18n="uploadDrag">Drag & drop or click
+                                to browse</p>
+                            <p style="color:var(--n-500); font-size:0.8rem; margin-top:0.5rem"
+                                data-i18n="uploadFormats">JPG / PNG supported</p>
                         </div>
                         <img id="imagePreview" class="cam-img" alt="Preview">
                     </div>
 
                     <!-- Upload Button -->
-                    <div class="cam-controls" id="uploadControls" style="display:flex; flex-direction:column; gap:1rem; align-items:center;">
-                        <button class="btn-glow hero-primary" id="takePhotoBtn" onclick="document.getElementById('cameraInput').click()"
-                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;" data-i18n="btnTakePhoto">📸 Take Photo</button>
+                    <div class="cam-controls" id="uploadControls"
+                        style="display:flex; flex-direction:column; gap:1rem; align-items:center;">
+                        <button class="btn-glow hero-primary" id="takePhotoBtn"
+                            onclick="document.getElementById('cameraInput').click()"
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem;"
+                            data-i18n="btnTakePhoto">📸 Take Photo</button>
                         <button class="btn-glow" id="choosePhotoBtn" onclick="triggerUpload(false)"
-                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; background: var(--g-600);" data-i18n="btnChoosePhoto">📂 Choose Photo</button>
+                            style="padding:1.25rem 3rem; width: 100%; max-width: 400px; font-size: 1.2rem; background: var(--g-600);"
+                            data-i18n="btnChoosePhoto">📂 Choose Photo</button>
                         <p id="uploadHintText"
-                            style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;" data-i18n="uploadHint">Use your camera or upload a leaf image from your device.</p>
+                            style="margin-top:0.75rem; color:var(--n-500); font-size:0.9rem; text-align:center;"
+                            data-i18n="uploadHint">Use your camera or upload a leaf image from your device.</p>
                     </div>
 
                     <!-- Analyze / Retake -->
@@ -284,15 +292,19 @@
 
                 <aside class="detect-side">
                     <div class="detect-info-card" style="margin-bottom:1rem;">
-                        <h3 style="margin-bottom:1rem; font-size:1.2rem; font-weight:800; color:var(--soil-900);" data-i18n="scanStepsTitle">🔍 Disease Scan Steps</h3>
+                        <h3 style="margin-bottom:1rem; font-size:1.2rem; font-weight:800; color:var(--soil-900);"
+                            data-i18n="scanStepsTitle">🔍 Disease Scan Steps</h3>
                         <ol style="padding-left:1.25rem; color:var(--n-700); line-height:2.2; font-size:0.97rem;">
-                            <li data-i18n="scanStep1">Click <b style="color:var(--g-700);">Choose File</b> and upload crop leaf</li>
-                            <li data-i18n="scanStep2">Tap <b style="color:var(--g-700);">Analyze Now</b> for disease report</li>
+                            <li data-i18n="scanStep1">Click <b style="color:var(--g-700);">Choose File</b> and upload
+                                crop leaf</li>
+                            <li data-i18n="scanStep2">Tap <b style="color:var(--g-700);">Analyze Now</b> for disease
+                                report</li>
                             <li data-i18n="scanStep3">Follow treatment and prevention tips</li>
                         </ol>
                     </div>
                     <div class="detect-info-card">
-                        <h4 style="margin-bottom:0.75rem; color:var(--g-700); font-size:1rem; font-weight:800;" data-i18n="photoTipsTitle">📸 Good Photo Tips</h4>
+                        <h4 style="margin-bottom:0.75rem; color:var(--g-700); font-size:1rem; font-weight:800;"
+                            data-i18n="photoTipsTitle">📸 Good Photo Tips</h4>
                         <ul style="padding-left:1.25rem; color:var(--n-600); font-size:0.9rem; line-height:2;">
                             <li data-i18n="tip1">Good natural lighting</li>
                             <li data-i18n="tip2">Fill frame with the leaf</li>
@@ -304,7 +316,8 @@
             </div>
         </div>
         <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
-        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handleFileSelect(event)">
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none"
+            onchange="handleFileSelect(event)">
     </main>
 
     <!-- Result Screen -->
@@ -323,14 +336,18 @@
         <div class="container">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
                 <button class="btn-back" onclick="navigateTo('screenHome')" data-i18n="back">← Back</button>
-                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="recTitle">Crop Recommendation</h2>
+                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="recTitle">Crop
+                    Recommendation</h2>
             </div>
             <div class="detect-grid">
                 <div class="detect-main">
                     <div class="glass tip-card" style="margin-bottom: 1.5rem">
-                        <button class="btn-glow" style="width: 100%" onclick="autoFillLocationData()" data-i18n="recAutoFill">📍 Auto-detect Location & Weather</button>
+                        <button class="btn-glow" style="width: 100%" onclick="autoFillLocationData()"
+                            data-i18n="recAutoFill">📍 Auto-detect Location & Weather</button>
                     </div>
-                    <form id="recommendForm" class="auth-form" onsubmit="event.preventDefault(); fetchCropRecommendation();" style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--sh-sm);">
+                    <form id="recommendForm" class="auth-form"
+                        onsubmit="event.preventDefault(); fetchCropRecommendation();"
+                        style="background: white; padding: 2rem; border-radius: 20px; box-shadow: var(--sh-sm);">
                         <div class="input-group">
                             <label data-i18n="recLocation">Location</label>
                             <input type="text" id="recLocation" placeholder="e.g. Pune, Maharashtra" required>
@@ -348,7 +365,8 @@
                         <div style="display: flex; gap: 1rem;">
                             <div class="input-group" style="flex: 1">
                                 <label data-i18n="recSoil">Soil Type</label>
-                                <select id="recSoil" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 8px;">
+                                <select id="recSoil" required
+                                    style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 8px;">
                                     <option value="Loamy">Loamy</option>
                                     <option value="Clay">Clay</option>
                                     <option value="Sandy">Sandy</option>
@@ -359,28 +377,37 @@
                             </div>
                             <div class="input-group" style="flex: 1">
                                 <label data-i18n="recSeason">Season</label>
-                                <select id="recSeason" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 8px;">
+                                <select id="recSeason" required
+                                    style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 8px;">
                                     <option value="Kharif">Kharif (Monsoon)</option>
                                     <option value="Rabi">Rabi (Winter)</option>
                                     <option value="Zaid">Zaid (Summer)</option>
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn-glow" style="width: 100%; margin-top: 1rem; font-size: 1.1rem; padding: 1rem;" data-i18n="recBtn">🔍 Get Recommendations</button>
+                        <button type="submit" class="btn-glow"
+                            style="width: 100%; margin-top: 1rem; font-size: 1.1rem; padding: 1rem;"
+                            data-i18n="recBtn">🔍 Get Recommendations</button>
                     </form>
                 </div>
                 <aside class="detect-side" style="display: block;">
                     <div class="detect-info-card" id="recommendResult" style="display: none;">
-                        <h3 style="margin-bottom:1rem; font-size:1.2rem; font-weight:800; color:var(--g-700);" data-i18n="recResultTitle">🌾 Recommended Crops</h3>
+                        <h3 style="margin-bottom:1rem; font-size:1.2rem; font-weight:800; color:var(--g-700);"
+                            data-i18n="recResultTitle">🌾 Recommended Crops</h3>
                         <div id="recCropsList" style="margin-bottom: 1rem;"></div>
-                        <h4 style="margin-bottom:0.5rem; color:var(--n-800); font-size:1rem; font-weight:700;" data-i18n="recReasoning">💡 Reasoning</h4>
-                        <p id="recReasoning" style="color:var(--n-600); font-size:0.9rem; line-height:1.6; margin-bottom: 1rem;"></p>
-                        <h4 style="margin-bottom:0.5rem; color:var(--n-800); font-size:1rem; font-weight:700;" data-i18n="recPrep">🚜 Preparation</h4>
+                        <h4 style="margin-bottom:0.5rem; color:var(--n-800); font-size:1rem; font-weight:700;"
+                            data-i18n="recReasoning">💡 Reasoning</h4>
+                        <p id="recReasoning"
+                            style="color:var(--n-600); font-size:0.9rem; line-height:1.6; margin-bottom: 1rem;"></p>
+                        <h4 style="margin-bottom:0.5rem; color:var(--n-800); font-size:1rem; font-weight:700;"
+                            data-i18n="recPrep">🚜 Preparation</h4>
                         <p id="recPrep" style="color:var(--n-600); font-size:0.9rem; line-height:1.6;"></p>
                     </div>
-                    <div class="detect-info-card" id="recommendEmpty" style="margin-bottom:1rem; text-align: center; padding: 2rem 1rem;">
+                    <div class="detect-info-card" id="recommendEmpty"
+                        style="margin-bottom:1rem; text-align: center; padding: 2rem 1rem;">
                         <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🌱</span>
-                        <p style="color: var(--n-500); font-size: 0.95rem;" data-i18n="recEmpty">Enter your field details and let AI suggest the best crops for maximum yield and profit.</p>
+                        <p style="color: var(--n-500); font-size: 0.95rem;" data-i18n="recEmpty">Enter your field
+                            details and let AI suggest the best crops for maximum yield and profit.</p>
                     </div>
                 </aside>
             </div>
@@ -392,7 +419,8 @@
         <div class="container">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:2rem">
                 <button class="btn-back" onclick="navigateTo('screenHome')" data-i18n="back">← Back</button>
-                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="iotTitle">IoT Smart Monitor</h2>
+                <h2 style="color:var(--n-950); font-size:1.75rem; font-weight:900;" data-i18n="iotTitle">IoT Smart
+                    Monitor</h2>
             </div>
 
             <div class="iot-dashboard">
@@ -415,8 +443,10 @@
                         </div>
                     </div>
                     <div class="iot-status">
-                        <span id="moistureStatusBadge" class="status-badge status-unknown" data-i18n="fetching">Fetching...</span>
-                        <p class="last-update"><span data-i18n="lastUpdated">Last Updated:</span> <span id="lastUpdated">--:--:--</span></p>
+                        <span id="moistureStatusBadge" class="status-badge status-unknown"
+                            data-i18n="fetching">Fetching...</span>
+                        <p class="last-update"><span data-i18n="lastUpdated">Last Updated:</span> <span
+                                id="lastUpdated">--:--:--</span></p>
                     </div>
                 </div>
 
@@ -436,7 +466,8 @@
                         </div>
                         <div class="iot-info-item">
                             <span class="info-label" data-i18n="iotConn">Connection</span>
-                            <span class="info-value" id="connectionStatus" style="color:var(--g-600)" data-i18n="iotLive">Live</span>
+                            <span class="info-value" id="connectionStatus" style="color:var(--g-600)"
+                                data-i18n="iotLive">Live</span>
                         </div>
                     </div>
                 </div>
@@ -482,7 +513,8 @@
                 <div class="iot-card-header" style="width:100%;">
                     <span class="iot-icon">📊</span>
                     <h3 data-i18n="iotChartTitle">Live Moisture History</h3>
-                    <span style="margin-left:auto;font-size:0.75rem;color:var(--n-400);font-weight:600;" data-i18n="iotLast20">Last 20 Readings</span>
+                    <span style="margin-left:auto;font-size:0.75rem;color:var(--n-400);font-weight:600;"
+                        data-i18n="iotLast20">Last 20 Readings</span>
                 </div>
                 <div class="iot-chart-wrap">
                     <canvas id="moistureChart"></canvas>
@@ -503,11 +535,13 @@
                         <h3 data-i18n="iotWeather">Field Weather</h3>
                     </div>
                     <div id="iotWeatherContent" class="iot-weather-content">
-                        <p style="color:var(--n-400);font-size:0.9rem;text-align:center;width:100%;padding:1rem 0;" data-i18n="iotDetectLoc">
+                        <p style="color:var(--n-400);font-size:0.9rem;text-align:center;width:100%;padding:1rem 0;"
+                            data-i18n="iotDetectLoc">
                             Detecting location...</p>
                     </div>
                     <button class="btn-ghost" onclick="fetchIoTWeather()"
-                        style="margin-top:auto;width:100%;padding:0.75rem;font-size:0.9rem;" data-i18n="iotRefreshWeather">🔄 Refresh Weather</button>
+                        style="margin-top:auto;width:100%;padding:0.75rem;font-size:0.9rem;"
+                        data-i18n="iotRefreshWeather">🔄 Refresh Weather</button>
                 </div>
 
                 <!-- Soil Health Score -->
@@ -531,7 +565,8 @@
                         <div class="health-details">
                             <div id="healthGrade" class="health-grade" data-i18n="iotWaiting">Waiting...</div>
                             <p id="healthTip"
-                                style="font-size:0.85rem;color:var(--n-600);margin-top:0.5rem;line-height:1.5;" data-i18n="iotConnectSensor">Connect sensor to get your soil health score.</p>
+                                style="font-size:0.85rem;color:var(--n-600);margin-top:0.5rem;line-height:1.5;"
+                                data-i18n="iotConnectSensor">Connect sensor to get your soil health score.</p>
                         </div>
                     </div>
                 </div>
@@ -646,7 +681,9 @@
                 <div class="input-group">
                     <label for="authPassword">Password</label>
                     <input type="password" id="authPassword" placeholder="Enter your password" required>
-                    <a href="#" id="forgotPasswordLink" onclick="toggleAuthMode('reset'); return false;" style="font-size:0.8rem; color:var(--g-600); text-align:right; display:block; margin-top:0.25rem; display:none;">Forgot Password?</a>
+                    <a href="#" id="forgotPasswordLink" onclick="toggleAuthMode('reset'); return false;"
+                        style="font-size:0.8rem; color:var(--g-600); text-align:right; display:block; margin-top:0.25rem; display:none;">Forgot
+                        Password?</a>
                 </div>
                 <p id="authError" class="auth-error"></p>
                 <button type="submit" id="authSubmitBtn" class="btn-glow auth-btn" style="width:100%">Sign Up</button>
@@ -658,19 +695,27 @@
     <div id="profileModal" class="auth-overlay hidden">
         <div class="auth-card glass" style="text-align:center;">
             <div class="auth-header" style="margin-bottom:1rem; position:relative;">
-                <label for="profilePhotoInput" style="cursor:pointer; display:inline-block; margin-bottom:0.5rem; position:relative;" title="Upload Photo">
-                    <div id="profilePhotoContainer" class="auth-icon" style="background:var(--g-100); color:var(--g-700); width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:0 auto; padding:0;">
+                <label for="profilePhotoInput"
+                    style="cursor:pointer; display:inline-block; margin-bottom:0.5rem; position:relative;"
+                    title="Upload Photo">
+                    <div id="profilePhotoContainer" class="auth-icon"
+                        style="background:var(--g-100); color:var(--g-700); width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:0 auto; padding:0;">
                         <span id="profilePhotoEmoji" style="font-size:2.5rem;">👤</span>
-                        <img id="profilePhotoImg" src="" style="display:none; width:100%; height:100%; object-fit:cover;" alt="Profile Photo">
+                        <img id="profilePhotoImg" src=""
+                            style="display:none; width:100%; height:100%; object-fit:cover;" alt="Profile Photo">
                     </div>
-                    <div style="position:absolute; bottom:0; right:0; background:var(--g-600); color:white; border-radius:50%; width:24px; height:24px; font-size:0.8rem; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(0,0,0,0.2);">📷</div>
+                    <div
+                        style="position:absolute; bottom:0; right:0; background:var(--g-600); color:white; border-radius:50%; width:24px; height:24px; font-size:0.8rem; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+                        📷</div>
                 </label>
-                <input type="file" id="profilePhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhotoUpload(event)">
+                <input type="file" id="profilePhotoInput" accept="image/*" style="display:none"
+                    onchange="handleProfilePhotoUpload(event)">
                 <h2 id="profileName">User Name</h2>
                 <p id="profilePhone">Phone</p>
             </div>
-            
-            <div class="profile-details" style="text-align:left; margin-bottom:1.5rem; padding: 1rem; background:rgba(255,255,255,0.05); border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
+
+            <div class="profile-details"
+                style="text-align:left; margin-bottom:1.5rem; padding: 1rem; background:rgba(255,255,255,0.05); border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
                     <span style="color:var(--n-500); font-size:0.9rem;">App Language</span>
                     <span id="profileLanguage" style="font-weight:600; font-size:0.9rem;">English</span>
@@ -685,7 +730,8 @@
                 </div>
                 <div style="display:flex; justify-content:space-between;">
                     <span style="color:var(--n-500); font-size:0.9rem;">Latest Soil Moisture</span>
-                    <span id="profileMoisture" style="font-weight:600; font-size:0.9rem; color:var(--accent-sky);">--</span>
+                    <span id="profileMoisture"
+                        style="font-weight:600; font-size:0.9rem; color:var(--accent-sky);">--</span>
                 </div>
             </div>
 
