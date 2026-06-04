@@ -691,53 +691,53 @@
     </div>
 
     <!-- Profile Modal -->
-    <div id="profileModal" class="auth-overlay hidden">
-        <div class="auth-card glass" style="text-align:center;">
-            <div class="auth-header" style="margin-bottom:1rem; position:relative;">
-                <label for="profilePhotoInput"
-                    style="cursor:pointer; display:inline-block; margin-bottom:0.5rem; position:relative;"
-                    title="Upload Photo">
-                    <div id="profilePhotoContainer" class="auth-icon"
-                        style="background:var(--g-100); color:var(--g-700); width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:0 auto; padding:0;">
-                        <span id="profilePhotoEmoji" style="font-size:2.5rem;">👤</span>
-                        <img id="profilePhotoImg" src=""
-                            style="display:none; width:100%; height:100%; object-fit:cover;" alt="Profile Photo">
+    <div id="profileModal" class="profile-overlay hidden">
+        <div class="profile-card-premium glass">
+            <div class="profile-banner"></div>
+            
+            <div class="profile-header-premium">
+                <label for="profilePhotoInput" class="profile-photo-wrap" title="Upload Photo">
+                    <div id="profilePhotoContainer" class="profile-photo-container">
+                        <span id="profilePhotoEmoji">👤</span>
+                        <img id="profilePhotoImg" src="" alt="Profile Photo" style="display:none;">
                     </div>
-                    <div
-                        style="position:absolute; bottom:0; right:0; background:var(--g-600); color:white; border-radius:50%; width:24px; height:24px; font-size:0.8rem; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
-                        📷</div>
+                    <div class="profile-photo-edit-badge">📷</div>
                 </label>
                 <input type="file" id="profilePhotoInput" accept="image/*" style="display:none"
                     onchange="handleProfilePhotoUpload(event)">
-                <h2 id="profileName">User Name</h2>
-                <p id="profilePhone">Phone</p>
+                
+                <h2 id="profileName" class="profile-name-premium">User Name</h2>
+                <p id="profilePhone" class="profile-phone-premium">Phone</p>
+                <div class="profile-member-since">Member Since <span id="profileDate">2026</span></div>
             </div>
 
-            <div class="profile-details"
-                style="text-align:left; margin-bottom:1.5rem; padding: 1rem; background:rgba(255,255,255,0.05); border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
-                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-                    <span style="color:var(--n-500); font-size:0.9rem;">App Language</span>
-                    <span id="profileLanguage" style="font-weight:600; font-size:0.9rem;">English</span>
+            <div class="profile-stats-premium">
+                <div class="stat-badge stat-scans">
+                    <span class="stat-icon">🍃</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="profileScans">0</span>
+                        <span class="stat-label">Leaf Scans</span>
+                    </div>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-                    <span style="color:var(--n-500); font-size:0.9rem;">Member Since</span>
-                    <span id="profileDate" style="font-weight:600; font-size:0.9rem;">2026</span>
+                <div class="stat-badge stat-moisture">
+                    <span class="stat-icon">💧</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="profileMoisture">--</span>
+                        <span class="stat-label">Moisture</span>
+                    </div>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-                    <span style="color:var(--n-500); font-size:0.9rem;">Total Leaf Scans</span>
-                    <span id="profileScans" style="font-weight:600; font-size:0.9rem;">0</span>
-                </div>
-                <div style="display:flex; justify-content:space-between;">
-                    <span style="color:var(--n-500); font-size:0.9rem;">Latest Soil Moisture</span>
-                    <span id="profileMoisture"
-                        style="font-weight:600; font-size:0.9rem; color:var(--accent-sky);">--</span>
+                <div class="stat-badge stat-lang">
+                    <span class="stat-icon">🌐</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="profileLanguage">English</span>
+                        <span class="stat-label">Language</span>
+                    </div>
                 </div>
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:0.75rem;">
-                <button class="btn-ghost" style="width:100%;" onclick="closeProfile()">Close</button>
-                <button class="btn-glow" style="width:100%; background:var(--accent-warning); box-shadow:none;"
-                    onclick="logout()">Logout</button>
+            <div class="profile-actions-premium">
+                <button class="btn-ghost profile-btn" onclick="closeProfile()">Close</button>
+                <button class="btn-glow profile-btn-danger" onclick="logout()">Logout</button>
             </div>
         </div>
     </div>
