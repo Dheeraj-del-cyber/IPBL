@@ -1463,7 +1463,6 @@ function updateIoTUI(data) {
     // Update Status Badge & Recommendation
     const badge = document.getElementById('moistureStatusBadge');
     const recBox = document.getElementById('iotRecommendation');
-    const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
     
     if (badge) {
         badge.className = 'status-badge'; // reset
