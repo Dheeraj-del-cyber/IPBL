@@ -2932,8 +2932,8 @@ button.bottom-nav-link {
     width: 100%;
     max-width: 420px;
     background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: var(--radius-xl);
+    border: 2px solid var(--g-400);
+    border-radius: 36px;
     overflow: hidden;
     box-shadow: var(--sh-float);
     transform: translateY(0) scale(1);
@@ -3126,7 +3126,16 @@ button.bottom-nav-link {
 }
 
 @media (max-width: 480px) {
+    .profile-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
     .profile-card-premium {
-        border-radius: var(--radius-lg);
+        border-radius: 40px 40px 0 0;
+        border-bottom: none;
+        max-width: 100%;
+    }
+    .profile-overlay.hidden .profile-card-premium {
+        transform: translateY(100%) scale(1);
     }
 }
