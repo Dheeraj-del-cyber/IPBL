@@ -1452,7 +1452,7 @@ function formatLocalTime(utcTimeStr) {
     h = h ? h : 12;
     const hStr = String(h).padStart(2, '0');
     
-    return `${hStr} hr ${m} min ${s} sec ${ampm}`;
+    return `${hStr}:${m}:${s} ${ampm}`;
 }
 
 function updateIoTUI(data) {
