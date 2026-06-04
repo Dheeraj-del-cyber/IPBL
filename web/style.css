@@ -2916,7 +2916,8 @@ button.bottom-nav-link {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem;
+    padding: 2rem;
+    overflow-y: auto;
     opacity: 1;
     visibility: visible;
     transition: opacity 0.4s ease, visibility 0.4s ease;
@@ -2987,6 +2988,18 @@ button.bottom-nav-link {
     font-size: 3rem;
     color: var(--g-500);
     transition: transform 0.3s var(--easing-spring);
+    position: relative;
+}
+
+/* Fix: uploaded photo must fill the circle, not zoom into nose/lips */
+.profile-photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
 }
 
 .profile-photo-wrap:hover .profile-photo-container {
@@ -3137,5 +3150,11 @@ button.bottom-nav-link {
     }
     .profile-overlay.hidden .profile-card-premium {
         transform: translateY(100%) scale(1);
+    }
+}
+
+@media (min-width: 481px) {
+    .profile-card-premium {
+        margin: auto;
     }
 }
