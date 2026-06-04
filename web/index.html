@@ -12,7 +12,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
     <!-- Styles -->
@@ -38,8 +38,7 @@
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#" class="nav-brand" onclick="navigateTo('screenHome'); return false;">
-                <span class="nav-logo">🌱</span>
-                <span>Agri AI</span>
+                <img src="logo.png" class="nav-logo-img" alt="Agri AI Logo">
             </a>
             <div class="nav-links">
                 <a href="#" class="nav-link active" data-screen="screenHome"
@@ -112,10 +111,9 @@
     <main class="screen active" id="screenHome">
         <section class="hero container">
             <div class="glass-sm hero-badge" data-i18n="heroBadge">🚜 Farmer Support App</div>
-            <h1 class="hero-title">
-                <span data-i18n="heroTitle1">Healthy Crops</span><br>
-                <span class="hero-glow" data-i18n="heroTitle2">Better Income</span>
-            </h1>
+            <div class="hero-logo-wrap">
+                <img src="logo.png" class="hero-logo" alt="Agri AI Logo">
+            </div>
             <p class="hero-desc" data-i18n="heroDesc">Identify plant disease, get exact treatment steps, and take action
                 quickly.</p>
             <div class="hero-btns">
@@ -647,7 +645,8 @@
     </div>
 
     <footer class="farm-footer">
-        <div class="container farm-footer-inner" style="justify-content: center;">
+        <div class="container farm-footer-inner" style="justify-content: center; flex-direction: column; align-items: center; gap: 1rem;">
+            <img src="logo.png" class="footer-logo" alt="Agri AI Logo">
             <p style="font-weight: 300; opacity: 0.9;">IPBL PROJECT 2026</p>
         </div>
     </footer>
