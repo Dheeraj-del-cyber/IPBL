@@ -54,7 +54,7 @@ const TRANSLATIONS = {
         iotTitle: 'IoT Smart Monitor', iotSoilMoisture: 'Soil Moisture',
         fetching: 'Fetching...', lastUpdated: 'Last Updated:',
         iotAIRec: 'AI Recommendation', iotOptRange: 'Optimal Range',
-        iotConn: 'Connection', iotLive: 'Live',
+        iotConn: 'Connection', iotLive: 'Live', iotOffline: 'Offline', iotDisconnected: 'Sensor disconnected. Please check connection.',
         iotMinToday: 'Min Today', iotMaxToday: 'Max Today',
         iotAverage: 'Average', iotReadings: 'Readings',
         iotChartTitle: 'Live Moisture History', iotLast20: 'Last 20 Readings',
@@ -112,7 +112,7 @@ const TRANSLATIONS = {
         iotTitle: 'IoT स्मार्ट मॉनिटर', iotSoilMoisture: 'मिट्टी की नमी',
         fetching: 'प्राप्त हो रहा है...', lastUpdated: 'अंतिम अपडेट:',
         iotAIRec: 'AI सिफारिश', iotOptRange: 'आदर्श सीमा',
-        iotConn: 'कनेक्शन', iotLive: 'लाइव',
+        iotConn: 'कनेक्शन', iotLive: 'लाइव', iotOffline: 'ऑफ़लाइन', iotDisconnected: 'सेंसर डिस्कनेक्ट हो गया। कृपया कनेक्शन जांचें।',
         iotMinToday: 'आज का न्यूनतम', iotMaxToday: 'आज का अधिकतम',
         iotAverage: 'औसत', iotReadings: 'रीडिंग',
         iotChartTitle: 'लाइव नमी इतिहास', iotLast20: 'अंतिम 20 रीडिंग',
@@ -170,7 +170,7 @@ const TRANSLATIONS = {
         iotTitle: 'IoT ಸ್ಮಾರ್ಟ್ ಮಾನಿಟರ್', iotSoilMoisture: 'ಮಣ್ಣಿನ ತೇವಾಂಶ',
         fetching: 'ಪಡೆಯಲಾಗುತ್ತಿದೆ...', lastUpdated: 'ಕೊನೆಯ ನವೀಕರಣ:',
         iotAIRec: 'AI ಶಿಫಾರಸು', iotOptRange: 'ಸೂಕ್ತ ವ್ಯಾಪ್ತಿ',
-        iotConn: 'ಸಂಪರ್ಕ', iotLive: 'ಲೈವ್',
+        iotConn: 'ಸಂಪರ್ಕ', iotLive: 'ಲೈವ್', iotOffline: 'ಆಫ್‌ಲೈನ್', iotDisconnected: 'ಸೆನ್ಸರ್ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ.',
         iotMinToday: 'ಇಂದಿನ ಕನಿಷ್ಠ', iotMaxToday: 'ಇಂದಿನ ಗರಿಷ್ಠ',
         iotAverage: 'ಸರಾಸರಿ', iotReadings: 'ರೀಡಿಂಗ್‌ಗಳು',
         iotChartTitle: 'ಲೈವ್ ತೇವಾಂಶ ಇತಿಹಾಸ', iotLast20: 'ಕಡೆಯ 20 ರೀಡಿಂಗ್‌ಗಳು',
@@ -1374,17 +1374,68 @@ async function fetchIoTData() {
         updateIoTUI(data);
     } catch (err) {
         console.error('IoT Fetch Error:', err);
-        const connStatus = document.getElementById('connectionStatus');
-        if (connStatus) {
-            connStatus.textContent = 'Offline';
-            connStatus.style.color = 'var(--accent-rose)';
-        }
+        setIoTOffline();
     }
+}
+
+function setIoTOffline(lastUpdated = '--:--:--') {
+    const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
+    const offlineText = dict.iotOffline || 'Offline';
+    
+    const valEl = document.getElementById('moistureValue');
+    const updateEl = document.getElementById('lastUpdated');
+    const connStatus = document.getElementById('connectionStatus');
+    const badge = document.getElementById('moistureStatusBadge');
+    const recBox = document.getElementById('iotRecommendation');
+    const gradeEl = document.getElementById('healthGrade');
+    const scoreEl = document.getElementById('healthScore');
+    const circle = document.getElementById('moistureProgress');
+    const ring = document.getElementById('healthRingFill');
+    const banner = document.getElementById('iotAlertBanner');
+
+    if (valEl) valEl.textContent = '--';
+    if (updateEl) updateEl.textContent = (lastUpdated === 'Never' || lastUpdated === '--:--:--') ? offlineText : lastUpdated;
+    if (connStatus) {
+        connStatus.textContent = offlineText;
+        connStatus.setAttribute('data-i18n', 'iotOffline');
+        connStatus.style.color = 'var(--accent-rose)';
+    }
+    if (badge) {
+        badge.className = 'status-badge status-unknown';
+        badge.textContent = offlineText;
+    }
+    if (recBox) {
+        recBox.textContent = dict.iotDisconnected || 'Sensor disconnected. Please check connection.';
+    }
+    if (gradeEl) {
+        gradeEl.textContent = offlineText;
+        gradeEl.className = 'health-grade grade-bad';
+    }
+    if (scoreEl) scoreEl.textContent = '--';
+    if (circle) {
+        const radius = circle.r ? circle.r.baseVal.value : 45;
+        const circumference = 2 * Math.PI * radius;
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = circumference;
+    }
+    if (ring) {
+        const circ = 2 * Math.PI * 34;
+        ring.style.strokeDasharray = circ;
+        ring.style.strokeDashoffset = circ;
+        ring.style.stroke = 'var(--n-300)';
+    }
+    if (banner) banner.classList.add('hidden');
 }
 
 function updateIoTUI(data) {
     const moisture = data.moisture || 0;
     const lastUpdated = data.last_updated || '--:--:--';
+    const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
+    
+    if (lastUpdated === 'Never' || data.status === 'offline') {
+        setIoTOffline(lastUpdated);
+        return;
+    }
     
     // Update Value & Last Updated
     const valEl = document.getElementById('moistureValue');
@@ -1394,7 +1445,8 @@ function updateIoTUI(data) {
     if (valEl) valEl.textContent = moisture;
     if (updateEl) updateEl.textContent = lastUpdated;
     if (connStatus) {
-        connStatus.textContent = 'Live';
+        connStatus.textContent = dict.iotLive || 'Live';
+        connStatus.setAttribute('data-i18n', 'iotLive');
         connStatus.style.color = 'var(--g-600)';
     }
 
