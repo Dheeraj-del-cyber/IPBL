@@ -1434,15 +1434,38 @@ function setIoTOffline(lastUpdated = '--:--:--') {
     }
 }
 
+function formatLocalTime(utcTimeStr) {
+    if (!utcTimeStr || utcTimeStr === '--:--:--' || utcTimeStr === 'Never') return utcTimeStr;
+    const parts = utcTimeStr.split(':');
+    if (parts.length !== 3) return utcTimeStr;
+    
+    const d = new Date();
+    d.setUTCHours(parseInt(parts[0], 10));
+    d.setUTCMinutes(parseInt(parts[1], 10));
+    d.setUTCSeconds(parseInt(parts[2], 10));
+    
+    let h = d.getHours();
+    const m = String(d.getMinutes()).padStart(2, '0');
+    const s = String(d.getSeconds()).padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    h = h ? h : 12;
+    const hStr = String(h).padStart(2, '0');
+    
+    return `${hStr} hr ${m} min ${s} sec ${ampm}`;
+}
+
 function updateIoTUI(data) {
     const moisture = data.moisture || 0;
-    const lastUpdated = data.last_updated || '--:--:--';
+    const rawLastUpdated = data.last_updated || '--:--:--';
     const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
     
-    if (lastUpdated === 'Never' || data.status === 'offline') {
-        setIoTOffline(lastUpdated);
+    if (rawLastUpdated === 'Never' || data.status === 'offline') {
+        setIoTOffline(rawLastUpdated);
         return;
     }
+    
+    const lastUpdated = formatLocalTime(rawLastUpdated);
     
     // Update Value & Last Updated
     const valEl = document.getElementById('moistureValue');
