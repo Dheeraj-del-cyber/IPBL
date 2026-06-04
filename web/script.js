@@ -55,7 +55,6 @@ const TRANSLATIONS = {
         fetching: 'Fetching...', lastUpdated: 'Last Updated:',
         iotAIRec: 'AI Recommendation', iotOptRange: 'Optimal Range',
         iotConn: 'Connection', iotLive: 'Live', iotOffline: 'Offline', iotDisconnected: 'Sensor disconnected. Please check connection.',
-        todayAt: 'Today at ',
         iotMinToday: 'Min Today', iotMaxToday: 'Max Today',
         iotAverage: 'Average', iotReadings: 'Readings',
         iotChartTitle: 'Live Moisture History', iotLast20: 'Last 20 Readings',
@@ -114,7 +113,6 @@ const TRANSLATIONS = {
         fetching: 'प्राप्त हो रहा है...', lastUpdated: 'अंतिम अपडेट:',
         iotAIRec: 'AI सिफारिश', iotOptRange: 'आदर्श सीमा',
         iotConn: 'कनेक्शन', iotLive: 'लाइव', iotOffline: 'ऑफ़लाइन', iotDisconnected: 'सेंसर डिस्कनेक्ट हो गया। कृपया कनेक्शन जांचें।',
-        todayAt: 'आज ',
         iotMinToday: 'आज का न्यूनतम', iotMaxToday: 'आज का अधिकतम',
         iotAverage: 'औसत', iotReadings: 'रीडिंग',
         iotChartTitle: 'लाइव नमी इतिहास', iotLast20: 'अंतिम 20 रीडिंग',
@@ -173,7 +171,6 @@ const TRANSLATIONS = {
         fetching: 'ಪಡೆಯಲಾಗುತ್ತಿದೆ...', lastUpdated: 'ಕೊನೆಯ ನವೀಕರಣ:',
         iotAIRec: 'AI ಶಿಫಾರಸು', iotOptRange: 'ಸೂಕ್ತ ವ್ಯಾಪ್ತಿ',
         iotConn: 'ಸಂಪರ್ಕ', iotLive: 'ಲೈವ್', iotOffline: 'ಆಫ್‌ಲೈನ್', iotDisconnected: 'ಸೆನ್ಸರ್ ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ.',
-        todayAt: 'ಇಂದು ',
         iotMinToday: 'ಇಂದಿನ ಕನಿಷ್ಠ', iotMaxToday: 'ಇಂದಿನ ಗರಿಷ್ಠ',
         iotAverage: 'ಸರಾಸರಿ', iotReadings: 'ರೀಡಿಂಗ್‌ಗಳು',
         iotChartTitle: 'ಲೈವ್ ತೇವಾಂಶ ಇತಿಹಾಸ', iotLast20: 'ಕಡೆಯ 20 ರೀಡಿಂಗ್‌ಗಳು',
@@ -1437,34 +1434,15 @@ function setIoTOffline(lastUpdated = '--:--:--') {
     }
 }
 
-function formatTimeStr(timeStr, dict) {
-    if (!timeStr || timeStr === '--:--:--' || timeStr === 'Never' || timeStr === dict.iotOffline) {
-        return timeStr;
-    }
-    const parts = timeStr.split(':');
-    if (parts.length >= 2) {
-        let h = parseInt(parts[0], 10);
-        const m = parts[1];
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        h = h % 12;
-        if (h === 0) h = 12;
-        const prefix = dict.todayAt || 'Today at ';
-        return `${prefix}${h}:${m} ${ampm}`;
-    }
-    return timeStr;
-}
-
 function updateIoTUI(data) {
     const moisture = data.moisture || 0;
-    const lastUpdatedRaw = data.last_updated || '--:--:--';
+    const lastUpdated = data.last_updated || '--:--:--';
     const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
     
-    if (lastUpdatedRaw === 'Never' || data.status === 'offline') {
-        setIoTOffline(lastUpdatedRaw);
+    if (lastUpdated === 'Never' || data.status === 'offline') {
+        setIoTOffline(lastUpdated);
         return;
     }
-    
-    const lastUpdated = formatTimeStr(lastUpdatedRaw, dict);
     
     // Update Value & Last Updated
     const valEl = document.getElementById('moistureValue');
