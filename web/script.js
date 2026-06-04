@@ -1425,6 +1425,13 @@ function setIoTOffline(lastUpdated = '--:--:--') {
         ring.style.stroke = 'var(--n-300)';
     }
     if (banner) banner.classList.add('hidden');
+    
+    // Clear history and stats to prevent showing old data
+    if (typeof IoTHistory !== 'undefined') {
+        IoTHistory = [];
+        updateIoTStats();
+        drawMoistureChart();
+    }
 }
 
 function updateIoTUI(data) {
@@ -1500,14 +1507,22 @@ let IoTHistory = [];
 let IoTWeatherLoaded = false;
 
 function updateIoTStats() {
-    if (IoTHistory.length === 0) return;
-    const min = Math.min(...IoTHistory);
-    const max = Math.max(...IoTHistory);
-    const avg = Math.round(IoTHistory.reduce((a, b) => a + b, 0) / IoTHistory.length);
     const minEl = document.getElementById('moistureMin');
     const maxEl = document.getElementById('moistureMax');
     const avgEl = document.getElementById('moistureAvg');
     const countEl = document.getElementById('moistureCount');
+    
+    if (IoTHistory.length === 0) {
+        if (minEl) minEl.textContent = '--';
+        if (maxEl) maxEl.textContent = '--';
+        if (avgEl) avgEl.textContent = '--';
+        if (countEl) countEl.textContent = '0';
+        return;
+    }
+    const min = Math.min(...IoTHistory);
+    const max = Math.max(...IoTHistory);
+    const avg = Math.round(IoTHistory.reduce((a, b) => a + b, 0) / IoTHistory.length);
+    
     if (minEl) minEl.textContent = min;
     if (maxEl) maxEl.textContent = max;
     if (avgEl) avgEl.textContent = avg;
@@ -1516,7 +1531,7 @@ function updateIoTStats() {
 
 function drawMoistureChart() {
     const canvas = document.getElementById('moistureChart');
-    if (!canvas || IoTHistory.length < 2) return;
+    if (!canvas) return;
     const wrap = canvas.parentElement;
     const W = wrap.clientWidth || 400;
     const H = wrap.clientHeight || 120;
@@ -1524,6 +1539,8 @@ function drawMoistureChart() {
     canvas.height = H;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, W, H);
+    
+    if (IoTHistory.length < 2) return;
 
     const dryY  = H - (30 / 100) * H;
     const wetY  = H - (75 / 100) * H;
