@@ -1833,6 +1833,11 @@ function handleAuth(e) {
             errorEl.textContent = 'Incorrect password.';
             return;
         }
+        // Backfill joinDate for old accounts that were created before this field existed
+        if (!users[phone].joinDate) {
+            users[phone].joinDate = new Date().toLocaleDateString();
+            localStorage.setItem('agri_users_db', JSON.stringify(users));
+        }
         localStorage.setItem('agri_active_user', JSON.stringify(users[phone]));
     }
     
@@ -1887,7 +1892,7 @@ function openProfile() {
         }
         
         const elDate = document.getElementById('profileDate');
-        if (elDate) elDate.textContent = user.joinDate || new Date().toLocaleDateString();
+        if (elDate) elDate.textContent = user.joinDate || 'Unknown';
         
         const elScans = document.getElementById('profileScans');
         if (elScans) elScans.textContent = user.scanCount || 0;
