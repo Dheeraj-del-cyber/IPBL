@@ -4,10 +4,11 @@ services:
     env: python
     plan: free
     region: oregon
-    pythonVersion: "3.11.9"
-    buildCommand: pip install -r requirements.txt
-    startCommand: cd server && python app.py
+    buildCommand: pip install -r ../requirements.txt
+    startCommand: python app.py
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
       - key: GROQ_API_KEY
         fromDatabase: false
       - key: ALLOWED_ORIGINS
