@@ -23,11 +23,15 @@ CLASS_NAMES = [
 
 # Initialization
 MODEL = None
+MODEL_LOADED = False
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'model.h5')
 
 def load_model():
-    global MODEL
+    global MODEL, MODEL_LOADED
+    if MODEL_LOADED:
+        return
+    MODEL_LOADED = True
     if os.path.exists(MODEL_PATH):
         try:
             MODEL = tf.keras.models.load_model(MODEL_PATH)
@@ -38,7 +42,8 @@ def load_model():
     else:
         print(f"WARNING: Model file {MODEL_PATH} not found.")
 
-load_model()
+# DO NOT call load_model() at import time — load lazily on first prediction
+# to avoid blocking gunicorn startup on Render.
 
 def plant_check(image_bytes):
     """
@@ -81,6 +86,9 @@ def predict_image(image_bytes):
     Stage 4: CNN Prediction with TTA (Test-Time Augmentation)
     Looks at the image from 3 different spatial perspectives for maximum accuracy.
     """
+    # Lazy-load the model on first prediction
+    load_model()
+
     if MODEL is None:
         return {"error": "Model not found. Please train the model first."}
     
