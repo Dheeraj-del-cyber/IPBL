@@ -179,7 +179,11 @@ def update_moisture():
         return jsonify({"error": "No moisture value provided"}), 400
     
     import datetime
-    iot_data["moisture"] = data['moisture']
+    try:
+        iot_data["moisture"] = float(data['moisture'])
+    except (ValueError, TypeError):
+        return jsonify({"error": "Invalid moisture value"}), 400
+    
     iot_data["last_updated"] = datetime.datetime.now().strftime("%H:%M:%S")
     
     return jsonify({"success": True, "received": iot_data["moisture"]})

@@ -597,7 +597,7 @@ function renderRealDiseaseResult(data) {
                 
                 <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem">
                     <span>Soil Moisture (IoT):</span>
-                    <span style="font-weight:700; color:var(--accent-sky)">${AppState.lastMoisture || 0}%</span>
+                    <span style="font-weight:700; color:var(--accent-sky)">${(AppState.lastMoisture || 0).toFixed(2)}%</span>
                 </div>
                 <div style="background:rgba(0,0,0,0.05); border-radius:10px; height:8px; overflow:hidden">
                     <div style="height:100%; width:${AppState.lastMoisture || 0}%; background:var(--accent-sky)"></div>
@@ -1456,7 +1456,7 @@ function formatLocalTime(utcTimeStr) {
 }
 
 function updateIoTUI(data) {
-    const moisture = data.moisture || 0;
+    const moisture = isNaN(parseFloat(data.moisture)) ? 0 : parseFloat(data.moisture);
     const rawLastUpdated = data.last_updated || '--:--:--';
     const dict = TRANSLATIONS[AppState.currentLang] || TRANSLATIONS.en;
     
@@ -1472,7 +1472,7 @@ function updateIoTUI(data) {
     const updateEl = document.getElementById('lastUpdated');
     const connStatus = document.getElementById('connectionStatus');
     
-    if (valEl) valEl.textContent = moisture;
+    if (valEl) valEl.textContent = moisture.toFixed(2);
     if (updateEl) updateEl.textContent = lastUpdated;
     if (connStatus) {
         connStatus.textContent = dict.iotLive || 'Live';
@@ -1544,11 +1544,11 @@ function updateIoTStats() {
     }
     const min = Math.min(...IoTHistory);
     const max = Math.max(...IoTHistory);
-    const avg = Math.round(IoTHistory.reduce((a, b) => a + b, 0) / IoTHistory.length);
+    const avg = IoTHistory.reduce((a, b) => a + b, 0) / IoTHistory.length;
     
-    if (minEl) minEl.textContent = min;
-    if (maxEl) maxEl.textContent = max;
-    if (avgEl) avgEl.textContent = avg;
+    if (minEl) minEl.textContent = min.toFixed(2);
+    if (maxEl) maxEl.textContent = max.toFixed(2);
+    if (avgEl) avgEl.textContent = avg.toFixed(2);
     if (countEl) countEl.textContent = IoTHistory.length;
 }
 
@@ -1898,7 +1898,7 @@ function openProfile() {
         if (elScans) elScans.textContent = user.scanCount || 0;
         
         const elMoisture = document.getElementById('profileMoisture');
-        if (elMoisture) elMoisture.textContent = AppState.lastMoisture ? AppState.lastMoisture + '%' : '--';
+        if (elMoisture) elMoisture.textContent = AppState.lastMoisture ? AppState.lastMoisture.toFixed(2) + '%' : '--';
         
     } catch(e) {}
 
