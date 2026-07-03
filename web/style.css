@@ -2241,34 +2241,58 @@ input[type=range].crop-range::-webkit-slider-thumb {
     margin: 1rem 0;
 }
 
-.moisture-gauge svg {
+.moisture-gauge {
+    position: relative;
     width: 100%;
     height: 100%;
-    transform: rotate(-90deg);
+    border-radius: 50%;
+    background-color: var(--n-100);
+    overflow: hidden;
+    box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.gauge-bg {
-    fill: none;
-    stroke: var(--n-100);
-    stroke-width: 8;
+.water-fill {
+    position: absolute;
+    top: 100%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: var(--accent-sky);
+    border-radius: 40%;
+    transition: top 1s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    animation: wave-spin 6s linear infinite;
+    opacity: 0.8;
 }
 
-.gauge-fill {
-    fill: none;
-    stroke: var(--accent-sky);
-    stroke-width: 8;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+.water-fill::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-sky);
+    border-radius: 45%;
+    animation: wave-spin 8s linear infinite reverse;
+    opacity: 0.5;
+}
+
+@keyframes wave-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .gauge-value {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    z-index: 2;
     font-size: 2.5rem;
     font-weight: 900;
     color: var(--n-900);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.8);
 }
 
 .iot-status {

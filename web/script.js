@@ -1389,7 +1389,7 @@ function setIoTOffline(lastUpdated = '--:--:--') {
     const recBox = document.getElementById('iotRecommendation');
     const gradeEl = document.getElementById('healthGrade');
     const scoreEl = document.getElementById('healthScore');
-    const circle = document.getElementById('moistureProgress');
+    const waterFill = document.getElementById('moistureWaterFill');
     const ring = document.getElementById('healthRingFill');
     const banner = document.getElementById('iotAlertBanner');
 
@@ -1412,11 +1412,8 @@ function setIoTOffline(lastUpdated = '--:--:--') {
         gradeEl.className = 'health-grade grade-bad';
     }
     if (scoreEl) scoreEl.textContent = '--';
-    if (circle) {
-        const radius = circle.r ? circle.r.baseVal.value : 45;
-        const circumference = 2 * Math.PI * radius;
-        circle.style.strokeDasharray = circumference;
-        circle.style.strokeDashoffset = circumference;
+    if (waterFill) {
+        waterFill.style.top = '100%';
     }
     if (ring) {
         const circ = 2 * Math.PI * 34;
@@ -1472,7 +1469,7 @@ function updateIoTUI(data) {
     const updateEl = document.getElementById('lastUpdated');
     const connStatus = document.getElementById('connectionStatus');
     
-    if (valEl) valEl.textContent = moisture.toFixed(2);
+    if (valEl) valEl.textContent = Math.round(moisture);
     if (updateEl) updateEl.textContent = lastUpdated;
     if (connStatus) {
         connStatus.textContent = dict.iotLive || 'Live';
@@ -1481,13 +1478,10 @@ function updateIoTUI(data) {
     }
 
     // Update Gauge
-    const circle = document.getElementById('moistureProgress');
-    if (circle) {
-        const radius = circle.r.baseVal.value;
-        const circumference = 2 * Math.PI * radius;
-        const offset = circumference - (moisture / 100) * circumference;
-        circle.style.strokeDasharray = circumference;
-        circle.style.strokeDashoffset = offset;
+    const waterFill = document.getElementById('moistureWaterFill');
+    if (waterFill) {
+        const topValue = 100 - moisture;
+        waterFill.style.top = topValue + '%';
     }
 
     // Update Status Badge & Recommendation
