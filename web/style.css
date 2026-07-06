@@ -3209,3 +3209,139 @@ button.bottom-nav-link {
         padding: 1rem;
     }
 }
+
+/* ==========================================================================
+   FARM CANVAS STYLES
+   ========================================================================== */
+.farm-canvas-section {
+    position: relative;
+    padding-top: 2rem;
+}
+
+.farm-canvas-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    background: var(--n-900);
+}
+
+.farm-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: filter 1s ease;
+}
+
+.farm-lighting-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Let clicks pass through */
+    transition: background 1s ease, mix-blend-mode 1s ease;
+    z-index: 5;
+}
+
+/* Lighting States */
+.farm-lighting-morning {
+    background: linear-gradient(to bottom right, rgba(255, 230, 150, 0.2), transparent);
+    mix-blend-mode: overlay;
+}
+.farm-lighting-day {
+    background: transparent;
+}
+.farm-lighting-dusk {
+    background: linear-gradient(to bottom, rgba(255, 100, 50, 0.2), rgba(100, 50, 150, 0.3));
+    mix-blend-mode: hard-light;
+}
+.farm-lighting-night {
+    background: rgba(10, 20, 50, 0.4);
+    mix-blend-mode: multiply;
+}
+
+/* Hotspots */
+.farm-hotspot {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.farm-hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.hotspot-icon {
+    font-size: 1.5rem;
+    z-index: 2;
+}
+
+.hotspot-pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.8); opacity: 0; }
+}
+
+.hotspot-tooltip {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--n-950);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, top 0.3s ease;
+}
+
+.farm-hotspot:hover .hotspot-tooltip {
+    opacity: 1;
+    top: -45px;
+}
+
+/* Approximate Hotspot Positions (Percentages so it scales) */
+.hotspot-iot { top: 30%; left: 75%; }      /* Greenhouse area */
+.hotspot-detect { top: 60%; left: 35%; }   /* Crop field area */
+.hotspot-chat { top: 45%; left: 15%; }     /* Barn/Farmer area */
+.hotspot-recommend { top: 25%; left: 45%; } /* Silo area */
+
+@media (max-width: 768px) {
+    .farm-hotspot {
+        width: 36px;
+        height: 36px;
+    }
+    .hotspot-icon {
+        font-size: 1.2rem;
+    }
+}
+

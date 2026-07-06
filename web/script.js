@@ -1355,7 +1355,7 @@ function startIoTMonioting() {
     IoTHistory = [];
     fetchIoTData();
     if (AppState.iotInterval) clearInterval(AppState.iotInterval);
-    AppState.iotInterval = setInterval(fetchIoTData, 5000);
+    AppState.iotInterval = setInterval(fetchIoTData, 20000);
     if (!IoTWeatherLoaded) fetchIoTWeather();
 }
 
@@ -2077,5 +2077,48 @@ async function fetchCropRecommendation() {
         submitBtn.innerHTML = oldBtnText;
         submitBtn.disabled = false;
     }
+}
+
+
+/* ==========================================================================
+   FARM CANVAS LIGHTING LOGIC
+   ========================================================================== */
+function updateFarmLighting() {
+    const overlay = document.getElementById('farmLightingOverlay');
+    if (!overlay) return;
+
+    const hour = new Date().getHours();
+    
+    // Remove existing classes
+    overlay.className = 'farm-lighting-overlay';
+
+    if (hour >= 5 && hour < 8) {
+        overlay.classList.add('farm-lighting-morning');
+    } else if (hour >= 8 && hour < 17) {
+        overlay.classList.add('farm-lighting-day');
+    } else if (hour >= 17 && hour < 20) {
+        overlay.classList.add('farm-lighting-dusk');
+    } else {
+        overlay.classList.add('farm-lighting-night');
+    }
+}
+
+// Run on load
+document.addEventListener('DOMContentLoaded', () => {
+    updateFarmLighting();
+    setInterval(updateFarmLighting, 1000 * 60 * 60);
+});
+
+// If the app is SPA and doesn't trigger DOMContentLoaded on navigation, 
+// we hook into the existing navigateTo function globally or just rely on the interval.
+// To be safe, we will override navigateTo slightly to include lighting update.
+const originalNavigateTo = window.navigateTo;
+if (typeof originalNavigateTo === "function") {
+    window.navigateTo = function(screenId) {
+        originalNavigateTo(screenId);
+        if (screenId === "screenHome") {
+            updateFarmLighting();
+        }
+    };
 }
 
