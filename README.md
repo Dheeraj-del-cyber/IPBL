@@ -14,7 +14,7 @@ An AI-powered, full-stack platform designed to empower farmers with modern techn
 - 🤖 **AI-Driven Advisory**: Integrates with the **Groq API (Llama 3)** to generate tailored, context-aware treatment plans (organic and chemical interventions).
 - 🌾 **AI Crop Recommendation**: Suggests the best crops based on location, soil type, season, temperature, and humidity using geolocation and weather APIs.
 - 🌍 **Deep Multilingual Support**: Fully localized in English, Hindi, and Kannada. The AI dynamically generates responses natively in the selected language.
-- 💧 **IoT Dashboard**: Real-time soil moisture monitoring and smart irrigation recommendations based on live sensor data.
+- 💧 **IoT Dashboard**: Real-time soil moisture monitoring and smart irrigation recommendations based on live sensor data
 
 
 ---
